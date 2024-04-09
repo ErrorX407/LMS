@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import Ambient from "../components/Ambient";
+import Logo from "../imgs/logo.webp"
 import { UserContext } from "../App";
 import axios from "axios";
 
@@ -63,7 +63,10 @@ const Navbar = () => {
     <>
       <nav className="navbar px-10">
         <Link to="/">
-          <div className="logo font-candela">Shiv Mahima</div>
+          <div className="flex justify-center items-center gap-4">
+          <img src={Logo} alt="logo" className="w-[30px] h-[30px]" />
+          <div className="logo">Blogspace</div>
+          </div>
         </Link>
 
         <div className="right flex justify-center items-center gap-5">

@@ -99,8 +99,6 @@ const SearchPage = () => {
   return (
     <div>
       <Ambient />
-      <Navbar />
-      <Sidebar />
       <div className="px-20">
         <div className="w-[100%] flex justify-start items-center gap-4 mx-auto">
           <button className="px-7 py-4 bg-white/10 rounded-2xl mouseenter">

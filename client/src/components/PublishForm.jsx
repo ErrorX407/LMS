@@ -17,7 +17,7 @@ const PublishForm = () => {
   } = useContext(EditorContext);
 
   const {
-    userAuth: { access_token, profile_img, fullName },
+    userAuth: { access_token, profile_img, fullName, username },
   } = useContext(UserContext);
 
   const navigate = useNavigate();
@@ -80,7 +80,7 @@ const PublishForm = () => {
 
     axios.post(
       import.meta.env.VITE_SERVER_DOMAIN + "/api/v1/post/create",
-      postObj,
+      postObj, username,
       {
         headers: {
           Authorization: `Bearer ${access_token}`,

@@ -68,7 +68,7 @@
   }
 
   .logo{
-    @apply text-[2.5vw] tracking-tight;
+    @apply text-[25px] font-candela leading-none;
   }
 
   .h-cover {

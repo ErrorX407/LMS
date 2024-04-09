@@ -40,7 +40,7 @@ const PostCard = ({
             </div>
           </Link>
         </div>
-        <Link to={category}>
+        <Link to={`/${category}`}>
           <div className="absolute right-3.5 bottom-3 p-2 rounded-2xl tags bg-white/10 z-[10] hover:opacity-80">
             <span className="capitalize">{category}</span>
           </div>

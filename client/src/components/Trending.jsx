@@ -1,10 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
-import { motion, stagger } from "framer-motion";
+import React, { useEffect, useState, Suspense } from "react";
+import { motion } from "framer-motion";
 import axios from "axios";
 import Loader from "./Loader";
-import PostCard from "./PostCard";
 import { Link } from "react-router-dom";
-import PostAmbient from "./PostAmbient"
+import PostAmbient from "./PostAmbient";
+
+const PostCard = React.lazy(() => import("./PostCard"));
 
 const Trending = () => {
   const [trendingPosts, setTrendingPosts] = useState(null);
@@ -28,31 +29,30 @@ const Trending = () => {
   }, []);
   return (
     <>
-    {
-      trendingPosts === null ? (
+      {trendingPosts === null ? (
         <PostAmbient banner="https://in.pinterest.com/pin/567312884325534810/" />
       ) : (
         <PostAmbient banner={bannerImage} />
-          )
-    }
-    <div className="mb-8 -mt-3">
-      <div className="top flex justify-between items-center">
-        <h1 className="font-candela text-3xl">Trending</h1>
-        <Link
-          to="/trending"
-          className=" text-white/50 underline-offset-2 hover:text-white hover:underline"
-        >
-          Show all
-        </Link>
-      </div>
-      <div className="post-container my-3 flex gap-5 overflow-x-auto overflow-y-hidden rounded-2xl">
-        <>
-          {trendingPosts == null ? (
-            <Loader />
-          ) : (
-            trendingPosts.map((post, i) => {
-              return (
-                <motion.div
+      )}
+      <div className="mb-8 -mt-3">
+        <div className="top flex justify-between items-center">
+          <h1 className="font-candela text-3xl">Trending</h1>
+          <Link
+            to="/trending"
+            className=" text-white/50 underline-offset-2 hover:text-white hover:underline"
+          >
+            Show all
+          </Link>
+        </div>
+        <div className="post-container my-3 flex gap-5 overflow-x-auto overflow-y-hidden rounded-2xl">
+          <>
+            {trendingPosts == null ? (
+              <Loader />
+            ) : (
+              trendingPosts.map((post, i) => {
+                return (
+                  <Suspense fallback={<p>Loading...</p>}>
+                    <motion.div
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{
@@ -62,25 +62,26 @@ const Trending = () => {
                       }}
                       key={i}
                     >
-                  <PostCard
-                    banner={post.banner}
-                    title={post.title}
-                    author={post.author.personal_info.fullName}
-                    authorLink={post.author.personal_info.username}
-                    profileImg={post.author.personal_info.profile_img}
-                    postLink={post.post_id}
-                    likes={post.activity.total_likes}
-                    tags={post.tags}
-                    publishedAt={post.publishedAt}
-                    category={post.category}
-                  />
-                </motion.div>
-              );
-            })
-          )}
-        </>
+                      <PostCard
+                        banner={post.banner}
+                        title={post.title}
+                        author={post.author.personal_info.fullName}
+                        authorLink={post.author.personal_info.username}
+                        profileImg={post.author.personal_info.profile_img}
+                        postLink={post.post_id}
+                        likes={post.activity.total_likes}
+                        tags={post.tags}
+                        publishedAt={post.publishedAt}
+                        category={post.category}
+                      />
+                    </motion.div>
+                  </Suspense>
+                );
+              })
+            )}
+          </>
+        </div>
       </div>
-    </div>
     </>
   );
 };

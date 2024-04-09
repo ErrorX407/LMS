@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from "react";
-import Navbar from "../components/Navbar";
-import Sidebar from "../components/Sidebar";
-import Ambient from "../components/Ambient";
+import React, { Suspense, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import axios from "axios";
 import Loader from "../components/Loader";
-import PostCard from "../components/PostCard";
 import NoDataMessage from "../components/NoDataMessage";
 import { FilterPaginationData } from "../common/FilterPaginationData";
 import LoadMoreButton from "../components/LoadMoreButton";
 import PostAmbient from "../components/PostAmbient";
+
+const PostCard = React.lazy(() => import("../components/PostCard"));
 
 const TrendingPage = () => {
   const [trendingPosts, setTrendingPosts] = useState(null);
@@ -113,7 +111,8 @@ const TrendingPage = () => {
             ) : trendingPosts.results.length ? (
               trendingPosts.results.map((post, i) => {
                 return (
-                  <motion.div
+                  <Suspense fallback={<p>This is loading...</p>}>
+                    <motion.div
                       initial={{ opacity: 0, transform: "translateY(50px)" }}
                       animate={{ opacity: 1, transform: "translateY(0px)" }}
                       transition={{
@@ -123,19 +122,20 @@ const TrendingPage = () => {
                       }}
                       key={i}
                     >
-                    <PostCard
-                      banner={post.banner}
-                      title={post.title}
-                      author={post.author.personal_info.fullName}
-                      authorLink={post.author.personal_info.username}
-                      profileImg={post.author.personal_info.profile_img}
-                      postLink={post.post_id}
-                      likes={post.activity.total_likes}
-                      tags={post.tags}
-                      publishedAt={post.publishedAt}
-                      category={post.category}
-                    />
-                  </motion.div>
+                      <PostCard
+                        banner={post.banner}
+                        title={post.title}
+                        author={post.author.personal_info.fullName}
+                        authorLink={post.author.personal_info.username}
+                        profileImg={post.author.personal_info.profile_img}
+                        postLink={post.post_id}
+                        likes={post.activity.total_likes}
+                        tags={post.tags}
+                        publishedAt={post.publishedAt}
+                        category={post.category}
+                      />
+                    </motion.div>
+                  </Suspense>
                 );
               })
             ) : (

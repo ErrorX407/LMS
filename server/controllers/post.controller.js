@@ -5,13 +5,13 @@ import Notification from "../models/Notification.js";
 
 export const getPostRoute = (req, res) => {
   try {
-    let { authorId, username } = req.user;
+    let authorId = req.user;
 
     if (!authorId) {
       return res.status(403).json({ Error: "User ID not found in request" });
     }
 
-    let { title, category, banner, tags, content, draft } = req.body;
+    let { title, category, banner, tags, content, draft, username } = req.body;
 
     if (!title) {
       return res
@@ -44,16 +44,15 @@ export const getPostRoute = (req, res) => {
 
     tags = tags.map((tag) => tag.toLowerCase());
 
-    let post_id =
-      title
-        .replace(/[^a-zA-Z0-9]/g, " ")
-        .replace(/\s+/g, "-")
-        .trim() +
-      "-" +
-      nanoid(25);
+    // let post_id =
+    //   title
+    //     .replace(/[^a-zA-Z0-9]/g, " ")
+    //     .replace(/\s+/g, "-")
+    //     .trim() +
+    //   "-" +
+    //   nanoid(25);
 
-    // let post_id = username + "/" +nanoid(25)
-    console.log(post_id);
+    let post_id = `pub=${encodeURIComponent(username)}` + "_" + `category=${encodeURIComponent(category)}` + "_" + `pid=${nanoid(25)}`
 
     let post = new Post({
       title,

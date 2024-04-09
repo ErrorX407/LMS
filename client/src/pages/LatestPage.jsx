@@ -1,16 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { motion, stagger } from "framer-motion";
 import {toast} from "react-toastify"
 import axios from "axios";
 import Loader from "../components/Loader";
-import PostCard from "../components/PostCard";
-import Navbar from "../components/Navbar";
-import Sidebar from "../components/Sidebar";
-import Ambient from "../components/Ambient";
 import { FilterPaginationData } from "../common/FilterPaginationData";
 import NoDataMessage from "../components/NoDataMessage";
 import LoadMoreButton from "../components/LoadMoreButton";
 import PostAmbient from "../components/PostAmbient";
+
+const PostCard = React.lazy(() => import("../components/PostCard"));
 
 const Latest = () => {
   const [latestPosts, setLatestPosts] = useState(null);
@@ -126,7 +124,8 @@ const Latest = () => {
             ) : latestPosts.results.length ? (
                 latestPosts.results.map((post, i) => {
                   return (
-                    <motion.div
+                    <Suspense fallback={<p>This is loading...</p>}>
+                      <motion.div
                       initial={{ opacity: 0, transform: "translateY(50px)" }}
                       animate={{ opacity: 1, transform: "translateY(0px)" }}
                       transition={{
@@ -149,6 +148,7 @@ const Latest = () => {
                         category={post.category}
                       />
                     </motion.div>
+                    </Suspense>
                   );
                 })
             ) : (

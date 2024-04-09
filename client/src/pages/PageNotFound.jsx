@@ -1,5 +1,6 @@
 import React from 'react'
 import Ambient from '../components/Ambient'
+import Navbar from '../components/Navbar'
 import { Link } from 'react-router-dom'
 import PageNotFoundImage from "../imgs/404 (2).png"
 

@@ -7,6 +7,7 @@ import EditorJS from "@editorjs/editorjs";
 import axios from "axios"
 
 import defaultBanner from "../imgs/blog banner.png";
+import Logo from "../imgs/logo.webp"
 import { uploadImage } from "../common/aws";
 import { EditorContext } from "../pages/Editor";
 import { tools } from "./Tools";
@@ -165,9 +166,12 @@ const BlogEditor = () => {
         bodyClassName="toastBody"
       />
       <PostAmbient banner={banner ? banner : defaultBanner} />
-      <nav className="navbar px-20">
+      <nav className="navbar px-10">
         <Link to="/">
-          <div className="logo">Shiv Mahima</div>
+        <div className="flex justify-center items-center gap-4">
+          <img src={Logo} alt="logo" className="w-[30px] h-[30px]" />
+          <div className="logo">Blogspace</div>
+          </div>
         </Link>
         <div className="right flex justify-center items-center gap-5">
           <button className="px-4 py-3 rounded-2xl bg-p bg bg-purple text-black text-xl font-semibold mouseenter" onClick={handlePublishEvent}>

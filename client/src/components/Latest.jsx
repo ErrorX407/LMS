@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { motion, stagger } from "framer-motion";
+import React, { useEffect, useState, Suspense } from "react";
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Loader from "./Loader";
-import PostCard from "./PostCard";
+
+const PostCard = React.lazy(() => import("./PostCard"));
 
 const Latest = () => {
   const [posts, setPosts] = useState(null);
@@ -40,7 +41,8 @@ const Latest = () => {
           ) : (
             posts.map((post, i) => {
               return (
-                <motion.div
+                <Suspense fallback={<p>Loading...</p>}>
+                    <motion.div
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{
@@ -50,19 +52,20 @@ const Latest = () => {
                       }}
                       key={i}
                     >
-                  <PostCard
-                    banner={post.banner}
-                    title={post.title}
-                    author={post.author.personal_info.fullName}
-                    authorLink={post.author.personal_info.username}
-                    profileImg={post.author.personal_info.profile_img}
-                    postLink={post.post_id}
-                    likes={post.activity.total_likes}
-                    tags={post.tags}
-                    publishedAt={post.publishedAt}
-                    category = {post.category}
-                  />
-                </motion.div>
+                      <PostCard
+                        banner={post.banner}
+                        title={post.title}
+                        author={post.author.personal_info.fullName}
+                        authorLink={post.author.personal_info.username}
+                        profileImg={post.author.personal_info.profile_img}
+                        postLink={post.post_id}
+                        likes={post.activity.total_likes}
+                        tags={post.tags}
+                        publishedAt={post.publishedAt}
+                        category={post.category}
+                      />
+                    </motion.div>
+                  </Suspense>
               );
             })
           )}

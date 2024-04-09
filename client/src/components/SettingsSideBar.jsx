@@ -23,7 +23,7 @@ const SettingsSideBar = () => {
             {/* <hr className="border-white/50 -ml-6 mb-8 mr-16" /> */}
 
             <NavLink
-              to="/dashboard/blogs"
+              to="/dashboard/posts"
               onClick={(e) => setPageState(e.target.innerText)}
               className="sidebar-link"
             >
