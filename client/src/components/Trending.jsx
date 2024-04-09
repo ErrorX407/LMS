@@ -4,9 +4,11 @@ import axios from "axios";
 import Loader from "./Loader";
 import PostCard from "./PostCard";
 import { Link } from "react-router-dom";
+import PostAmbient from "./PostAmbient"
 
 const Trending = () => {
   const [trendingPosts, setTrendingPosts] = useState(null);
+  const [bannerImage, setBannerImage] = useState("");
   const fetchTrendingPosts = ({ maxLimit = 6 }) => {
     axios
       .post(import.meta.env.VITE_SERVER_DOMAIN + "/api/v1/post/trending", {
@@ -14,6 +16,7 @@ const Trending = () => {
       })
       .then(({ data }) => {
         setTrendingPosts(data.posts);
+        setBannerImage(data.posts[0].banner);
       })
       .catch((err) => {
         console.log(err);
@@ -24,6 +27,14 @@ const Trending = () => {
     fetchTrendingPosts({ maxLimit: 6 });
   }, []);
   return (
+    <>
+    {
+      trendingPosts === null ? (
+        <PostAmbient banner="https://in.pinterest.com/pin/567312884325534810/" />
+      ) : (
+        <PostAmbient banner={bannerImage} />
+          )
+    }
     <div className="mb-8 -mt-3">
       <div className="top flex justify-between items-center">
         <h1 className="font-candela text-3xl">Trending</h1>
@@ -42,15 +53,15 @@ const Trending = () => {
             trendingPosts.map((post, i) => {
               return (
                 <motion.div
-                  initial={{ opacity: 0, scale: 0.1 / i }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{
-                    delay: 0.2 * i,
-                    duration: 0.8,
-                    ease: [0, 0.71, 0.2, 1.01],
-                  }}
-                  key={i}
-                >
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{
+                        delay: 0.1 * i,
+                        duration: 2,
+                        ease: [0, 0.71, 0.2, 1.01],
+                      }}
+                      key={i}
+                    >
                   <PostCard
                     banner={post.banner}
                     title={post.title}
@@ -70,6 +81,7 @@ const Trending = () => {
         </>
       </div>
     </div>
+    </>
   );
 };
 

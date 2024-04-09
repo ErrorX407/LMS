@@ -60,15 +60,15 @@ const Solutions = () => {
               latestPosts.results.map((post, i) => {
                 return (
                   <motion.div
-                    initial={{ opacity: 0, scale: 0.1 / i }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{
-                      delay: 0.2 * i,
-                      duration: 0.8,
-                      ease: [0, 0.71, 0.2, 1.01],
-                    }}
-                    key={i}
-                  >
+                      initial={{ opacity: 0, transform: "translateY(50px)" }}
+                      animate={{ opacity: 1, transform: "translateY(0px)" }}
+                      transition={{
+                        delay: 0.1 * i,
+                        duration: 2,
+                        ease: [0, 0.71, 0.2, 1.01],
+                      }}
+                      key={i}
+                    >
                     <PostCard
                       banner={post.banner}
                       title={post.title}

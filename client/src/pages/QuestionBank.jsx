@@ -15,10 +15,10 @@ const Solutions = () => {
 
   return (
     <>
-        <PostAmbient banner="https://i.pinimg.com/236x/db/70/7e/db707edb4b623713d06334b7ccc829a3.jpg" />
+        <PostAmbient banner="https://i.pinimg.com/236x/55/72/2f/55722f58e29ce8299db6cc525c346bf5.jpg" />
 
       <div className="px-10">
-        <h1 className="font-candela text-3xl">Solutions</h1>
+        <h1 className="font-candela text-3xl">Question Bank</h1>
 
       </div>
     </>

@@ -10,11 +10,13 @@ import Ambient from "../components/Ambient";
 import { FilterPaginationData } from "../common/FilterPaginationData";
 import NoDataMessage from "../components/NoDataMessage";
 import LoadMoreButton from "../components/LoadMoreButton";
+import PostAmbient from "../components/PostAmbient";
 
 const Latest = () => {
   const [latestPosts, setLatestPosts] = useState(null);
   const [pageState, setPageState] = useState("latest");
   const [errorMessage, setErrorMessage] = useState("");
+  const [bannerImage, setBannerImage] = useState("");
 
   const fetchLatestPosts = ({ page = 1, maxLimit = 15 }) => {
     axios
@@ -31,6 +33,7 @@ const Latest = () => {
           countRoute: "/api/v1/post/latest/count",
         });
         setLatestPosts(formatedData);
+        setBannerImage(formatedData.results[0].banner);
       })
       .catch((err) => {
         console.log(err);
@@ -78,15 +81,21 @@ const Latest = () => {
   const loadPostByCategory = (e) => {
     let category = e.target.value;
     if (pageState == category) {
+      setLatestPosts(null);
       setPageState("latest");
       return;
     }
-    setPageState(category);
-    setLatestPosts(null);
+    else{
+      setPageState(category);
+      setLatestPosts(null);
+    }
   };
   return (
     <>
-      <Ambient />
+      {
+        latestPosts === null ? <PostAmbient banner="https://i.pinimg.com/236x/17/5c/91/175c9122f658873799ead326000e9ee5.jpg" />
+        : <PostAmbient banner={bannerImage} />
+      }
       <div className="px-10">
         <h1 className="font-candela text-3xl">Latest Posts</h1>
         <div className="my-8 flex gap-3">
@@ -118,11 +127,11 @@ const Latest = () => {
                 latestPosts.results.map((post, i) => {
                   return (
                     <motion.div
-                      initial={{ opacity: 0, scale: 0.1 / i }}
-                      animate={{ opacity: 1, scale: 1 }}
+                      initial={{ opacity: 0, transform: "translateY(50px)" }}
+                      animate={{ opacity: 1, transform: "translateY(0px)" }}
                       transition={{
-                        delay: 0.2 * i,
-                        duration: 0.8,
+                        delay: 0.1 * i,
+                        duration: 2,
                         ease: [0, 0.71, 0.2, 1.01],
                       }}
                       key={i}

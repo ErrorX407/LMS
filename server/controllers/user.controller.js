@@ -129,9 +129,8 @@ export const updateUserProfile = (req, res) => {
         let hostname = new URL(social_links[socialLinksArr[i]]).hostname;
 
         if (
-          !hostname.includes(
-            `${socialLinksArr[i]}.com` && socialLinksArr[i] != "website"
-          )
+          !hostname.includes(`${socialLinksArr[i]}.com`) &&
+          socialLinksArr[i] !== "website"
         ) {
           return res.status(403).json({
             Error:
