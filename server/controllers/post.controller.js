@@ -333,6 +333,45 @@ export const getPost = (req, res) => {
     });
 };
 
+export const writtenPosts = (req, res) => {
+  let user_id = req.user;
+
+  let {page, draft, query, deletedDocCount} = req.body;
+
+  let maxLimit = 5;
+  let skipDocs = (page - 1) * maxLimit;
+
+  if (deletedDocCount) {
+    skipDocs -= deletedDocCount;
+  }
+
+  Post.find({author: user_id, draft, title: new RegExp(query, "i")})
+  .skip(skipDocs)
+  .limit(maxLimit)
+  .sort({ publishedAt: -1 })
+  .select(" title banner publishedAt post_id activity category draft -_id")
+  .then(posts => {
+    return res.status(200).json({ posts })
+  })
+  .catch((err) => {
+    return res.status(500).json({ Error: err.message });
+  });
+
+};
+
+export const writtenPostsCount = (req, res) => {
+  let user_id = req.user;
+  let {draft, query} = req.body;
+
+  Post.countDocuments({author: user_id, draft, title: new RegExp(query, "i")})
+  .then(count => {
+     return res.status(200).json({ totalDocs: count })
+   })
+  .catch((err) => {
+     return res.status(500).json({ Error: err.message });
+   });
+}
+
 export const likePost = (req, res) => {
   let user_id = req.user;
 

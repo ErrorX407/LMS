@@ -9,6 +9,8 @@ import {
   searchPosts,
   countSearchPosts,
   getPost,
+  writtenPosts,
+  writtenPostsCount,
   likePost,
   isLiked
 } from "../controllers/post.controller.js";
@@ -35,6 +37,10 @@ router.post("/search", searchPosts);
 router.post("/search/count", countSearchPosts);
 
 router.post("/get", getPost)
+
+router.post("/written", isLoggedIn, writtenPosts)
+
+router.post("/written/count", isLoggedIn, writtenPostsCount)
 
 router.post("/like", isLoggedIn, likePost)
 
