@@ -243,49 +243,46 @@ export const countPostsByCategory = (req, res) => {
     });
 };
 
-export const searchPosts = (req, res) => {
-  let { category, page, query, author } = req.body;
-  // category = category.toLowerCase();
-
-  let findQuery;
-
-  if (category) {
-    findQuery = { category: { $regex: category, $options: "i" }, draft: false };
-  } else if (query) {
-    findQuery = { draft: false, title: new RegExp(query, "i") };
-  } else if (author) {
-    findQuery = { draft: false, author: author };
-  }
-
+export const searchPosts = async (req, res) => {
   try {
-    let maxLimit = 20;
+    const { category, page, query, author } = req.body;
 
-    Post.find(findQuery) // Use regex for case-insensitive matching
+    let findQuery = { draft: false };
+
+    if (category) {
+      findQuery.category = { $regex: category, $options: "i" };
+    } else if (query) {
+      findQuery.title = new RegExp(query, "i");
+    } else if (author) {
+      findQuery.author = author;
+    }
+
+    const maxLimit = 20;
+    const skip = (page - 1) * maxLimit;
+
+    const posts = await Post.find(findQuery)
       .populate(
         "author",
         "personal_info.profile_img personal_info.username personal_info.fullName -_id"
       )
       .sort({ publishedAt: -1 })
       .select("post_id title category banner activity tags publishedAt -_id")
-      .skip((page - 1) * maxLimit)
-      .limit(maxLimit)
-      .then((posts) => {
-        if (posts.length === 0) {
-          return res.status(500).json({
-            Error: `No Post Found Having This Category`,
-          });
-        }
-        return res.status(200).json({ posts });
-      })
-      .catch((err) => {
-        console.error("Error filtering posts by tag:", err);
-        return res.status(500).json({ Error: err.message });
+      .skip(skip)
+      .limit(maxLimit);
+
+    if (posts.length === 0) {
+      return res.status(404).json({
+        message: "🔍 Nothing found. Keep searching, you'll get there! 🕵️‍♂️🔎",
       });
+    }
+
+    return res.status(200).json({ posts });
   } catch (error) {
-    console.error("Error in filterPostsByTag:", error);
-    res.status(500).json({ Error: "Internal server error" });
+    console.error("Error in searchPosts:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 };
+
 
 export const countSearchPosts = (req, res) => {
   let { category } = req.body;

@@ -17,7 +17,7 @@ const PostCard = ({
   return (
     <div className="post relative w-[250px] h-[260px] bg-[rgba(255,255,255,0.1)] flex-shrink-0 rounded-2xl overflow-hidden">
       <div className="banner relative w-full overflow-hidden aspect-video ">
-        <img src={banner} alt="" className="object-cover bannerImg" />
+        <img src={banner} alt={title} className="object-cover bannerImg" />
 
         <div className="absolute pointer-events-none bg-black/30 backdrop-blur-md z-[99] bottom-2 right-2 likes w-fit flex p-3 rounded-2xl justify-start items-center gap-2 cursor-pointer">
         <i className="fi fi-sr-heart text-white text-[18px] bg-transparent flex justify-center items-center"></i>
@@ -32,7 +32,7 @@ const PostCard = ({
           <Link to={`/${authorLink}`}>
             <div className="author mt-4 flex justify-start items-center gap-3">
               <div className="author-img w-[30px] h-[30px] overflow-hidden rounded-lg">
-                <img src={profileImg} alt="" />
+                <img src={profileImg} alt={authorLink} />
               </div>
               <div className="author-name capitalize text-[16px] w-[55%] overflow-hidden whitespace-nowrap text-ellipsis text-white/70">
                 {author}
@@ -48,7 +48,7 @@ const PostCard = ({
       </div>
       <Link
         to={`/post/${postLink}`}
-        className="absolute top-0 left-0 w-full h-full"
+        className="post-link absolute top-0 left-0 w-full h-full"
       ></Link>
     </div>
   );

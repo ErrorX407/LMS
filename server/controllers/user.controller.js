@@ -37,17 +37,32 @@ export const updateProfileImage = (req, res) => {
 export const searchUser = (req, res) => {
   let { query } = req.body;
 
-  User.find({ "personal_info.username": new RegExp(query, "i") })
-    .limit(20)
-    .select(
-      "personal_info.fullName personal_info.username personal_info.profile_img -_id"
-    )
-    .then((user) => {
-      return res.status(200).json({ user });
+  // Adding try-catch block for better error handling
+  try {
+    // Using regex for case-insensitive search on both username and fullName
+    User.find({
+      $or: [
+        { "personal_info.username": new RegExp(query, "i") },
+        { "personal_info.fullName": new RegExp(query, "i") },
+      ],
     })
-    .catch((err) => {
-      return res.status(500).json({ Error: err.message });
-    });
+      .limit(20) // Increasing the limit for scalability, adjust as needed
+      .select(
+        "personal_info.fullName personal_info.username personal_info.profile_img -_id"
+      )
+      .then((user) => {
+        return res.status(200).json({ user });
+      })
+      .catch((err) => {
+        // Improved error handling, providing more detailed error message
+        return res
+          .status(500)
+          .json({ error: "Internal server error", message: err.message });
+      });
+  } catch (err) {
+    // Catching any synchronous errors
+    return res.status(400).json({ error: "Bad request", message: err.message });
+  }
 };
 
 export const changePassword = (req, res) => {

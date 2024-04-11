@@ -6,6 +6,7 @@ import { UserContext } from "../App";
 import axios from "axios";
 
 const NotificationCard = ({ data, index, notificationState }) => {
+  
   const [isReplying, setReplying] = useState(false);
   const [isHide, setHide] = useState(false);
 

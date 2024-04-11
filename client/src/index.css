@@ -64,7 +64,7 @@
   }
 
   .navbar {
-    @apply z-[999] sticky top-0 flex items-center justify-between gap-12 w-full px-[5vw] py-5 h-[80px] border-b border-transparent bg-transparent backdrop-blur-lg;
+    @apply z-[999] sticky top-0 flex items-center justify-between gap-12 w-full px-[5vw] py-5 h-[80px] border-b border-transparent bg-black;
   }
 
   .logo{

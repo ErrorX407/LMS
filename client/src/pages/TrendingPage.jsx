@@ -104,7 +104,7 @@ const TrendingPage = () => {
             })}
           </div>
         </div>
-        <div className="post-container my-3 w-full flex gap-5 flex-wrap rounded-2xl">
+        <div className="post-container mt-6 my-3 w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 rounded-2xl">
           <>
             {trendingPosts == null ? (
               <Loader />

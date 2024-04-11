@@ -22,6 +22,7 @@ import QuestionBank from "./pages/QuestionBank";
 import TestSeries from "./pages/TestSeries";
 import News from "./pages/News";
 import ManagePosts from "./pages/ManagePosts";
+import Search from "./pages/Search";
 
 const MainSidebar = React.lazy(() => import("./components/MainSidebar"));
 
@@ -44,6 +45,7 @@ const App = () => {
           <Route path="/" element={<MainSidebar />}>
             <Route index element={<Home />} />
             <Route path="search/:query" element={<SearchPage />} />
+            <Route path="search" element={<Search />} />
             <Route path="trending" element={<TrendingPage />} />
             <Route path="latest" element={<LatestPage />} />
             <Route path="solutions" element={<Solutions />} />
