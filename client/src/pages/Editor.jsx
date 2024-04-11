@@ -1,13 +1,15 @@
-import React, { createContext, useContext, useState } from "react";
-import { Navigate } from "react-router-dom";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { Navigate, useParams } from "react-router-dom";
 import { UserContext } from "../App";
 import BlogEditor from "../components/BlogEditor";
 import PublishForm from "../components/PublishForm";
+import Loader from "../components/Loader";
+import axios from "axios";
 
 const postStructure = {
   title: "",
   banner: "",
-  content: "",
+  content: [],
   category: "",
   tags: [],
   publisher: { pesonal_info: {} },
@@ -16,17 +18,38 @@ const postStructure = {
 export const EditorContext = createContext({});
 
 const Editor = () => {
+
+  let { post_id } = useParams();
+
   const [post, setPost] = useState(postStructure);
   const [editorState, setEditorState] = useState("editor");
   const [textEditor, setTextEditor] = useState({ isReady: false });
+  const [loading, setLoading] = useState(true)
   let {
     userAuth: { access_token },
   } = useContext(UserContext);
+  useEffect(()=>{
+    if (!post_id) {
+      return setLoading(false);
+    }
+
+    axios.post(import.meta.env.VITE_SERVER_DOMAIN + "/api/v1/post/get",{
+      post_id, draft: true, mode: 'edit'
+    }).then(({data: {post}}) => {
+      setPost(post)
+      setLoading(false)
+    })
+    .catch(err => {
+      setPost(null)
+      setLoading(false)
+    })
+  }, []);
   return (
     <EditorContext.Provider value={{ post, setPost, editorState, setEditorState, textEditor, setTextEditor }}>
       {access_token === null ? (
         <Navigate to="/login" />
-      ) : editorState == "editor" ? (
+      ) : loading ? <Loader /> :
+      editorState == "editor" ? (
         <BlogEditor />
       ) : (
         <PublishForm />

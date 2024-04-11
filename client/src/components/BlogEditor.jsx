@@ -1,13 +1,12 @@
-import React, { useContext, useEffect } from "react";
-import { Link } from "react-router-dom";
-import {useNavigate} from "react-router-dom"
+import React, { useContext, useEffect, useRef } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ToastContainer, toast } from "react-toastify";
 import EditorJS from "@editorjs/editorjs";
-import axios from "axios"
+import axios from "axios";
 
 import defaultBanner from "../imgs/blog banner.png";
-import Logo from "../imgs/logo.webp"
+import Logo from "../imgs/logo.webp";
 import { uploadImage } from "../common/aws";
 import { EditorContext } from "../pages/Editor";
 import { tools } from "./Tools";
@@ -15,19 +14,40 @@ import { UserContext } from "../App";
 import PostAmbient from "./PostAmbient";
 
 const BlogEditor = () => {
-  const {post, post: {title, banner, content, tags}, setPost, textEditor, setTextEditor, setEditorState} = useContext(EditorContext);
-  const { userAuth: {access_token} } = useContext(UserContext)
-  const navigate = useNavigate()
+  const {
+    post,
+    post: { title, banner, content, tags },
+    setPost,
+    textEditor,
+    setTextEditor,
+    setEditorState,
+  } = useContext(EditorContext);
+  const {
+    userAuth: { access_token, username },
+  } = useContext(UserContext);
+  let { post_id } = useParams();
+  const navigate = useNavigate();
+  const titleTextareaRef = useRef(null);
   useEffect(() => {
     if (!textEditor.isReady) {
-      setTextEditor(new EditorJS({
-        holderId: "textEditor",
-        data: content,
-        tools: tools,
-        placeholder: "Hey, let's give something truly awesome and special together!"
-      }));
+      setTextEditor(
+        new EditorJS({
+          holderId: "textEditor",
+          data: Array.isArray(content) ? content[0] : content,
+          tools: tools,
+          placeholder:
+            "Hey, let's give something truly awesome and special together!",
+        })
+      );
     }
-  },[])
+
+    // Calculate and set the initial height of the title textarea
+    if (titleTextareaRef.current) {
+      adjustTextareaHeight(titleTextareaRef.current);
+    }
+
+
+  }, []);
 
   const handleBannerUpload = (e) => {
     e.preventDefault();
@@ -41,7 +61,7 @@ const BlogEditor = () => {
           if (url) {
             toast.dismiss(loadingToast);
             // materialBannerRef.current.src = url;
-            setPost({...post, banner: url});
+            setPost({ ...post, banner: url });
             toast.success("Great job! 🌟 Image uploaded successfully! 🖼️");
           }
         })
@@ -58,90 +78,99 @@ const BlogEditor = () => {
     }
   };
 
+  const adjustTextareaHeight = (textarea) => {
+    textarea.style.height = "auto";
+    textarea.style.height = `${textarea.scrollHeight}px`;
+  };
+
   const handleTitleChange = (e) => {
-    let input = e.target;
-
-    input.style.height = "fit-content";
-    input.style.height = `${input.scrollHeight}px`;
-
-    setPost({...post, title: input.value});
+    const input = e.target;
+    adjustTextareaHeight(input);
+    setPost({ ...post, title: input.value });
   };
 
   const handleBannerError = (e) => {
     let img = e.target;
     img.src = defaultBanner;
-  }
+  };
 
-  const handlePublishEvent = () =>{
+  const handlePublishEvent = () => {
     if (!banner.length) {
-      return toast.error("Upload a banner to publish it")
+      return toast.error("🖼️ Upload a banner to publish! 🌟📷");
     }
     if (!title || title.length === 0 || title === "") {
-      return toast.error("Whoops! Looks like you missed the title for your Post! 📝");
+      return toast.error(
+        "Whoops! Looks like you missed the title for your Post! 📝"
+      );
     }
     if (textEditor.isReady) {
-      textEditor.save().then(data => {
-        if (data.blocks.length) {
-          setPost({...post, content: data});
-          setEditorState("publish")
-        }else{
-          return toast.error("Write something to publish your post")
-        }
-      })
-       .catch((err) => {
+      textEditor
+        .save()
+        .then((data) => {
+          if (data.blocks.length) {
+            setPost({ ...post, content: data });
+            setEditorState("publish");
+          } else {
+            return toast.error("Write something to publish your post");
+          }
+        })
+        .catch((err) => {
           return toast.error(err.message);
         });
     }
-  }
+  };
 
   const handleSaveDraft = (e) => {
     if (e.target.className.includes("disable")) {
       return;
     }
     if (!title.length) {
-      return toast.error("You must provide a title to save a post in draft.");
+      return toast.error("⚠️ Title required to save draft! 📝📌");
     }
 
-    let loadingToast = toast.loading("Publishing...");
+    let loadingToast = toast.loading("💾 Saving Draft... Hold tight! 📝🔄");
     e.target.classList.add("disable");
 
     if (textEditor.isReady) {
-      textEditor.save().then(content => {
+      textEditor.save().then((content) => {
         let postObj = {
           title,
           banner,
           content,
-          category,
           tags,
           draft: true,
+          username,
         };
-        axios.post(
-          import.meta.env.VITE_SERVER_DOMAIN + "/api/v1/post/create",
-          postObj,
-          {
-            headers: {
-              Authorization: `Bearer ${access_token}`,
-            },
-          }
-        ).then(() => {
-          e.target.classList.remove("disable");
-          toast.dismiss(loadingToast)
-          toast.success("Saved To Draft 👍 Redirecting to homepage.... 🫡 ")
-    
-          setTimeout(() => {
-            navigate("/");
-          }, 3500)
-        })
-        .catch(({response}) => {
-          e.target.classList.remove("disable");
-          toast.dismiss(loadingToast)
-          return toast.error(response.data.Error)
-        })
-      })
+
+        axios
+          .post(
+            import.meta.env.VITE_SERVER_DOMAIN + "/api/v1/post/create",
+            { ...postObj, id: post_id},
+            {
+              headers: {
+                'Authorization': `Bearer ${access_token}`,
+              },
+            }
+          )
+          .then(() => {
+            e.target.classList.remove("disable");
+            toast.dismiss(loadingToast);
+            toast.success(
+              "🎉 Post saved! Redirecting to manage posts... 🔄📌 "
+            );
+
+            setTimeout(() => {
+              navigate("/dashboard/posts");
+            }, 3500);
+          })
+          .catch(({ response }) => {
+            e.target.classList.remove("disable");
+            toast.dismiss(loadingToast);
+            return toast.error(response.data.Error);
+          });
+      });
     }
-
-
-  }
+  };
 
   return (
     <div>
@@ -150,7 +179,7 @@ const BlogEditor = () => {
         toastStyle={{
           backgroundColor: "#ffffff17",
           backdropFilter: "blur(20px)",
-          width: '400px'
+          width: "400px",
         }}
         position="top-center"
         autoClose={3000}
@@ -168,16 +197,22 @@ const BlogEditor = () => {
       <PostAmbient banner={banner ? banner : defaultBanner} />
       <nav className="navbar px-10">
         <Link to="/">
-        <div className="flex justify-center items-center gap-4">
-          <img src={Logo} alt="logo" className="w-[30px] h-[30px]" />
-          <div className="logo">Blogspace</div>
+          <div className="flex justify-center items-center gap-4">
+            <img src={Logo} alt="logo" className="w-[30px] h-[30px]" />
+            <div className="logo">Blogspace</div>
           </div>
         </Link>
         <div className="right flex justify-center items-center gap-5">
-          <button className="px-4 py-3 rounded-2xl bg-p bg bg-purple text-black text-xl font-semibold mouseenter" onClick={handlePublishEvent}>
+          <button
+            className="px-4 py-3 rounded-2xl bg-p bg bg-purple text-black text-xl font-semibold mouseenter"
+            onClick={handlePublishEvent}
+          >
             Publish
           </button>
-          <button className="px-4 py-3 rounded-2xl bg-white/10 text-xl font-semibold mouseenter" onClick={handleSaveDraft}>
+          <button
+            className="px-4 py-3 rounded-2xl bg-white/10 text-xl font-semibold mouseenter"
+            onClick={handleSaveDraft}
+          >
             Save Draft
           </button>
         </div>
@@ -188,6 +223,7 @@ const BlogEditor = () => {
       <motion.div className="editor max-w-[900px] center py-4 max-lg:px-[5vw]">
         <div className="mr-auto max-w-[100%]">
           <textarea
+          ref={titleTextareaRef}
             name="title"
             defaultValue={title}
             rows="1"

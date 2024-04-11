@@ -93,7 +93,7 @@ const PostInteraction = ({ onShareButtonClick }) => {
         <div className="flex gap-6 items-center">
           {
             username === author_username?
-            <Link to={`/${post_id}/edit`}
+            <Link to={`/editor/${post_id}`}
               className="bg-black/30 backdrop-blur-md w-fit flex p-3 rounded-2xl justify-start items-center gap-2 cursor-pointer mouseenter"
             >
               <img

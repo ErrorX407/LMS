@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import {useNavigate} from "react-router-dom"
+import {useNavigate, useParams} from "react-router-dom"
 import { ToastContainer, toast } from "react-toastify";
 import { UserContext } from "../App";
 import { EditorContext } from "../pages/Editor";
@@ -7,6 +7,9 @@ import Tag from "./Tag";
 import axios from "axios";
 
 const PublishForm = () => {
+
+  let { post_id } = useParams();
+
   let tagLimit = 10;
 
   let {
@@ -50,7 +53,7 @@ const PublishForm = () => {
     }
   };
 
-  const publishBlog = (e) => {
+  const publishPost = (e) => {
     if (e.target.className.includes("disable")) {
       return;
     }
@@ -75,12 +78,13 @@ const PublishForm = () => {
       content,
       category,
       tags,
+      username,
       draft: false,
     };
 
     axios.post(
       import.meta.env.VITE_SERVER_DOMAIN + "/api/v1/post/create",
-      postObj, username,
+      {...postObj, id: post_id},
       {
         headers: {
           Authorization: `Bearer ${access_token}`,
@@ -124,7 +128,7 @@ const PublishForm = () => {
         bodyClassName="toastBody"
       />
 
-      <section className="w-screen min-h-screen grid items-center lg:grid-cols-2 py-16 lg:gap-8">
+      <section className="w-screen h-screen grid items-center lg:grid-cols-2 py-16 lg:gap-8">
         <button
           className="absolute right-[5vw] z-10 top-[5%] lg:top-[7%]"
           onClick={handleCloseEvent}
@@ -203,7 +207,7 @@ const PublishForm = () => {
 
           <button
             className="w-full py-3 rounded-2xl bg-p bg bg-purple text-black text-xl font-semibold mouseenter"
-            onClick={publishBlog}
+            onClick={publishPost}
           >
             Publish
           </button>

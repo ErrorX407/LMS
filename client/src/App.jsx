@@ -58,6 +58,7 @@ const App = () => {
           </Route>
 
           <Route path="/editor" element={<Editor />} />
+          <Route path="/editor/:post_id" element={<Editor />} />
           <Route path="/post/:post_id" element={<PostPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />

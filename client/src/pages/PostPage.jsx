@@ -4,9 +4,7 @@ import { toast, ToastContainer } from "react-toastify";
 import axios from "axios";
 import Loader from "../components/Loader";
 import Navbar from "../components/Navbar";
-import Sidebar from "../components/Sidebar";
-import Ambient from "../components/Ambient";
-import { getDate, getFullDate } from "../common/Date";
+import { getFullDate } from "../common/Date";
 import PostAmbient from "../components/PostAmbient";
 import PostInteraction from "../components/PostInteraction";
 import PostContent from "../components/PostContent";
@@ -124,7 +122,6 @@ const PostPage = () => {
             setTotalParentCommentsLoaded,
           }}
         >
-          {/* <Ambient /> */}
           <PostAmbient banner={banner} />
           <Navbar />
           <CommentsContainer />

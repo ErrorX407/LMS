@@ -96,12 +96,45 @@ const ManagePosts = () => {
           placeholder="Search Posts...."
           onChange={handleChange}
           onKeyDown={handleSearch}
-          className="w-1/2 text-[16px] bg-purple/10 p-4 pl-[3.3rem] pr-6 rounded-[1.2rem] border-purple/30 outline-none focus:bg-purple/20"
+          className="w-[55%] text-[16px] bg-purple/10 p-4 pl-[3.3rem] pr-6 rounded-[1.2rem] border-purple/30 outline-none focus:bg-purple/20"
         />
         <i
           className="fi fi-rr-search absolute right-[10%] md:pointer-events-none md:
         left-5 top-1/2 -translate-y-1/2 text-xl"
         ></i>
+        <button className="bg-purple text-black rounded-[1rem] w-[50px] h-[50px] absolute ml-3 top-1/2 -translate-y-1/2 hover:scale-95 active:scale-90">
+          <i className="fi fi-rr-search text-2xl flex justify-center items-center m-3"></i>
+        </button>
+      </div>
+
+      <div>
+      {posts == null ? (
+        <Loader />
+      ) : posts.results.posts.length ?
+        <div className="post-container mt-6 my-3 w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 rounded-2xl">
+        {
+          posts.results.posts.map((post, i) => {
+            return <motion.div
+                    key={i}
+                    initial={{ opacity: 0, transform: "translateY(50px)" }}
+                    animate={{ opacity: 1, transform: "translateY(0px)" }}
+                    transition={{
+                      delay: 0.1 * i,
+                      duration: 2,
+                      ease: [0, 0.71, 0.2, 1.01],
+                    }}
+                  >
+                    {
+                      console.log(post)
+                    }
+                    <ManagePostCard post={post} />
+                  </motion.div>
+          })
+        }
+        </div>  
+      : (
+        <NoDataMessage message="No posts published yet" />
+      )}
       </div>
     </div>
   );

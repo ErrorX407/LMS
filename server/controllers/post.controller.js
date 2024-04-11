@@ -11,7 +11,7 @@ export const getPostRoute = (req, res) => {
       return res.status(403).json({ Error: "User ID not found in request" });
     }
 
-    let { title, category, banner, tags, content, draft, username } = req.body;
+    let { title, category, banner, tags, content, draft, username, id } = req.body;
 
     if (!title) {
       return res
@@ -52,50 +52,60 @@ export const getPostRoute = (req, res) => {
     //   "-" +
     //   nanoid(25);
 
-    let post_id = `pub=${encodeURIComponent(username)}` + "_" + `category=${encodeURIComponent(category)}` + "_" + `pid=${nanoid(25)}`
+    let post_id = id || `pub=${(username)}` + "_" + `category=${(category)}` + "_" + `pid=${nanoid(25)}`
 
-    let post = new Post({
-      title,
-      content,
-      tags,
-      banner,
-      category,
-      author: authorId,
-      post_id,
-      draft: Boolean(draft),
-    });
-
-    post
-      .save()
-      .then((post) => {
-        let incrementVal = draft ? 0 : 1;
-
-        User.findOneAndUpdate(
-          { _id: authorId },
-          {
-            $inc: { "account_info.total_posts": incrementVal },
-            $push: { posts: post._id },
-          }
-        )
-          .then((user) => {
-            if (!user) {
-              console.error("User not found");
-              return res.status(404).json({ Error: "User not found" });
-            }
-            console.log("User updated successfully");
-            res.status(200).json({ id: post.post_id });
-          })
-          .catch((err) => {
-            console.error("Error updating user:", err);
-            res
-              .status(500)
-              .json({ Error: "Failed to update total post number" });
-          });
+    if (id) {
+      Post.findOneAndUpdate({post_id}, {title, content, tags, banner, category, draft: draft ? draft : false})
+      .then(() => {
+        return res.status(200).json({id: post_id})
       })
       .catch((err) => {
-        console.error("Error saving post:", err);
         res.status(500).json({ Error: err.message });
       });
+    } else{
+      let post = new Post({
+        title,
+        content,
+        tags,
+        banner,
+        category,
+        author: authorId,
+        post_id,
+        draft: Boolean(draft),
+      });
+  
+      post
+        .save()
+        .then((post) => {
+          let incrementVal = draft ? 0 : 1;
+  
+          User.findOneAndUpdate(
+            { _id: authorId },
+            {
+              $inc: { "account_info.total_posts": incrementVal },
+              $push: { posts: post._id },
+            }
+          )
+            .then((user) => {
+              if (!user) {
+                console.error("User not found");
+                return res.status(404).json({ Error: "User not found" });
+              }
+              console.log("User updated successfully");
+              res.status(200).json({ id: post.post_id });
+            })
+            .catch((err) => {
+              console.error("Error updating user:", err);
+              res
+                .status(500)
+                .json({ Error: "Failed to update total post number" });
+            });
+        })
+        .catch((err) => {
+          console.error("Error saving post:", err);
+          res.status(500).json({ Error: err.message });
+        });
+    }
   } catch (error) {
     console.error("Error in getPostRoute:", error);
     res.status(500).json({ Error: "Internal server error" });
@@ -302,8 +312,8 @@ export const countSearchPosts = (req, res) => {
 };
 
 export const getPost = (req, res) => {
-  let { post_id } = req.body;
-  let incrementVal = 1;
+  let { post_id, draft, mode } = req.body;
+  let incrementVal = mode != 'edit' ? 1 : 0;
 
   Post.findOneAndUpdate(
     { post_id },
@@ -323,6 +333,9 @@ export const getPost = (req, res) => {
       ).catch((err) => {
         return res.status(500).json({ Error: err.message });
       });
+      if (post.draft && !draft) {
+        return res.status(500).json({ Error: "🚫 Can't access draft posts. 😕📝" });
+      }
       return res.status(200).json({ post });
     })
     .catch((err) => {
