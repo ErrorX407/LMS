@@ -7,6 +7,7 @@ import { getFullDate } from "../common/Date";
 import { PostContext, postStructure } from "../pages/PostPage";
 import { UserContext } from "../App";
 import CommentField from "./CommentField";
+import ReplyField from "./ReplyField";
 
 const CommentCard = ({ index, leftVal, commentData , commentsArr}) => {
   let {
@@ -131,16 +132,16 @@ const CommentCard = ({ index, leftVal, commentData , commentsArr}) => {
             </div>
             <p
               className="text-xl"
-              dangerouslySetInnerHTML={{ __html: comment }}
+              dangerouslySetInnerHTML={{ __html: comment.replace(/\n/g, '<br>') }}
             ></p>
             {/* <button
               className="mt-3 px-5 py-2 bg-purple/20 rounded-2xl duration-500 hover:bg-purple hover:text-black"
               onClick={handleReplyClick}
             >
               Reply
-            </button> */}
+            </button>
             {isReplying ? (
-              <CommentField
+              <ReplyField
                 action="Reply"
                 index={index}
                 replyingTo={_id}
@@ -148,7 +149,7 @@ const CommentCard = ({ index, leftVal, commentData , commentsArr}) => {
               />
             ) : (
               ""
-            )}
+            )} */}
           </div>
         </div>
       </div>

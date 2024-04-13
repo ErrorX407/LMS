@@ -28,17 +28,20 @@ const PostCard = ({
         <div className="title text-[16px] line-clamp-2 text-white/100">
           {title}
         </div>
-        <div className="z-[9] underline-offset-2 relative author-link hover:underline">
+        <div className="w-full z-[9] absolute left-1/2 px-3 -translate-x-1/2 bottom-2  flex justify-between items-center h-12">
+          <div className="flex justify-start items-center gap-3">
           <Link to={`/${authorLink}`}>
             <div className="author mt-4 flex justify-start items-center gap-3">
               <div className="author-img w-[30px] h-[30px] overflow-hidden rounded-lg">
                 <img src={profileImg} alt={authorLink} />
               </div>
-              <div className="author-name capitalize text-[16px] w-[55%] overflow-hidden whitespace-nowrap text-ellipsis text-white/70">
+              <div className="author-name capitalize text-[16px] w-[100%] overflow-hidden whitespace-nowrap text-ellipsis text-white/70">
                 {author}
               </div>
             </div>
           </Link>
+
+          </div>
         </div>
         <Link to={`/${category}`}>
           <div className="absolute right-3.5 bottom-3 p-2 rounded-2xl tags bg-white/10 z-[10] hover:opacity-80">

@@ -11,6 +11,7 @@ import {
   getPost,
   writtenPosts,
   writtenPostsCount,
+  deletePosts,
   likePost,
   isLiked
 } from "../controllers/post.controller.js";
@@ -41,6 +42,8 @@ router.post("/get", getPost)
 router.post("/written", isLoggedIn, writtenPosts)
 
 router.post("/written/count", isLoggedIn, writtenPostsCount)
+
+router.post("/delete", isLoggedIn, deletePosts)
 
 router.post("/like", isLoggedIn, likePost)
 

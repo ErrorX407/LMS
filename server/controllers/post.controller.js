@@ -1,110 +1,135 @@
 import { nanoid } from "nanoid";
 import Post from "../models/Post.js";
 import User from "../models/User.js";
+import Comment from "../models/Comment.js";
 import Notification from "../models/Notification.js";
 
 export const getPostRoute = (req, res) => {
   try {
     let authorId = req.user;
+    let isAdmin = req.admin;
 
-    if (!authorId) {
-      return res.status(403).json({ Error: "User ID not found in request" });
-    }
+    if (isAdmin) {
+      if (!authorId) {
+        return res.status(403).json({ Error: "User ID not found in request" });
+      }
 
-    let { title, category, banner, tags, content, draft, username, id } = req.body;
+      let { title, category, banner, tags, content, draft, username, id } =
+        req.body;
 
-    if (!title) {
-      return res
-        .status(403)
-        .json({ Error: "You must provide a title to publish a post." });
-    }
-
-    if (!draft) {
-      if (!category) {
+      if (!title) {
         return res
           .status(403)
-          .json({ Error: "You must provide a category to publish a post." });
+          .json({ Error: "You must provide a title to publish a post." });
       }
-      if (!banner) {
-        return res
-          .status(403)
-          .json({ Error: "You must provide a post banner to publish it." });
+
+      if (!draft) {
+        if (!category) {
+          return res
+            .status(403)
+            .json({ Error: "You must provide a category to publish a post." });
+        }
+        if (!banner) {
+          return res
+            .status(403)
+            .json({ Error: "You must provide a post banner to publish it." });
+        }
+        if (!tags) {
+          return res.status(403).json({
+            Error: "You must provide at least one tag to publish a post.",
+          });
+        }
+        if (!content.blocks.length) {
+          return res.status(403).json({
+            Error: "You must provide some content to publish a post.",
+          });
+        }
       }
-      if (!tags) {
-        return res.status(403).json({
-          Error: "You must provide at least one tag to publish a post.",
+
+      tags = tags.map((tag) => tag.toLowerCase());
+
+      // let post_id =
+      //   title
+      //     .replace(/[^a-zA-Z0-9]/g, " ")
+      //     .replace(/\s+/g, "-")
+      //     .trim() +
+      //   "-" +
+      //   nanoid(25);
+
+      let post_id =
+        id ||
+        `pub=${username}` +
+          "_" +
+          `category=${category}` +
+          "_" +
+          `pid=${nanoid(25)}`;
+
+      if (id) {
+        Post.findOneAndUpdate(
+          { post_id },
+          {
+            title,
+            content,
+            tags,
+            banner,
+            category,
+            draft: draft ? draft : false,
+          }
+        )
+          .then(() => {
+            return res.status(200).json({ id: post_id });
+          })
+          .catch((err) => {
+            res.status(500).json({ Error: err.message });
+          });
+      } else {
+        let post = new Post({
+          title,
+          content,
+          tags,
+          banner,
+          category,
+          author: authorId,
+          post_id,
+          draft: Boolean(draft),
         });
-      }
-      if (!content.blocks.length) {
-        return res
-          .status(403)
-          .json({ Error: "You must provide some content to publish a post." });
-      }
-    }
 
-    tags = tags.map((tag) => tag.toLowerCase());
+        post
+          .save()
+          .then((post) => {
+            let incrementVal = draft ? 0 : 1;
 
-    // let post_id =
-    //   title
-    //     .replace(/[^a-zA-Z0-9]/g, " ")
-    //     .replace(/\s+/g, "-")
-    //     .trim() +
-    //   "-" +
-    //   nanoid(25);
-
-    let post_id = id || `pub=${(username)}` + "_" + `category=${(category)}` + "_" + `pid=${nanoid(25)}`
-
-    if (id) {
-      Post.findOneAndUpdate({post_id}, {title, content, tags, banner, category, draft: draft ? draft : false})
-      .then(() => {
-        return res.status(200).json({id: post_id})
-      })
-      .catch((err) => {
-        res.status(500).json({ Error: err.message });
-      });
-    } else{
-      let post = new Post({
-        title,
-        content,
-        tags,
-        banner,
-        category,
-        author: authorId,
-        post_id,
-        draft: Boolean(draft),
-      });
-  
-      post
-        .save()
-        .then((post) => {
-          let incrementVal = draft ? 0 : 1;
-  
-          User.findOneAndUpdate(
-            { _id: authorId },
-            {
-              $inc: { "account_info.total_posts": incrementVal },
-              $push: { posts: post._id },
-            }
-          )
-            .then((user) => {
-              if (!user) {
-                console.error("User not found");
-                return res.status(404).json({ Error: "User not found" });
+            User.findOneAndUpdate(
+              { _id: authorId },
+              {
+                $inc: { "account_info.total_posts": incrementVal },
+                $push: { posts: post._id },
               }
-              console.log("User updated successfully");
-              res.status(200).json({ id: post.post_id });
-            })
-            .catch((err) => {
-              console.error("Error updating user:", err);
-              res
-                .status(500)
-                .json({ Error: "Failed to update total post number" });
-            });
-        })
-        .catch((err) => {
-          console.error("Error saving post:", err);
-          res.status(500).json({ Error: err.message });
-        });
+            )
+              .then((user) => {
+                if (!user) {
+                  console.error("User not found");
+                  return res.status(404).json({ Error: "User not found" });
+                }
+                console.log("User updated successfully");
+                res.status(200).json({ id: post.post_id });
+              })
+              .catch((err) => {
+                console.error("Error updating user:", err);
+                res
+                  .status(500)
+                  .json({ Error: "Failed to update total post number" });
+              });
+          })
+          .catch((err) => {
+            console.error("Error saving post:", err);
+            res.status(500).json({ Error: err.message });
+          });
+      }
+    } else {
+      return res
+        .status(500)
+        .json({ Error: "🚫 No permission to create posts. 😕📝" });
     }
   } catch (error) {
     console.error("Error in getPostRoute:", error);
@@ -293,7 +318,6 @@ export const searchPosts = async (req, res) => {
   }
 };
 
-
 export const countSearchPosts = (req, res) => {
   let { category } = req.body;
   category = category.toLowerCase();
@@ -313,7 +337,7 @@ export const countSearchPosts = (req, res) => {
 
 export const getPost = (req, res) => {
   let { post_id, draft, mode } = req.body;
-  let incrementVal = mode != 'edit' ? 1 : 0;
+  let incrementVal = mode != "edit" ? 1 : 0;
 
   Post.findOneAndUpdate(
     { post_id },
@@ -334,7 +358,9 @@ export const getPost = (req, res) => {
         return res.status(500).json({ Error: err.message });
       });
       if (post.draft && !draft) {
-        return res.status(500).json({ Error: "🚫 Can't access draft posts. 😕📝" });
+        return res
+          .status(500)
+          .json({ Error: "🚫 Can't access draft posts. 😕📝" });
       }
       return res.status(200).json({ post });
     })
@@ -346,7 +372,7 @@ export const getPost = (req, res) => {
 export const writtenPosts = (req, res) => {
   let user_id = req.user;
 
-  let {page, draft, query, deletedDocCount} = req.body;
+  let { page, draft, query, deletedDocCount } = req.body;
 
   let maxLimit = 5;
   let skipDocs = (page - 1) * maxLimit;
@@ -355,32 +381,66 @@ export const writtenPosts = (req, res) => {
     skipDocs -= deletedDocCount;
   }
 
-  Post.find({author: user_id, draft, title: new RegExp(query, "i")})
-  .skip(skipDocs)
-  .limit(maxLimit)
-  .sort({ publishedAt: -1 })
-  .select(" title banner publishedAt post_id activity category draft -_id")
-  .then(posts => {
-    return res.status(200).json({ posts })
-  })
-  .catch((err) => {
-    return res.status(500).json({ Error: err.message });
-  });
-
+  Post.find({ author: user_id, draft, title: new RegExp(query, "i") })
+    .skip(skipDocs)
+    .limit(maxLimit)
+    .sort({ publishedAt: -1 })
+    .select(" title banner publishedAt post_id activity category draft -_id")
+    .then((posts) => {
+      return res.status(200).json({ posts });
+    })
+    .catch((err) => {
+      return res.status(500).json({ Error: err.message });
+    });
 };
 
 export const writtenPostsCount = (req, res) => {
   let user_id = req.user;
-  let {draft, query} = req.body;
+  let { draft, query } = req.body;
 
-  Post.countDocuments({author: user_id, draft, title: new RegExp(query, "i")})
-  .then(count => {
-     return res.status(200).json({ totalDocs: count })
-   })
-  .catch((err) => {
-     return res.status(500).json({ Error: err.message });
-   });
-}
+  Post.countDocuments({ author: user_id, draft, title: new RegExp(query, "i") })
+    .then((count) => {
+      return res.status(200).json({ totalDocs: count });
+    })
+    .catch((err) => {
+      return res.status(500).json({ Error: err.message });
+    });
+};
+
+export const deletePosts = (req, res) => {
+  let user_id = req.user;
+
+  let isAdmin = req.admin;
+
+  let { post_id } = req.body;
+
+  if (isAdmin) {
+    Post.findOneAndDelete({ post_id })
+      .then((post) => {
+        Notification.deleteMany({ post: post._id }).then((data) =>
+          console.log("Notification deleted")
+        );
+        Comment.deleteMany({ post_id: post._id }).then((data) =>
+          console.log("Comments deleted")
+        );
+        User.findOneAndUpdate(
+          { _id: user_id },
+          {
+            $pull: { post: post._id },
+            $inc: { "account_info.total_posts": -1 },
+          }
+        ).then((user) => console.log("Post Deleted"));
+
+        return res.status(200).json({ Status: "🗑️ Post deleted! 🎉👍" });
+      })
+      .catch((err) => {
+        return res.status(500).json({ Error: err.message });
+      });
+  }
+  else{
+    return res.status(500).json({ Error: "🚫 No permission to delete post. 😕🔒" });
+  }
+};
 
 export const likePost = (req, res) => {
   let user_id = req.user;

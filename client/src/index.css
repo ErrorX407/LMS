@@ -213,6 +213,19 @@
   /* color: #ff4e4e73; */
 }
 
+@media (max-width: 650px) {
+  .ce-toolbar__plus{
+    color: #ffffff; 
+    background-color: #8B46FF;
+    border: none;
+  }
+  .ce-toolbar__settings-btn{
+    color: #000000; 
+    background-color: #8B46FF;
+    border: none;
+  }
+}
+
 .ce-toolbar__plus:hover,
 .ce-popover-item:hover,
 .ce-toolbar__settings-btn:hover,

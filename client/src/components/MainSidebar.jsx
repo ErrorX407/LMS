@@ -1,8 +1,19 @@
-import React from "react";
-import { Outlet, NavLink } from "react-router-dom";
+import React, { useContext } from "react";
+import { Outlet, NavLink, Link } from "react-router-dom";
+import { UserContext } from "../App";
 import Navbar from "./Navbar";
+import { clearSession, removeFromSession } from "../common/session";
+import { toast } from "react-toastify";
 
 const MainSidebar = () => {
+  const { userAuth, setUserAuth } = useContext(UserContext);
+  const handleLogout = () => {
+    clearSession()
+    setTimeout(() => {
+    location.reload();
+    }, 1000)
+    toast.success("👋 Logged out! See you soon! 🚪🔒")
+  }
   return (
     <>
       <Navbar />
@@ -146,6 +157,42 @@ const MainSidebar = () => {
                 </span>
               </div>
             </NavLink>
+
+            {userAuth.access_token ? (
+          <div className="mb-auto">
+            <NavLink
+              to="/settings"
+              onClick={(e) => setPageState(e.target.innerText)}
+              className="sidebar-link"
+            >
+              <div className="solutions flex justify-start items-center gap-6">
+                <img
+                  src="https://img.icons8.com/3d-fluency/94/gear--v1.png" alt="gear--v1"
+                  className="w-[25px]"
+                />
+                <span className="text-[18px] whitespace-nowrap w-full overflow-hidden">
+                  Settings
+                </span>
+              </div>
+            </NavLink>
+            <button
+              onClick={handleLogout}
+              className="w-full flex justify-start items-center gap-6 overflow-hidden mouseenter cursor-pointer text-2xl p-3 mb-3 bg-white/5 rounded-2xl"
+            >
+              <div className="solutions flex justify-start items-center gap-6">
+                <img
+                  src="https://img.icons8.com/3d-fluency/94/door.png" alt="door"
+                  className="w-[25px]"
+                />
+                <span className="text-[18px] whitespace-nowrap w-full overflow-hidden">
+                  Logout
+                </span>
+              </div>
+            </button>
+          </div>
+        ) : (
+          ""
+        )}
           </div>
         </div>
 

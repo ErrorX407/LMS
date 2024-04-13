@@ -23,7 +23,7 @@ const PostInteraction = ({ onShareButtonClick }) => {
     setCommentWrapper
   } = useContext(PostContext);
 
-  let {userAuth: {username, access_token}} = useContext(UserContext)
+  let {userAuth: {username, access_token, isAdmin}} = useContext(UserContext)
 
   useEffect(()=>{
     if (access_token) {
@@ -92,7 +92,8 @@ const PostInteraction = ({ onShareButtonClick }) => {
         </div>
         <div className="flex gap-6 items-center">
           {
-            username === author_username?
+            !isAdmin ? "" :
+            username === author_username ?
             <Link to={`/editor/${post_id}`}
               className="bg-black/30 backdrop-blur-md w-fit flex p-3 rounded-2xl justify-start items-center gap-2 cursor-pointer mouseenter"
             >

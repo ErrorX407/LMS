@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 
 const formatDataToSend = (user) => {
 
-  const access_token = jwt.sign({ id : user.id}, process.env.JWT_SECRET_KEY)
+  const access_token = jwt.sign({ id : user.id, admin: user.admin }, process.env.JWT_SECRET_KEY)
 
   return {
     access_token,
@@ -13,6 +13,7 @@ const formatDataToSend = (user) => {
     username: user.personal_info.username,
     email: user.personal_info.email,
     fullName: user.personal_info.fullName,
+    isAdmin: user.admin
   };
 };
 

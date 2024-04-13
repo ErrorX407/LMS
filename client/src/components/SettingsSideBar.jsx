@@ -6,7 +6,7 @@ import PostAmbient from "./PostAmbient";
 
 const SettingsSideBar = () => {
   const {
-    userAuth: { access_token, profile_img, new_notification_available },
+    userAuth: { access_token, profile_img, new_notification_available, isAdmin },
   } = useContext(UserContext);
   const [page, setPageState] = useState();
 
@@ -63,7 +63,9 @@ const SettingsSideBar = () => {
               </div>
             </NavLink>
 
-            <NavLink
+            {
+              isAdmin ? 
+              <NavLink
               to="/editor"
               onClick={(e) => setPageState(e.target.innerText)}
               className="sidebar-link"
@@ -79,6 +81,8 @@ const SettingsSideBar = () => {
                 </span>
               </div>
             </NavLink>
+            : ""
+            }
 
             <h1 className="font-candela text-3xl mb-3 mt-10">Settings</h1>
             {/* <hr className="border-white/50 -ml-6 mb-8 mr-16" /> */}

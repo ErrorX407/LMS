@@ -5,6 +5,7 @@ import BlogEditor from "../components/BlogEditor";
 import PublishForm from "../components/PublishForm";
 import Loader from "../components/Loader";
 import axios from "axios";
+import PageNotFound from "./PageNotFound";
 
 const postStructure = {
   title: "",
@@ -26,7 +27,7 @@ const Editor = () => {
   const [textEditor, setTextEditor] = useState({ isReady: false });
   const [loading, setLoading] = useState(true)
   let {
-    userAuth: { access_token },
+    userAuth: { access_token, isAdmin },
   } = useContext(UserContext);
   useEffect(()=>{
     if (!post_id) {
@@ -46,7 +47,7 @@ const Editor = () => {
   }, []);
   return (
     <EditorContext.Provider value={{ post, setPost, editorState, setEditorState, textEditor, setTextEditor }}>
-      {access_token === null ? (
+      { !isAdmin ? <PageNotFound /> : access_token === null ? (
         <Navigate to="/login" />
       ) : loading ? <Loader /> :
       editorState == "editor" ? (

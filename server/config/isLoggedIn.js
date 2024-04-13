@@ -14,6 +14,7 @@ export const isLoggedIn = (req, res, next) => {
       }
   
       req.user = user.id;
+      req.admin = user.admin;
       next();
     })
   }

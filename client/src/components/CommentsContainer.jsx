@@ -43,7 +43,7 @@ const CommentsContainer = () => {
   let commentsArr = results.comment;
 
   return (
-    <div className={"comment-container max-sm:w-full fixed "+ (commentWrapper ? "top-0 sm:right-0" : "top-[100%] sm:right-[-100%]") +" duration-700 max-sm:right-0 sm:top-0 w-[30%] mix-w-[350px] h-full z-[1000] bg-black/50 backdrop-blur-2xl shadow-2xl p-8 px-5 overflow-y-auto overflow-x-hidden"}>
+    <div className={"comment-container max-sm:w-full fixed "+ (commentWrapper ? "top-0 sm:right-0" : "top-[100%] sm:right-[-100%]") +" duration-700 max-sm:right-0 sm:top-0 w-[30%] mix-w-[350px] h-full z-[1000] bg-black/80 backdrop-blur-2xl shadow-2xl p-8 px-5 overflow-y-auto overflow-x-hidden"}>
         <div className="relative">
             <h1 className="text-3xl font-candela">Comments</h1>
             <p className="text-xl mt-2 w-[80%] line-clamp-1 opacity-80">{title}</p>
