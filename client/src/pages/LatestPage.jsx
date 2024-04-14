@@ -94,7 +94,7 @@ const Latest = () => {
         latestPosts === null ? <PostAmbient banner="https://i.pinimg.com/236x/17/5c/91/175c9122f658873799ead326000e9ee5.jpg" />
         : <PostAmbient banner={bannerImage} />
       }
-      <div className="px-10">
+      <div className="px-5 lg:px-10 md:px-8 mt-[50px] md:mt-0 lg:mt-0">
         <h1 className="font-candela text-3xl">Latest Posts</h1>
         <div className="my-8 flex gap-3">
           <div className="w-[100%] flex justify-start items-center gap-4 mx-auto">
@@ -117,8 +117,8 @@ const Latest = () => {
             })}
           </div>
         </div>
-        <div className="post-container mt-6 my-3 w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 rounded-2xl">
-          <>
+        <div className="mx-auto max-w-full lg:max-w-full">
+          <div className="grid grid-cols-2 gap-x-0 gap-y-10 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {latestPosts == null ? (
               <Loader />
             ) : latestPosts.results.length ? (
@@ -154,7 +154,7 @@ const Latest = () => {
             ) : (
               <NoDataMessage message="No Posts Found" />
             )}
-          </>
+          </div>
         </div>
 
         <LoadMoreButton

@@ -5,7 +5,7 @@ import { getFullDate } from "../common/Date";
 const About = ({ social_links, joinedAt }) => {
   return (
     <>
-      <div className="flex justify-end items-center gap-5">
+      <div className="justify-end items-center gap-5 hidden md:flex lg:flex">
         {Object.keys(social_links).map((key) => {
           let link = social_links[key];
 
@@ -81,7 +81,7 @@ const About = ({ social_links, joinedAt }) => {
           }
         })}
       </div>
-      <div className="w-full flex justify-end items-center ">
+      <div className="w-full hidden md:flex lg:flex justify-end items-center ">
         <h1 className="mt-5 mr-16 px-5 py-3 bg-purple rounded-2xl text-black font-semibold w-fit cursor-default">
           You Joined On - {getFullDate(joinedAt)}
         </h1>

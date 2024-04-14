@@ -9,7 +9,7 @@ const PostCard = React.lazy(() => import("./PostCard"));
 const Latest = () => {
   const [posts, setPosts] = useState(null);
 
-  const fetchLatestPosts = useCallback(async ({ maxLimit = 6 }) => {
+  const fetchLatestPosts = useCallback(async ({ maxLimit = 8 }) => {
     try {
       const { data } = await axios.post(`${import.meta.env.VITE_SERVER_DOMAIN}/api/v1/post/latest`, { maxLimit });
       setPosts(data.posts);
@@ -19,7 +19,7 @@ const Latest = () => {
   }, []);
 
   useEffect(() => {
-    fetchLatestPosts({ maxLimit: 6 });
+    fetchLatestPosts({ maxLimit: 8 });
   }, [fetchLatestPosts]);
 
   return (

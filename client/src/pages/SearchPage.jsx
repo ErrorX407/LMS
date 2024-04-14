@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import axios from "axios";
-import Navbar from "../components/Navbar";
-import Ambient from "../components/Ambient";
-import Sidebar from "../components/Sidebar";
 import { useParams } from "react-router-dom";
 import Loader from "../components/Loader";
 import PostCard from "../components/PostCard";
 import { FilterPaginationData } from "../common/FilterPaginationData";
 import LoadMoreButton from "../components/LoadMoreButton";
-import NoDataMessage from "../components/NoDataMessage";
 import UserCard from "../components/UserCard";
 
 const SearchPage = () => {
@@ -98,7 +94,6 @@ const SearchPage = () => {
   };
   return (
     <div>
-      <Ambient />
       <div className="px-20">
         <div className="w-[100%] flex justify-start items-center gap-4 mx-auto">
           <button className="px-7 py-4 bg-white/10 rounded-2xl mouseenter">

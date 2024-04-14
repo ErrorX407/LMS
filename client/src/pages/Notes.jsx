@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { motion, stagger } from "framer-motion";
+import React, { useEffect, useState, Suspense } from "react";
+import { motion } from "framer-motion";
 import axios from "axios";
 import Loader from "../components/Loader";
-import PostCard from "../components/PostCard";
-import Navbar from "../components/Navbar";
-import Sidebar from "../components/Sidebar";
-import Ambient from "../components/Ambient";
 import { FilterPaginationData } from "../common/FilterPaginationData";
 import NoDataMessage from "../components/NoDataMessage";
 import LoadMoreButton from "../components/LoadMoreButton";
 import PostAmbient from "../components/PostAmbient";
+
+const PostCard = React.lazy(() => import("../components/PostCard"));
 
 const Solutions = () => {
   const [latestPosts, setLatestPosts] = useState(null);
@@ -49,16 +47,18 @@ const Solutions = () => {
         latestPosts === null ? <PostAmbient banner="https://i.pinimg.com/236x/17/5c/91/175c9122f658873799ead326000e9ee5.jpg" />
         : <PostAmbient banner={bannerImage} />
       }
-      <div className="px-10">
-        <h1 className="font-candela text-3xl">Notes</h1>
-        <div className="post-container my-3 w-full flex gap-5 flex-wrap rounded-2xl">
-          <>
-            {latestPosts === null ? (
+      <div className="px-5 lg:px-10 md:px-8 mt-[50px] md:mt-0 lg:mt-0">
+        <h1 className="font-candela text-3xl mb-4">Notes</h1>
+
+        <div className="mx-auto max-w-full lg:max-w-full">
+          <div className="grid grid-cols-2 gap-x-0 gap-y-10 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+            {latestPosts == null ? (
               <Loader />
             ) : latestPosts.results.length ? (
-              latestPosts.results.map((post, i) => {
-                return (
-                  <motion.div
+                latestPosts.results.map((post, i) => {
+                  return (
+                    <Suspense fallback={<p>This is loading...</p>}>
+                      <motion.div
                       initial={{ opacity: 0, transform: "translateY(50px)" }}
                       animate={{ opacity: 1, transform: "translateY(0px)" }}
                       transition={{
@@ -68,25 +68,26 @@ const Solutions = () => {
                       }}
                       key={i}
                     >
-                    <PostCard
-                      banner={post.banner}
-                      title={post.title}
-                      author={post.author.personal_info.fullName}
-                      authorLink={post.author.personal_info.username}
-                      profileImg={post.author.personal_info.profile_img}
-                      postLink={post.post_id}
-                      likes={post.activity.total_likes}
-                      tags={post.tags}
-                      publishedAt={post.publishedAt}
-                      category={post.category}
-                    />
-                  </motion.div>
-                );
-              })
+                      <PostCard
+                        banner={post.banner}
+                        title={post.title}
+                        author={post.author.personal_info.fullName}
+                        authorLink={post.author.personal_info.username}
+                        profileImg={post.author.personal_info.profile_img}
+                        postLink={post.post_id}
+                        likes={post.activity.total_likes}
+                        tags={post.tags}
+                        publishedAt={post.publishedAt}
+                        category={post.category}
+                      />
+                    </motion.div>
+                    </Suspense>
+                  );
+                })
             ) : (
               <NoDataMessage message="No Posts Found" />
             )}
-          </>
+          </div>
         </div>
 
         <LoadMoreButton

@@ -11,7 +11,7 @@ const Trending = () => {
   const [trendingPosts, setTrendingPosts] = useState(null);
   const [bannerImage, setBannerImage] = useState("");
 
-  const fetchTrendingPosts = useCallback(async ({ maxLimit = 6 }) => {
+  const fetchTrendingPosts = useCallback(async ({ maxLimit = 8 }) => {
     try {
       const { data } = await axios.post(`${import.meta.env.VITE_SERVER_DOMAIN}/api/v1/post/trending`, { maxLimit });
       setTrendingPosts(data.posts);
@@ -22,7 +22,7 @@ const Trending = () => {
   }, []);
 
   useEffect(() => {
-    fetchTrendingPosts({ maxLimit: 6 });
+    fetchTrendingPosts({ maxLimit: 8 });
   }, [fetchTrendingPosts]);
 
   return (

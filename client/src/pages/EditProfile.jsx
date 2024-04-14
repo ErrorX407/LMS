@@ -216,7 +216,7 @@ const EditProfile = () => {
         <Loader />
       ) : (
         <>
-          <div className="success-overlay absolute opacity-0 pointer-events-none top-[-15%] left-0 w-full h-full bg-black/50 z-[1000] backdrop-blur-lg">
+          <div className="success-overlay max-md:hidden absolute opacity-0 pointer-events-none top-[-15%] left-0 w-full h-full bg-black/50 z-[1000] backdrop-blur-lg">
             <div className="relative top-[42%] left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center items-center flex-col">
               <div className="w-[100px] h-[100px]">
                 <img
@@ -230,8 +230,8 @@ const EditProfile = () => {
               </div>
             </div>
           </div>
-          <form ref={editProfileForm}>
-            <h1 className="font-candela text-3xl mb-0 max-md:hidden">
+          <form ref={editProfileForm} className="mt-[50px] md:mt-0 lg:mt-0">
+            <h1 className="font-candela text-3xl mb-0 max-md:text-center">
               Edit Profile{" "}
             </h1>
             <div className="flex flex-col lg:flex-row items-start py-4 gap-8 lg:gap-10">

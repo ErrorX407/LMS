@@ -228,7 +228,7 @@ const BlogEditor = () => {
             defaultValue={title}
             rows="1"
             placeholder="Add a delightful title here! ✨"
-            className="title font-candela w-full h-fit text-purple my-7 leading-tight bg-transparent resize-none outline-none  focus:placeholder:text-purple text-[4vw] mb-7 line-clamp-2 hover:line-clamp-none"
+            className="title font-candela w-full h-fit text-purple my-7 leading-tight bg-transparent resize-none outline-none  focus:placeholder:text-purple text-[40px] md:text-[50px] lg:[4vw] mb-7 line-clamp-2 hover:line-clamp-none"
             onKeyDown={onTitleKeyDown}
             onChange={handleTitleChange}
           />

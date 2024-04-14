@@ -55,11 +55,11 @@ const App = () => {
             <Route path="test-series" element={<TestSeries />} />
             <Route path="news" element={<News />} />
             <Route path=":id" element={<ProfilePage />} />
+          <Route path="/post/:post_id" element={<PostPage />} />
           </Route>
 
           <Route path="/editor" element={<Editor />} />
           <Route path="/editor/:post_id" element={<Editor />} />
-          <Route path="/post/:post_id" element={<PostPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
 

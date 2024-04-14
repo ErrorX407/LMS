@@ -80,8 +80,8 @@ const TrendingPage = () => {
         <PostAmbient banner="https://i.pinimg.com/564x/e4/19/e8/e419e83e9015cdd066c4bb592371d77d.jpg" />
       ) : (
         <PostAmbient banner={bannerImage} />
-      )}
-      <div className="px-10">
+      )}{" "}
+      <div className="px-5 lg:px-10 md:px-8 mt-[50px] md:mt-0 lg:mt-0">
         <h1 className="font-candela text-3xl">Trending</h1>
         <div>
           <div className="my-8 flex gap-3">
@@ -104,8 +104,9 @@ const TrendingPage = () => {
             })}
           </div>
         </div>
-        <div className="post-container mt-6 my-3 w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 rounded-2xl">
-          <>
+
+        <div class="mx-auto max-w-full lg:max-w-full" >
+          <div className="grid grid-cols-2 gap-x-0 gap-y-10 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {trendingPosts == null ? (
               <Loader />
             ) : trendingPosts.results.length ? (
@@ -141,15 +142,15 @@ const TrendingPage = () => {
             ) : (
               <NoDataMessage message="No Post Found" />
             )}
-          </>
+          </div>
         </div>
-        <LoadMoreButton
+      </div>
+      {/* <LoadMoreButton
           state={trendingPosts}
           fetchDataFun={
             pageState == "trending" ? fetchTrendingPosts : fetchPostsByCategory
           }
-        />
-      </div>
+        /> */}
     </>
   );
 };

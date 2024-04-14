@@ -3,7 +3,6 @@ import { Link, useParams } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import axios from "axios";
 import Loader from "../components/Loader";
-import Navbar from "../components/Navbar";
 import { getFullDate } from "../common/Date";
 import PostAmbient from "../components/PostAmbient";
 import PostInteraction from "../components/PostInteraction";
@@ -123,15 +122,14 @@ const PostPage = () => {
           }}
         >
           <PostAmbient banner={banner} />
-          <Navbar />
           <CommentsContainer />
-          <div className="max-w-[900px] center py-4 max-lg:px-[5vw]">
-            <h1 className="w-full text-[4vw] mb-7 leading-tight font-candela line-clamp-2 hover:line-clamp-none cursor-default">
+          <div className="max-w-[900px] center py-4 max-lg:px-[5vw] mt-[30px] md:mt-0 lg:mt-0">
+            <h1 className="w-full text-[40px] md:text-[50px] lg:[4vw] mb-7 leading-tight font-candela line-clamp-2 hover:line-clamp-none cursor-default">
               {" "}
               {title}{" "}
             </h1>
-            <div className="flex max-sm:flex-col justify-between my-8">
-              <div className="flex gap-5 items-start">
+            <div className="flex justify-between my-8">
+              <div className="flex gap-5 items-center justify-center">
                 <img
                   src={profile_img}
                   alt=""
@@ -158,8 +156,8 @@ const PostPage = () => {
               className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 backdrop-blur-md z-[1000] flex justify-center items-center"
               style={{ display: showDialog ? "block" : "none" }}
             >
-              <div className="relative w-1/2 backdrop-blur-md top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black/50 px-10 py-8 rounded-3xl">
-                <h1 className="font-candela text-4xl">
+              <div className="relative w-[90%] lg:w-1/2 md:w-1/2 backdrop-blur-md top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black/50 px-10 py-8 rounded-3xl">
+                <h1 className="font-candela text-[30px]">
                   Share This Post 🤗 With Your Friends 😉...
                 </h1>
                 <div className="flex justify-between items-center my-10">
@@ -170,9 +168,9 @@ const PostPage = () => {
                     <img
                       src="https://img.icons8.com/3d-fluency/100/link.png"
                       alt="link"
-                      className="w-[5vw] -hue-rotate-90"
+                      className="w-[50px] md:w-[5vw] -hue-rotate-90"
                     />
-                    <div className="like-count text-white text-[1.3vw]">
+                    <div className="like-count text-white md:text-[1.6vw] lg:text-[1.3vw]">
                       Copy Link
                     </div>
                   </div>
@@ -184,9 +182,9 @@ const PostPage = () => {
                     <img
                       src="https://img.icons8.com/3d-fluency/188/twitter-circled.png"
                       alt="twitter-circled"
-                      className="w-[5vw]"
+                      className="w-[50px] md:w-[5vw]"
                     />
-                    <div className="like-count text-white text-[1.3vw]">
+                    <div className="like-count text-white md:text-[1.6vw] lg:text-[1.3vw]">
                       Twitter
                     </div>
                   </Link>
@@ -198,9 +196,9 @@ const PostPage = () => {
                     <img
                       src="https://img.icons8.com/3d-fluency/188/whatsapp.png"
                       alt="whatsapp"
-                      className="w-[5vw]"
+                      className="w-[50px] md:w-[5vw]"
                     />
-                    <div className="like-count text-white text-[1.3vw]">
+                    <div className="like-count text-white md:text-[1.6vw] lg:text-[1.3vw]">
                       Whatsapp
                     </div>
                   </a>
@@ -212,9 +210,9 @@ const PostPage = () => {
                     <img
                       src="https://img.icons8.com/3d-fluency/188/facebook-circled.png"
                       alt="facebook-circled"
-                      className="w-[5vw]"
+                      className="w-[50px] md:w-[5vw]"
                     />
-                    <div className="like-count text-white text-[1.3vw]">
+                    <div className="like-count text-white md:text-[1.6vw] lg:text-[1.3vw]">
                       Facebook
                     </div>
                   </Link>

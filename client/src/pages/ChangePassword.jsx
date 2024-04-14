@@ -105,13 +105,13 @@ const ChangePassword = () => {
 
   return (
     <>
-      <div className="right w-full flex justify-start items-center flex-col">
+      <div className="w-full flex justify-center md:justify-start items-center flex-col mt-[120px] md:mt-0 lg:mt-0">
         <form
           ref={changePasswordRef}
-          className="email-form w-full flex justify-center items-start flex-col"
+          className="email-form w-full flex justify-center items-center md:items-start flex-col"
         >
           <h1 className="font-candela text-3xl mb-8">Change Password </h1>
-          <div className="w-1/2 relative">
+          <div className="w-full md:w-1/2 relative">
             <input
               ref={inputRefCurrent}
               name="currentPassword"
@@ -130,7 +130,7 @@ const ChangePassword = () => {
               )}
             </div>
           </div>
-          <div className="w-1/2 relative">
+          <div className=" w-full md:w-1/2 relative">
             <input
               ref={inputRefNew}
               name="newPassword"
@@ -145,7 +145,7 @@ const ChangePassword = () => {
               {showNewPassword ? <Eye size={22} /> : <EyeClosed size={22} />}
             </div>
           </div>
-          <div className="w-1/2 relative">
+          <div className="w-full md:w-1/2 relative">
             <input
               ref={inputRefConfirm}
               name="confirmPassword"
@@ -165,7 +165,7 @@ const ChangePassword = () => {
             </div>
           </div>
           <button
-            className="flex justify-center items-center font-semibold mb-4 gap-1 text-2xl w-1/2 h-16 bg-purple rounded-2xl text-black mouseenter"
+            className="flex justify-center items-center font-semibold mb-4 gap-1 text-2xl w-full md:w-1/2 h-16 bg-purple rounded-2xl text-black mouseenter"
             type="submit"
             onClick={handleSubmit}
           >

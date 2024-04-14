@@ -88,9 +88,9 @@ let profile_imgs_name_list = [
   "Exquisite",
 ];
 let profile_imgs_collections_list = [
-  "adventurer-neutral",
-  "notionists-neutral",
-  // "fun-emoji",
+  // "adventurer-neutral",
+  // "notionists-neutral",
+  "fun-emoji",
 ];
 
 const userSchema = mongoose.Schema(

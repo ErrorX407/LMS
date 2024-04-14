@@ -1,12 +1,8 @@
 import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Loader from "../components/Loader";
-import Navbar from "../components/Navbar";
-import Sidebar from "../components/Sidebar";
-import Ambient from "../components/Ambient";
-import { UserContext } from "../App";
 import About from "../components/About";
 import { FilterPaginationData } from "../common/FilterPaginationData";
 import PostCard from "../components/PostCard";
@@ -30,10 +26,6 @@ export const profileDataStructure = {
 };
 
 const ProfilePage = () => {
-  const {
-    userAuth: { username },
-  } = useContext(UserContext);
-
   let { id: profileId } = useParams();
 
   const [profile, setProfile] = useState(profileDataStructure);
@@ -111,45 +103,45 @@ const ProfilePage = () => {
       ) : profile_username.length ? (
         <>
           <PostAmbient banner={profile_img} />
-          <section className="px-10">
+          <section className="px-5 lg:px-10 md:px-8 mt-[50px] md:mt-0 lg:mt-0">
             <div className="flex justify-between items-center flex-wrap w-full mx-auto">
-            <div className="top-cont flex flex-col md:flex-row md:items-center w-[55%]">
-              <div className="profile-img w-40 h-40 overflow-hidden rounded-3xl md:mr-4 mb-4 md:mb-0">
-                <img
-                  src={profile_img}
-                  alt=""
-                  className="profileImg w-full h-full object-cover"
-                />
-              </div>
-              <div className="settings">
-                <div className="name font-bold text-3xl capitalize">
-                  {fullName}
+              <div className="top-cont flex flex-col md:flex-row md:items-center w-full md:w-[55%] md:justify-start">
+                <div className="profile-img m-auto md:m-0 w-40 h-40 overflow-hidden rounded-3xl md:mr-4 mb-4 md:mb-0">
+                  <img
+                    src={profile_img}
+                    alt=""
+                    className="profileImg w-full h-full object-cover"
+                  />
                 </div>
-                <div className="username font-medium text-[rgba(255,255,255,0.7)]">
-                  @{profile_username}
-                </div>
-                <div className="flex flex-col md:flex-row items-center mt-4">
-                  <div className="info md:mt-0 flex gap-6 flex-col md:flex-row justify-between w-full md:w-auto">
-                    <div className="flex justify-center items-center mb-2 md:mb-0 bg-purple border-2 border-purple/50 px-3 rounded-xl">
-                      <h1 className="text-2xl text-black">
-                        {total_posts.toLocaleString()}{" "}
-                        <span className="text-xl text-black/70">Posts</span>
-                      </h1>
-                    </div>
-                    <div className="flex justify-center items-center bg-purple border-2 border-purple/50 px-3 rounded-xl">
-                      <h1 className="text-2xl text-black">
-                        {total_reads.toLocaleString()}{" "}
-                        <span className="text-xl text-black/70">Reads</span>
-                      </h1>
+                <div>
+                  <div className="name font-bold text-3xl text-center capitalize md:text-left">
+                    {fullName}
+                  </div>
+                  <div className="username font-medium text-[rgba(255,255,255,0.7)] text-center md:text-left">
+                    @{profile_username}
+                  </div>
+                  <div className="flex flex-col md:flex-row items-center mt-4">
+                    <div className="info md:mt-0 flex gap-6 md:gap-6 flex-row md:flex-row justify-center w-auto md:w-auto">
+                      <div className="flex justify-center items-center md:mb-0 bg-white/10 px-3 md:px-3 w-fit rounded-xl">
+                        <h1 className="text-2xl text-white">
+                          {total_posts.toLocaleString()}{" "}
+                          <span className="text-xl text-white/70">Posts</span>
+                        </h1>
+                      </div>
+                      <div className="flex justify-center items-center bg-white/10 px-3 md:px-3 w-fit rounded-xl">
+                        <h1 className="text-2xl text-white">
+                          {total_reads.toLocaleString()}{" "}
+                          <span className="text-xl text-white/70">Reads</span>
+                        </h1>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div>
-              {/* Assuming About component is responsive */}
-              <About social_links={social_links} joinedAt={joinedAt} />
-            </div>
+              <div>
+                {/* Assuming About component is responsive */}
+                <About social_links={social_links} joinedAt={joinedAt} />
+              </div>
             </div>
 
             <div className="post-container mt-6 my-3 w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 rounded-2xl">

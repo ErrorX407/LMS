@@ -21,6 +21,10 @@ const postSchema = mongoose.Schema({
         lowercase: true
         // required: true
     },
+    class: {
+        type: String,
+        lowercase: true
+    },
     content: {
         type: [],
         // required: true

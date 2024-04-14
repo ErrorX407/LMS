@@ -58,8 +58,8 @@ const Notifications = () => {
     setNotifications(null)
   };
   return (
-    <div>
-      <h1 className="font-candela text-3xl mb-0 max-md:hidden">
+    <div className="mt-[50px] md:mt-0 lg:mt-0">
+      <h1 className="font-candela text-3xl mb-0">
         Recent Notifications{" "}
       </h1>
 

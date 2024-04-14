@@ -1,13 +1,11 @@
 import React, { useState } from "react";
-import Ambient from "../components/Ambient";
-import Sidebar from "../components/Sidebar";
 import Trending from "../components/Trending";
 import Latest from "../components/Latest";
 import {ToastContainer} from "react-toastify"
 
 const Home = () => {
   return (
-    <section className="px-8 w-[calc(100%-230px)]">
+    <section className="px-8">
     <ToastContainer
       stacked
       toastStyle={{
@@ -28,9 +26,7 @@ const Home = () => {
       transition:Bounce
       bodyClassName="toastBody"
     />
-      {/* <Ambient /> */}
-      {/* <Sidebar /> */}
-      <div>
+      <div className="mt-[50px] md:mt-0 lg:mt-0">
         <Trending />
         <Latest />
       </div>
