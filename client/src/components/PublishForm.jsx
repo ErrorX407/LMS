@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
-import {useNavigate, useParams} from "react-router-dom"
+import { Select, Option } from "@material-tailwind/react";
+import { useNavigate, useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import { UserContext } from "../App";
 import { EditorContext } from "../pages/Editor";
@@ -7,13 +8,12 @@ import Tag from "./Tag";
 import axios from "axios";
 
 const PublishForm = () => {
-
   let { post_id } = useParams();
 
   let tagLimit = 10;
 
   let {
-    post: { category, banner, title, tags, content },
+    post: { category, banner, title, grade, tags, content },
     setEditorState,
     setPost,
     post,
@@ -77,33 +77,36 @@ const PublishForm = () => {
       banner,
       content,
       category,
+      grade,
       tags,
       username,
       draft: false,
     };
 
-    axios.post(
-      import.meta.env.VITE_SERVER_DOMAIN + "/api/v1/post/create",
-      {...postObj, id: post_id},
-      {
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-        },
-      }
-    ).then(() => {
-      e.target.classList.remove("disable");
-      toast.dismiss(loadingToast)
-      toast.success("Post Published 👍 Redirecting to homepage.... 🫡 ")
+    axios
+      .post(
+        import.meta.env.VITE_SERVER_DOMAIN + "/api/v1/post/create",
+        { ...postObj, id: post_id },
+        {
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+          },
+        }
+      )
+      .then(() => {
+        e.target.classList.remove("disable");
+        toast.dismiss(loadingToast);
+        toast.success("Post Published 👍 Redirecting to homepage.... 🫡 ");
 
-      setTimeout(() => {
-        navigate("/");
-      }, 3500)
-    })
-    .catch(({response}) => {
-      e.target.classList.remove("disable");
-      toast.dismiss(loadingToast)
-      return toast.error(response.data.Error)
-    })
+        setTimeout(() => {
+          navigate("/");
+        }, 3500);
+      })
+      .catch(({ response }) => {
+        e.target.classList.remove("disable");
+        toast.dismiss(loadingToast);
+        return toast.error(response.data.Error);
+      });
   };
   return (
     <>
@@ -112,7 +115,7 @@ const PublishForm = () => {
         toastStyle={{
           backgroundColor: "#ffffff17",
           backdropFilter: "blur(20px)",
-          width: '400px'
+          width: "400px",
         }}
         position="top-center"
         autoClose={3000}
@@ -183,14 +186,33 @@ const PublishForm = () => {
             className="mb-5 w-full h-16 p-4 bg-transparent border-2 border-purple/30 text-2xl outline-none rounded-2xl focus:border-purple focus:text-purple active:border-purple active:text-purple"
             onChange={handlePostTitleChange}
           />
-          <input
-            required
-            name="category"
-            type="text"
-            placeholder="Categorty (Ex: Notes, Solution etc)"
-            className="mb-5 w-full h-16 p-4 bg-transparent border-2 border-purple/30 text-2xl outline-none rounded-2xl focus:border-purple focus:text-purple active:border-purple active:text-purple"
+
+          <select
+            id="categories"
+            class="mb-5 w-full h-16 p-4 bg-transparent border-2 border-purple/30 text-2xl outline-none rounded-2xl focus:border-purple focus:text-purple active:border-purple active:text-purple"
             onChange={(e) => setPost({ ...post, category: e.target.value })}
-          />
+          >
+            <option selected className="bg-purple text-black">Choose a category</option>
+            <option value="notes" className="bg-purple text-black">Notes</option>
+            <option value="news" className="bg-purple text-black">News</option>
+            <option value="solutions" className="bg-purple text-black">Solutions</option>
+            <option value="pyqs" className="bg-purple text-black">Pyq's</option>
+          </select>
+
+          <select
+            id="categories"
+            class="mb-5 w-full h-16 p-4 bg-transparent border-2 border-purple/30 text-2xl outline-none rounded-2xl focus:border-purple focus:text-purple active:border-purple active:text-purple"
+            onChange={(e) => setPost({ ...post, grade: e.target.value })}
+          >
+            <option selected className="bg-purple text-black">Choose a class</option>
+            <option value="class6" className="bg-purple text-black">Class 6</option>
+            <option value="class7" className="bg-purple text-black">Class 7</option>
+            <option value="class8" className="bg-purple text-black">Class 8</option>
+            <option value="class9" className="bg-purple text-black">Class 9</option>
+            <option value="class10" className="bg-purple text-black">Class 10</option>
+            <option value="class11" className="bg-purple text-black">Class 11</option>
+            <option value="class12" className="bg-purple text-black">Class 12</option>
+          </select>
 
           <div className="relative">
             <input

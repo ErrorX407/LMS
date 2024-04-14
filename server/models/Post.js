@@ -21,7 +21,7 @@ const postSchema = mongoose.Schema({
         lowercase: true
         // required: true
     },
-    class: {
+    grade: {
         type: String,
         lowercase: true
     },

@@ -14,7 +14,7 @@ export const getPostRoute = (req, res) => {
         return res.status(403).json({ Error: "User ID not found in request" });
       }
 
-      let { title, category, banner, tags, content, draft, username, id } =
+      let { title, category, banner, tags, grade, content, draft, username, id } =
         req.body;
 
       if (!title) {
@@ -73,6 +73,7 @@ export const getPostRoute = (req, res) => {
             tags,
             banner,
             category,
+            grade,
             draft: draft ? draft : false,
           }
         )
@@ -88,6 +89,7 @@ export const getPostRoute = (req, res) => {
           content,
           tags,
           banner,
+          grade,
           category,
           author: authorId,
           post_id,
@@ -222,35 +224,44 @@ export const countTrendingPosts = (req, res) => {
 };
 
 export const filterPostsByCategory = (req, res) => {
-  let { category, page } = req.body;
+  let { category, page, filter } = req.body;
   category = category.toLowerCase();
 
   try {
     let maxLimit = 10;
 
-    Post.find({ category: { $regex: category, $options: "i" }, draft: false }) // Use regex for case-insensitive matching
-      .populate(
-        "author",
-        "personal_info.profile_img personal_info.username personal_info.fullName -_id"
-      )
-      .sort({ publishedAt: -1 })
-      .select("post_id title category banner activity tags publishedAt -_id")
-      .skip((page - 1) * maxLimit)
-      .limit(maxLimit)
-      .then((posts) => {
-        if (posts.length === 0) {
-          return res.status(500).json({
-            Error: `No Post Found Having Category - ${category.toUpperCase()}`,
-          });
-        }
-        return res.status(200).json({ posts });
-      })
-      .catch((err) => {
-        console.error("Error filtering posts by tag:", err);
-        return res.status(500).json({ Error: err.message });
-      });
+    let findQuery = { draft: false };
+
+    if (filter !== 'all') {
+      findQuery.grade = filter; // Filter by grade if provided
+    }
+
+    Post.find({ 
+      category: { $regex: category, $options: "i" }, // Case-insensitive matching for category
+      ...findQuery // Add additional filter conditions
+    })
+    .populate(
+      "author",
+      "personal_info.profile_img personal_info.username personal_info.fullName -_id"
+    )
+    .sort({ publishedAt: -1 })
+    .select("post_id title category banner activity tags grade publishedAt -_id")
+    .skip((page - 1) * maxLimit)
+    .limit(maxLimit)
+    .then((posts) => {
+      if (posts.length === 0) {
+        return res.status(404).json({
+          Error: `No Post Found`,
+        });
+      }
+      return res.status(200).json({ posts });
+    })
+    .catch((err) => {
+      console.error("Error filtering posts by category:", err);
+      return res.status(500).json({ Error: err.message });
+    });
   } catch (error) {
-    console.error("Error in filterPostsByTag:", error);
+    console.error("Error in filterPostsByCategory:", error);
     res.status(500).json({ Error: "Internal server error" });
   }
 };

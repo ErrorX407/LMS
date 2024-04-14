@@ -12,6 +12,7 @@ const postStructure = {
   banner: "",
   content: [],
   category: "",
+  grade: "",
   tags: [],
   publisher: { pesonal_info: {} },
 };
