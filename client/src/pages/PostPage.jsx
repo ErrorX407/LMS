@@ -124,7 +124,7 @@ const PostPage = () => {
           <PostAmbient banner={banner} />
           <CommentsContainer />
           <div className="max-w-[900px] center py-4 max-lg:px-[5vw] mt-[30px] md:mt-0 lg:mt-0">
-            <h1 className="w-full text-[40px] md:text-[50px] lg:[4vw] mb-7 leading-tight font-candela line-clamp-2 hover:line-clamp-none cursor-default">
+            <h1 className="w-full text-[40px] md:text-[60px] lg:[5vw] mb-7 leading-[1.15] font-candela line-clamp-2 hover:line-clamp-none cursor-default">
               {" "}
               {title}{" "}
             </h1>

@@ -3,6 +3,8 @@ import ReactDOM from "react-dom/client";
 import { ToastContainer } from "react-toastify";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App.jsx";
+import "../src/assets/font/Whyte/stylesheet.css"
+import "../src/assets/font/Whyte-Inktrap/stylesheet.css"
 import "./index.css";
 import "react-toastify/dist/ReactToastify.css";
 

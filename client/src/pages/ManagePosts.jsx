@@ -166,7 +166,7 @@ const ManagePosts = () => {
             <Loader />
           ) : posts.results.posts.length ? (
             <div className="mx-auto max-w-full lg:max-w-full">
-              <div className="grid grid-cols-2 gap-x-0 gap-y-10 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+              <div className="grid grid-cols-2 gap-x-0 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                 {posts.results.posts.map((post, i) => {
                   return (
                     <motion.div
@@ -178,6 +178,7 @@ const ManagePosts = () => {
                         duration: 2,
                         ease: [0, 0.71, 0.2, 1.01],
                       }}
+                      className="mr-5"
                     >
                       <ManagePostCard
                         post={{ ...post, index: i, setStateFun: setPosts }}

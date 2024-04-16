@@ -5,6 +5,8 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { storeInSession } from "../common/session";
 import { UserContext } from "../App";
+import PostAmbient from "../components/PostAmbient";
+import Logo from "../imgs/logo.webp";
 
 const Login = () => {
   const authForm = useRef();
@@ -38,7 +40,7 @@ const Login = () => {
         );
       })
       .catch(({ response }) => {
-        toast.error(response.data.Error);
+        return toast.error(response.data.Error);
       });
   };
 
@@ -97,16 +99,19 @@ const Login = () => {
     <Navigate to="/" />
   ) : (
     <>
+      <div className="md:hidden lg:hidden">
+      <PostAmbient banner="https://images.unsplash.com/photo-1602463182886-dcf06cb2b789?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDN8fGRhcmslMjBwaW5rfGVufDB8fDB8fHww" />
+      </div>
       <div className="login flex justify-center items-center">
-        <div className="left w-1/2 h-screen">
+        <div className="left w-1/2 h-screen hidden md:block">
           <img
             src="https://images.unsplash.com/photo-1579353174740-9e4e39428d6f?q=80&w=1888&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             alt=""
             className="object-cover"
           />
         </div>
-        <div className="right w-1/2 h-screen px-8 py-4">
-          <h1 className="font-candela text-[6vw]">
+        <div className="right md:w-1/2 h-screen px-8 py-4">
+          <h1 className="font-candela text-[60px] md:text-[50px] lg:text-[5vw]">
             What's up, buddy? Ready to log in...{" "}
           </h1>
           <form ref={authForm} action="" className="my-20">
@@ -140,10 +145,16 @@ const Login = () => {
               Login
             </button>
 
-            <div className="w-1/2 absolute bottom-10 pr-20 float-right flex justify-between items-center">
+            <div className="md:w-1/2 w-full absolute bottom-10 pr-20 float-right flex justify-between items-center">
               <Link to="/register">
                 <div className="text-[#ff35e4] w-full hover:underline text-center">
                   Don't have account ?
+                </div>
+              </Link>
+              <Link to="/">
+                <div className="flex justify-center items-center gap-1">
+                  <img src={Logo} alt="logo" className="w-[18px] h-[18px]" />
+                  <div className="logo text-2xl">Blogspace</div>
                 </div>
               </Link>
               <Link to="forget-password">

@@ -26,8 +26,8 @@ export default {
 
         extend: {
             fontFamily: {
-              messinaReg: ["'Messina Regular'", "sans-serif"],
-              candela: ["'Candela Light Web'", "serif"]
+              messinaReg: ["Whyte", "sans-serif"],
+              candela: ["Whyte Inktrap", "serif"]
             },
         },
 

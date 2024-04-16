@@ -105,7 +105,7 @@ const TrendingPage = () => {
           </div>
         </div>
 
-        <div class="mx-auto max-w-full lg:max-w-full" >
+        <div className="mx-auto max-w-full lg:max-w-full" >
           <div className="grid grid-cols-2 gap-x-0 gap-y-10 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {trendingPosts == null ? (
               <Loader />

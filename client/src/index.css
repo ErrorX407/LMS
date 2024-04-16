@@ -6,6 +6,11 @@
 }
 
 @font-face {
+  font-family: "Agrandir";
+  src: url(./assets/font/Agrandir/Agrandir-TextBold.otf);
+}
+
+@font-face {
   font-family: "Messina Regular";
   src: url(./assets/font/MessinaSans-Regular.woff2);
 }

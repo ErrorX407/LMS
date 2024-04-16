@@ -23,6 +23,7 @@ import TestSeries from "./pages/TestSeries";
 import News from "./pages/News";
 import ManagePosts from "./pages/ManagePosts";
 import Search from "./pages/Search";
+import EmailVerify from "./pages/EmailVerify";
 
 const MainSidebar = React.lazy(() => import("./components/MainSidebar"));
 
@@ -62,6 +63,7 @@ const App = () => {
           <Route path="/editor/:post_id" element={<Editor />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/users/:id/verify/:token" element={<EmailVerify />} />
 
           <Route path="/settings" element={<SettingsSideBar />}>
             <Route path="edit-profile" element={<EditProfile />} />

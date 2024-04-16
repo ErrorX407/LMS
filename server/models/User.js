@@ -178,6 +178,10 @@ const userSchema = mongoose.Schema(
       ref: "posts",
       default: [],
     },
+    verified: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: {

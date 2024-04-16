@@ -144,38 +144,40 @@ const ProfilePage = () => {
               </div>
             </div>
 
-            <div className="post-container mt-6 my-3 w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 rounded-2xl">
-              {posts == null ? (
-                <Loader />
-              ) : posts.results.length ? (
-                posts.results.map((post, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, transform: "translateY(50px)" }}
-                    animate={{ opacity: 1, transform: "translateY(0px)" }}
-                    transition={{
-                      delay: 0.1 * i,
-                      duration: 2,
-                      ease: [0, 0.71, 0.2, 1.01],
-                    }}
-                  >
-                    <PostCard
-                      banner={post.banner}
-                      title={post.title}
-                      author={post.author.personal_info.fullName}
-                      authorLink={post.author.personal_info.username}
-                      profileImg={post.author.personal_info.profile_img}
-                      postLink={post.post_id}
-                      likes={post.activity.total_likes}
-                      tags={post.tags}
-                      publishedAt={post.publishedAt}
-                      category={post.category}
-                    />
-                  </motion.div>
-                ))
-              ) : (
-                <NoDataMessage message="No Posts Found" />
-              )}
+            <div className="mx-auto max-w-full lg:max-w-full mt-12">
+              <div className="grid grid-cols-2 gap-x-0 gap-y-10 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+                {posts == null ? (
+                  <Loader />
+                ) : posts.results.length ? (
+                  posts.results.map((post, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, transform: "translateY(50px)" }}
+                      animate={{ opacity: 1, transform: "translateY(0px)" }}
+                      transition={{
+                        delay: 0.1 * i,
+                        duration: 2,
+                        ease: [0, 0.71, 0.2, 1.01],
+                      }}
+                    >
+                      <PostCard
+                        banner={post.banner}
+                        title={post.title}
+                        author={post.author.personal_info.fullName}
+                        authorLink={post.author.personal_info.username}
+                        profileImg={post.author.personal_info.profile_img}
+                        postLink={post.post_id}
+                        likes={post.activity.total_likes}
+                        tags={post.tags}
+                        publishedAt={post.publishedAt}
+                        category={post.category}
+                      />
+                    </motion.div>
+                  ))
+                ) : (
+                  <NoDataMessage message="No Posts Found" />
+                )}
+              </div>
             </div>
 
             <LoadMoreButton state={posts} fetchDataFun={getPosts} />

@@ -36,7 +36,7 @@ const PostCard = ({
               className="author-link underline-offset-2 hover:underline hover:text-white"
             >
               <div className="author flex justify-start items-center gap-2 md:gap-2 lg:gap-3">
-                <div className="author-img w-[25px] h-[25px] aspe object-cover lg:w-[30px] lg:h-[30px] md:w-[28px] md:h-[28px] overflow-hidden rounded-[6px] lg:rounded-lg md:rounded-lg flex-shrink-0">
+                <div className="author-img w-[25px] h-[25px] aspect-square object-cover lg:w-[30px] lg:h-[30px] md:w-[28px] md:h-[28px] overflow-hidden rounded-[6px] lg:rounded-lg md:rounded-lg flex-shrink-0">
                   <img src={profileImg} alt={authorLink} />
                 </div>
                 <div className="author-name capitalize text-[14px] md:text-[15px] lg:text-[16px] w-[100%] overflow-hidden whitespace-nowrap text-ellipsis text-white/70 ">
@@ -48,7 +48,9 @@ const PostCard = ({
         </div>
         <Link to={`/${category}`}>
           <div className="absolute right-3.5 bottom-3 p-1.5 md:p-2 rounded-[10px] md:rounded-2xl tags bg-white/10 z-[10] hover:opacity-80">
-            <span className="capitalize text-[13px] md:text-[14px] lg:text-[14px]">{category}</span>
+            <span className="capitalize text-[13px] md:text-[14px] lg:text-[14px]">
+              {category}
+            </span>
           </div>
         </Link>
       </div>
