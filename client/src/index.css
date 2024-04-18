@@ -163,7 +163,7 @@
   }
 
   button:disabled{
-    @apply bg-purple/80 scale-100 cursor-not-allowed pointer-events-none duration-700;
+    @apply opacity-80 scale-100 cursor-not-allowed pointer-events-none duration-700;
   }
 }
 

@@ -7,12 +7,14 @@ import axios from "axios";
 import { storeInSession } from "../common/session";
 import { UserContext } from "../App";
 import PostAmbient from "../components/PostAmbient";
+import LoaderTwo from "../components/LoaderTwo";
 
 const Register = () => {
   const authForm = useRef();
   const passwordRef = useRef(null);
   const [showPassword, setShowPassword] = useState(false);
   const [emailMessage, setEmailMessage] = useState("");
+  const [formLoading, setFormLoading] = useState(false);
 
   let {
     userAuth: { access_token },
@@ -30,7 +32,7 @@ const Register = () => {
     setShowPassword(!showPassword);
   };
 
-  const userAuthThroughServer = (serverRoute, formData) => {
+  const userAuthThroughServer = (serverRoute, formData, regButton) => {
     axios
       .post(import.meta.env.VITE_SERVER_DOMAIN + serverRoute, formData)
       .then(({ data }) => {
@@ -40,19 +42,26 @@ const Register = () => {
         // toast.success(
         //   "Congratulations! 🎉 You're officially part of the community! 🌟 Welcome aboard! 🚀 #RegistrationSuccess"
         // );
+        setFormLoading(false);
+        regButton.removeAttribute("disabled");
         return toast.success(data.message);
       })
       .catch(({ response }) => {
+        setFormLoading(false);
+        regButton.removeAttribute("disabled");
         toast.error(response.data.Error);
       });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const regButton = e.target;
     let serverRoute = "/api/v1/auth/register";
     const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; // regex for email
     const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/; // regex for password
 
+    setFormLoading(true);
+    regButton.setAttribute("disabled", true);
     //formdata
 
     let form = new FormData(authForm.current);
@@ -67,41 +76,55 @@ const Register = () => {
     //Form Validation
 
     if (!email || !password || email === "" || password === "") {
+      setFormLoading(false);
+      regButton.removeAttribute("disabled");
       return toast.error(
         "Whoops! Looks like you missed filling out some fields. Make sure to complete them all! 📝"
       );
     }
     if (!fullName || fullName.length < 3 || fullName === "") {
+      setFormLoading(false);
+      regButton.removeAttribute("disabled");
       return toast.error(
         "Hey there! Your full name should have more than three letters. Give it another shot! 📝"
       );
     }
     if (!email || email.length === 0 || email === "") {
+      setFormLoading(false);
+      regButton.removeAttribute("disabled");
       return toast.error(
         "Hey, don't forget your email! It's required for login. 📧"
       );
     }
 
     if (!emailRegex.test(email)) {
+      setFormLoading(false);
+      regButton.removeAttribute("disabled");
       return toast.error(
         "Hold on! Looks like there's an issue with your email. Make sure it's formatted correctly! 📧"
       );
     }
 
     if (!password || password.length === 0 || password === "") {
+      setFormLoading(false);
+      regButton.removeAttribute("disabled");
       return toast.error("Password is required 😵");
     }
 
     if (!passwordRegex.test(password)) {
+      setFormLoading(false);
+      regButton.removeAttribute("disabled");
       return toast.error(
         "Password🔒 should be 6 to 20 characters long with a numeric, 1 lowercase and 1 uppercase letter 😵"
       );
     }
-    userAuthThroughServer(serverRoute, formData);
+    userAuthThroughServer(serverRoute, formData, regButton);
   };
 
-  return access_token ? <Navigate to="/" /> :
-  <>
+  return access_token ? (
+    <Navigate to="/" />
+  ) : (
+    <>
       {emailMessage && (
         <div className="success-overlay max-md:hidden absolute opacity-0 pointer-events-none top-[-15%] left-0 w-full h-full bg-black/50 z-[1000] backdrop-blur-lg">
           <div className="relative top-[42%] left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center items-center flex-col">
@@ -165,7 +188,8 @@ const Register = () => {
               type="submit"
               onClick={handleSubmit}
             >
-              Register{" "}
+              {formLoading ? "Enlisting... 🚀🎉" : "Register"}
+              {formLoading ? <LoaderTwo size={30} color="text-black" /> : ""}
             </button>
             <Link
               to="/login"
@@ -179,6 +203,7 @@ const Register = () => {
         </div>
       </div>
     </>
+  );
 };
 
 export default Register;

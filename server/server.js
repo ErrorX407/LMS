@@ -10,6 +10,7 @@ import uploadRouter from "./routes/upload.routes.js";
 import postRouter from "./routes/post.routes.js";
 import postInteractionRouter from "./routes/postInteraction.routes.js";
 import notificationRouter from "./routes/notification.routes.js";
+import questionsRoute from "./routes/questions.routes.js"
 
 const app = express();
 const port = 3000;
@@ -34,6 +35,7 @@ app.use("/api/v1/upload", uploadRouter);
 app.use("/api/v1/post", postRouter);
 app.use("/api/v1/post/ineraction", postInteractionRouter);
 app.use("/api/v1/notification", notificationRouter);
+app.use('/api/v1/questionBank', questionsRoute);
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
