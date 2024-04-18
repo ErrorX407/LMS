@@ -3,210 +3,210 @@
         "question": "What is the chemical symbol for water?",
         "answer": "H₂O.",
         "difficulty": "easy",
-        "class": "class10",
+        "grade": "class10",
         "subject": "science"
     },
     {
         "question": "Name the process by which plants make their food?",
         "answer": "Photosynthesis.",
         "difficulty": "easy",
-        "class": "class10",
+        "grade": "class10",
         "subject": "science"
     },
     {
         "question": "Who was the first President of India?",
         "answer": "Dr. Rajendra Prasad.",
         "difficulty": "easy",
-        "class": "class10",
+        "grade": "class10",
         "subject": "social-science"
     },
     {
         "question": "Name the river on the banks of which the city of Kolkata is situated?",
         "answer": "Hooghly River.",
         "difficulty": "easy",
-        "class": "class10",
+        "grade": "class10",
         "subject": "social-science"
     },
     {
         "question": "What is the capital of France?",
         "answer": "Paris.",
         "difficulty": "easy",
-        "class": "class10",
+        "grade": "class10",
         "subject": "social-science"
     },
     {
         "question": "What is the value of π (pi) to two decimal places?",
         "answer": "π (pi) to two decimal places is approximately 3.14.",
         "difficulty": "easy",
-        "class": "class10",
+        "grade": "class10",
         "subject": "maths"
     },
     {
         "question": "Solve the equation: 3x + 5 = 20?",
         "answer": "x = 5.",
         "difficulty": "easy",
-        "class": "class10",
+        "grade": "class10",
         "subject": "maths"
     },
     {
         "question": "Find the area of a rectangle with length 8cm and width 5cm",
         "answer": "Area = length × width = 8 cm × 5 cm = 40 cm².",
         "difficulty": "easy",
-        "class": "class10",
+        "grade": "class10",
         "subject": "maths"
     },
     {
         "question": "If a triangle has angles 60°, 90°, and 30°, what type of triangle is it?",
         "answer": "It is a right-angled triangle.",
         "difficulty": "easy",
-        "class": "class10",
+        "grade": "class10",
         "subject": "maths"
     },
     {
         "question": "Explain the process of photosynthesis?",
         "answer": "Photosynthesis is the process by which green plants and some other organisms use sunlight to synthesize foods with the help of chlorophyll.",
         "difficulty": "medium",
-        "class": "class10",
+        "grade": "class10",
         "subject": "science"
     },
     {
         "question": "What is the difference between a physical change and a chemical change?",
         "answer": "Physical change involves a change in the physical properties of a substance, while chemical change results in the formation of a new substance.",
         "difficulty": "medium",
-        "class": "class10",
+        "grade": "class10",
         "subject": "science"
     },
     {
         "question": "Define Ohm's Law and give its mathematical expression?",
         "answer": "Ohm's Law states that the current passing through a conductor between two points is directly proportional to the voltage across the two points.",
         "difficulty": "medium",
-        "class": "class10",
+        "grade": "class10",
         "subject": "science"
     },
     {
         "question": "Explain the significance of the Indian National Congress in the freedom struggle?",
         "answer": "The Indian National Congress played a crucial role in India's struggle for independence, advocating for self-rule and representing diverse sections of society.",
         "difficulty": "medium",
-        "class": "class10",
+        "grade": "class10",
         "subject": "social-science"
     },
     {
         "question": "Discuss the main features of the Constitution of India?",
         "answer": "The Constitution of India has features like fundamental rights, directive principles, and a parliamentary form of government.",
         "difficulty": "medium",
-        "class": "class10",
+        "grade": "class10",
         "subject": "social-science"
     },
     {
         "question": "Who was Akbar the Great, and what were his contributions to the Mughal Empire?",
         "answer": "Akbar was a Mughal emperor known for his policy of religious tolerance, administrative reforms, and cultural patronage.",
         "difficulty": "medium",
-        "class": "class10",
+        "grade": "class10",
         "subject": "social-science"
     },
     {
         "question": "Factorize the expression: 2x² + 8x + 6?",
         "answer": "(x + 3)(2x + 1).",
         "difficulty": "medium",
-        "class": "class10",
+        "grade": "class10",
         "subject": "maths"
     },
     {
         "question": "Calculate the volume of a cylinder with radius 4 cm and height 10 cm?",
         "answer": "Volume = πr²h = π(4 cm)²(10 cm) = 160π cm³.",
         "difficulty": "medium",
-        "class": "class10",
+        "grade": "class10",
         "subject": "maths"
     },
     {
         "question": "Solve the simultaneous equations: 2x + 3y = 10 and 4x - 2y = 6?",
         "answer": "x = 2, y = 2.",
         "difficulty": "medium",
-        "class": "class10",
+        "grade": "class10",
         "subject": "maths"
     },
     {
         "question": "The sum of two consecutive integers is 25. Find the integers?",
         "answer": "The integers are 12 and 13.",
         "difficulty": "medium",
-        "class": "class10",
+        "grade": "class10",
         "subject": "maths"
     },
     {
         "question": "Explain the structure and function of a plant cell?",
         "answer": "A plant cell has a cell wall, cell membrane, nucleus, cytoplasm, and other organelles. It performs photosynthesis and provides structural support.",
         "difficulty": "hard",
-        "class": "class10",
+        "grade": "class10",
         "subject": "science"
     },
     {
         "question": "Describe the working of a concave lens in a human eye?",
         "answer": "A concave lens in the human eye diverges light rays, helping in the accommodation of distant objects.",
         "difficulty": "hard",
-        "class": "class10",
+        "grade": "class10",
         "subject": "science"
     },
     {
         "question": "What is the difference between endothermic and exothermic reactions?",
         "answer": "Endothermic reactions absorb heat, while exothermic reactions release heat.",
         "difficulty": "hard",
-        "class": "class10",
+        "grade": "class10",
         "subject": "science"
     },
     {
         "question": "Analyze the causes and consequences of the Industrial Revolution?",
         "answer": "The Industrial Revolution led to technological advancements, urbanization, and changes in economic and social structures.",
         "difficulty": "hard",
-        "class": "class10",
+        "grade": "class10",
         "subject": "social-science"
     },
     {
         "question": "Describe the impact of the Green Revolution on Indian agriculture?",
         "answer": "The Green Revolution increased agricultural productivity through the use of high-yielding varieties and modern farming techniques.",
         "difficulty": "hard",
-        "class": "class10",
+        "grade": "class10",
         "subject": "social-science"
     },
     {
         "question": "Discuss the major events of the Indian National Movement during the 1920s?",
         "answer": "Major events in the Indian National Movement during the 1920s included the Non-Cooperation Movement and the Civil Disobedience Movement.",
         "difficulty": "hard",
-        "class": "class10",
+        "grade": "class10",
         "subject": "social-science"
     },
     {
         "question": "Explain the features and significance of the Harappan civilization?",
         "answer": "The Harappan civilization had features like planned cities, advanced drainage systems, and trade networks.",
         "difficulty": "hard",
-        "class": "class10",
+        "grade": "class10",
         "subject": "social-science"
     },
     {
         "question": "If sin θ = 0.8, find the value of cos θ?",
         "answer": "cos θ = √(1 - sin²θ) = √(1 - 0.64) = 0.6",
         "difficulty": "hard",
-        "class": "class10",
+        "grade": "class10",
         "subject": "maths"
     },
     {
         "question": "A circle has a circumference of 36π cm. Find its radius?",
         "answer": "Radius = Circumference / (2π) = 36π / (2π) = 18 cm.",
         "difficulty": "hard",
-        "class": "class10",
+        "grade": "class10",
         "subject": "maths"
     },
     {
         "question": "Solve the quadratic equation: 2x² - 5x + 3 = 0?",
         "answer": "x = 1/2 or x = 3.",
         "difficulty": "hard",
-        "class": "class10",
+        "grade": "class10",
         "subject": "maths"
     },
     {
         "question": "In a triangle ABC, if angle A = 50° and angle B = 70°, find angle C?",
         "answer": "Angle C = 180° - (50° + 70°) = 60°.",
         "difficulty": "hard",
-        "class": "class10",
+        "grade": "class10",
         "subject": "maths"
     }
 ]

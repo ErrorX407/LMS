@@ -177,6 +177,14 @@
   font-size: 16px !important;
 }
 
+.custom-toast{
+  background: #ffffff1d;
+  /* background: #61d3452d; */
+  border-radius: 16px;
+  backdrop-filter: blur(20px);
+  color: #fff;
+}
+
 .ce-block__content,
 .ce-toolbar__content {
   max-width: 900px;

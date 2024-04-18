@@ -6,13 +6,13 @@ const questionBankSchema = mongoose.Schema(
   {
     question: String,
     answer: String,
-    class: String,
+    grade: String,
     subject: String,
     difficulty: String,
     likes: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "user",
+        ref: "users",
       },
     ],
   },
