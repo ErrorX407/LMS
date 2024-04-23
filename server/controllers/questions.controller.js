@@ -1,7 +1,7 @@
 import Questions from "../models/Questions.js";
 
 export const getAllQuestions = async (req, res) => {
-  let apiData = Questions.find(req.query).select("question answer grade subject difficulty likes -_id");
+  let apiData = Questions.find(req.query).sort({ publishedAt: -1 }).select("question answer grade subject difficulty likes -_id");
   let questionsData = await apiData;
   // console.log(req.query);
 
@@ -13,13 +13,28 @@ export const getAllQuestions = async (req, res) => {
 };
 
 export const addQuestions = async (req, res) => {
-  let {question, answer, grade, subject, difficulty} = req.body;
+  try {
+    const questionsData = req.body; // Assuming req.body is an array of question objects
 
-  const newQuestions = new Questions({question, answer, grade, subject, difficulty});
+    // Loop through the array of question objects and save each one
+    for (const questionData of questionsData) {
+      const { question, answer, grade, subject, difficulty } = questionData;
 
-  newQuestions.save().then(()=>{
-    return res.status(200).json({message: "Question Added Successfully!"});
-  }).catch((err)=>{
-    return res.status(500).json({Error: err.message});
-  })
+      // Create a new instance of the Questions model for each question object
+      const newQuestion = new Questions({
+        question,
+        answer,
+        grade,
+        subject,
+        difficulty,
+      });
+
+      // Save each question to the database
+      await newQuestion.save();
+    }
+
+    return res.status(200).json({ message: "Questions Added Successfully!" });
+  } catch (err) {
+    return res.status(500).json({ Error: err.message });
+  }
 };

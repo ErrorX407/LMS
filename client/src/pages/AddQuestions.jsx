@@ -10,7 +10,7 @@ const AddQuestions = () => {
     userAuth: { access_token },
   } = useContext(UserContext);
   const [numForms, setNumForms] = useState(1); // State to track the number of forms
-  const addQuetionRef = useRef();
+  const addQuetionRef = useRef([]);
 
   const handleTextareaChange = (e) => {
     let input = e.target;
@@ -23,7 +23,7 @@ const AddQuestions = () => {
     let forms = [];
     for (let i = 0; i < numForms; i++) {
       forms.push(
-        <form ref={addQuetionRef} key={i} className="w-[98%]">
+        <form ref={el => addQuetionRef.current[i] = el} key={i} className="w-[98%]">
           <textarea
             name="question"
             rows="1"
@@ -206,53 +206,42 @@ const AddQuestions = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (access_token) {
-      let form = new FormData(addQuetionRef.current);
-      let formData = {};
-
-      for (let [key, value] of form.entries()) {
-        formData[key] = value;
+      let formDataArray = [];
+  
+      for (let i = 0; i < numForms; i++) {
+        let form = new FormData(addQuetionRef.current[i]);
+        let formData = {};
+  
+        for (let [key, value] of form.entries()) {
+          formData[key] = value;
+        }
+  
+        if (!formData.question || !formData.answer || formData.grade === "🎓 Choose class! 👩‍🎓" || formData.subject === "📚 Select subject!" || formData.difficulty === "Select Difficulty! 🎯🌟") {
+          return toast.error("All fields are required")
+        }
+        formDataArray.push(formData);
       }
 
-      let { question, answer, grade, subject, difficulty } = formData;
-
-      if (!question || !answer || !grade || !subject || !difficulty) {
-        return toast.error("All fields are required")
-      }
-      if (!question || question=="") {
-        return toast.error("Question is required")
-      }
-      if (!answer || answer=="") {
-        return toast.error("Answer is required")
-      }
-      if (!grade || grade=="") {
-        return toast.error("Grade is required")
-      }
-      if (!subject || subject=="") {
-        return toast.error("Subject is required")
-      }
-      if (!difficulty || difficulty=="") {
-        return toast.error("Difficulty is required")
-      }
       axios.post(
         import.meta.env.VITE_SERVER_DOMAIN +
-          "api/v1/questionBank/questions/add",
-        {
-          formData,
-        },
+          "/api/v1/questionBank/questions/add",
+        formDataArray,
         {
           headers: {
             Authorization: `Bearer ${access_token}`,
           },
         }
       ).then(()=>{
-        return toast.success("Question Added Successfully")
+        return toast.success("Questions Added Successfully")
       }).catch(({response}) => {
-        return toast.error(response)
-      })
-    }else{
-      return toast.error("Login to upload questions")
+        console.log(response);
+        // return toast.error(response)
+      });
+    } else {
+      return toast.error("Login to upload questions");
     }
   };
+  
 
   return (
     <>
@@ -271,12 +260,12 @@ const AddQuestions = () => {
           >
             Upload Question
           </button>
-          {/* <button
+          <button
           onClick={handleAddMore}
           className="w-[98%] flex justify-center items-center gap-1 h-16 p-4 font-bold bg-[#72380B]/50 hover:bg-[#72380B] rounded-2xl text-2xl hover:text-black active:scale-95"
         >
           Add More! ✨
-        </button> */}
+        </button>
         </div>
       </div>
     </>
