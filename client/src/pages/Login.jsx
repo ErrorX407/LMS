@@ -135,7 +135,7 @@ const Login = () => {
           />
         </div>
         <div className="right md:w-1/2 h-screen px-8 py-4">
-          <h1 className="font-candela text-[60px] md:text-[50px] lg:text-[5vw]">
+          <h1 className="font-candela text-[45px] md:text-[50px] lg:text-[5vw]">
             What's up, buddy? Ready to log in...{" "}
           </h1>
           <form ref={authForm} action="" className="my-20">

@@ -152,7 +152,7 @@ const Register = () => {
           />
         </div>
         <div className="right w-full md:w-1/2 h-screen px-8 py-4">
-          <h1 className="font-candela text-[35px] md:text-[50px] lg:text-[5vw]">
+          <h1 className="font-candela text-[45px] md:text-[50px] lg:text-[5vw]">
             Hey there, buddy! Let's register now{" "}
           </h1>
           <form ref={authForm} action="" className="my-20 email-form">
