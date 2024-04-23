@@ -16,6 +16,7 @@ const QuestionBankSelection = () => {
     getQuestions,
     setGetQuestions,
   } = useContext(QuestionBankContext);
+  
   const handleQuestionBank = (e) => {
     const button = e.target;
     if (!grade || !subject || !difficulty) {
@@ -67,7 +68,7 @@ const QuestionBankSelection = () => {
       <h1 className="font-candela text-3xl">Question Bank</h1>
       <div className="w-full md:w-1/2 mt-10">
         <select
-          className="mb-5 appearance-none w-full h-16 p-4 bg-[#8CA309]/20 text-2xl outline-none rounded-2xl focus:bg-[#8CA309]/40 focus:text-white active:bg-[#8CA309]/40 active:text-white"
+          className="mb-5 appearance-none w-full h-16 p-4 bg-[#8CA309]/20 text-xl md:text-2xl outline-none rounded-2xl focus:bg-[#8CA309]/40 focus:text-white active:bg-[#8CA309]/40 active:text-white"
           onChange={(e) =>
             setQuestions({ ...questions, grade: e.target.value })
           }
@@ -99,7 +100,7 @@ const QuestionBankSelection = () => {
         </select>
 
         <select
-          className="appearance-none mb-5 w-full h-16 p-4 bg-[#8CA309]/20 text-2xl outline-none rounded-2xl focus:bg-[#8CA309]/40 focus:text-white active:bg-[#8CA309]/40 active:text-white"
+          className="appearance-none mb-5 w-full h-16 p-4 bg-[#8CA309]/20 text-xl md:text-2xl outline-none rounded-2xl focus:bg-[#8CA309]/40 focus:text-white active:bg-[#8CA309]/40 active:text-white"
           onChange={(e) =>
             setQuestions({ ...questions, subject: e.target.value })
           }
@@ -176,7 +177,7 @@ const QuestionBankSelection = () => {
         </select>
 
         <select
-          className="appearance-none mb-5 w-full h-16 p-4 bg-[#8CA309]/20 text-2xl outline-none rounded-2xl focus:bg-[#8CA309]/40 focus:text-white active:bg-[#8CA309]/40 active:text-white"
+          className="appearance-none mb-5 w-full h-16 p-4 bg-[#8CA309]/20 text-xl md:text-2xl outline-none rounded-2xl focus:bg-[#8CA309]/40 focus:text-white active:bg-[#8CA309]/40 active:text-white"
           onChange={(e) =>
             setQuestions({ ...questions, difficulty: e.target.value })
           }
@@ -203,7 +204,7 @@ const QuestionBankSelection = () => {
 
         <button
           onClick={handleQuestionBank}
-          className="w-full mb-5 flex justify-center items-center gap-1 h-16 p-4 bg-[#8CA309] rounded-2xl text-2xl text-black mouseenter"
+          className="w-full mb-5 flex justify-center items-center gap-1 h-16 p-4 bg-[#8CA309] rounded-2xl text-xl md:text-2xl text-black mouseenter"
         >
           {loading ? "Loading..." : "🔍 Get Questions! 🤔📚"}
           {loading ? <LoaderTwo size={30} color="text-black" /> : ""}

@@ -4,7 +4,6 @@ import PostAmbient from "../components/PostAmbient";
 import { Link, useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import axios from "axios";
-import { toast } from "react-toastify";
 
 const EmailVerify = () => {
   const [validUrl, setValidUrl] = useState(false);

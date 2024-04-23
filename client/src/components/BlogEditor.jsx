@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import EditorJS from "@editorjs/editorjs";
 import axios from "axios";
 
@@ -174,26 +174,6 @@ const BlogEditor = () => {
 
   return (
     <div>
-      <ToastContainer
-        stacked
-        toastStyle={{
-          backgroundColor: "#ffffff17",
-          backdropFilter: "blur(20px)",
-          width: "400px",
-        }}
-        position="top-center"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-        transition:Bounce
-        bodyClassName="toastBody"
-      />
       <PostAmbient banner={banner ? banner : defaultBanner} />
       <nav className="navbar px-10">
         <Link to="/">

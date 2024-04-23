@@ -119,7 +119,7 @@ const ManagePosts = () => {
       <h1 className="font-candela text-3xl mb-0">Manage Posts </h1>
 
       <div>
-        <div className="my-4 md:my-8 flex gap-3">
+        <div className="my-4 md:my-8 flex gap-3 overflow-x-auto">
           {categories.map((category, index) => {
             return (
               <button
@@ -146,7 +146,7 @@ const ManagePosts = () => {
           placeholder="Search Posts...."
           onChange={handleChange}
           onKeyDown={handleSearch}
-          className="w-[55%] text-[16px] bg-purple/10 p-4 pl-[3.3rem] pr-6 rounded-[1.2rem] border-purple/30 outline-none focus:bg-purple/20"
+          className="w-[80%] md:w-[55%] text-[16px] bg-purple/10 p-4 pl-[3.3rem] pr-6 rounded-[1.2rem] border-purple/30 outline-none focus:bg-purple/20"
         />
         <i
           className="fi fi-rr-search absolute pointer-events-none right-[10%] md:pointer-events-none md:
@@ -166,7 +166,7 @@ const ManagePosts = () => {
             <Loader />
           ) : posts.results.posts.length ? (
             <div className="mx-auto max-w-full lg:max-w-full">
-              <div className="grid grid-cols-2 gap-x-0 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+              <div className="grid grid-cols-1 moblieLg:grid-cols-2 gap-x-0 moblieLg:gap-x-4 gap-5 xsm:gap-y-4 sm:gap-y-5 md:gap-y-12 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                 {posts.results.posts.map((post, i) => {
                   return (
                     <motion.div

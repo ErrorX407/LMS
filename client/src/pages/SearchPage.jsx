@@ -115,15 +115,17 @@ const SearchPage = () => {
             Search result for "{query}"{" "}
           </h1>
         </div>
-        <div className="post-container my-3 w-full flex gap-5 flex-wrap rounded-2xl">
-          <UserCardWrapper />
+        <div className="mx-auto max-w-full lg:max-w-full">
+          <div className="grid grid-cols-1 moblieLg:grid-cols-2 gap-x-0 moblieLg:gap-x-4 gap-5 xsm:gap-y-4 sm:gap-y-5 md:gap-y-12 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+            <UserCardWrapper />
+          </div>
         </div>
-        <div className="post-container my-3 w-full flex gap-5 flex-wrap rounded-2xl">
-          <>
-            {posts == null ? (
-              <Loader />
-            ) : posts.results.length ? (
-              posts.results.map((post, i) => {
+        {posts == null ? (
+          <Loader />
+        ) : posts.results.length ? (
+          <div className="mx-auto max-w-full lg:max-w-full">
+            <div className="grid grid-cols-1 moblieLg:grid-cols-2 gap-x-0 moblieLg:gap-x-4 gap-5 xsm:gap-y-4 sm:gap-y-5 md:gap-y-12 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+              {posts.results.map((post, i) => {
                 return (
                   <motion.div
                     initial={{ opacity: 0, scale: 0.1 / i }}
@@ -149,12 +151,12 @@ const SearchPage = () => {
                     />
                   </motion.div>
                 );
-              })
-            ) : (
-              ""
-            )}
-          </>
-        </div>
+              })}
+            </div>
+          </div>
+        ) : (
+          ""
+        )}
         <LoadMoreButton state={posts} fetchDataFun={searchPosts} />
       </div>
     </div>

@@ -81,10 +81,10 @@ const TrendingPage = () => {
       ) : (
         <PostAmbient banner={bannerImage} />
       )}{" "}
-      <div className="px-5 lg:px-10 md:px-8 mt-[50px] md:mt-0 lg:mt-0">
+      <div className="px-4 xsm:px-5 lg:px-10 md:px-8 mt-[50px] md:mt-0 lg:mt-0">
         <h1 className="font-candela text-3xl">Trending</h1>
         <div>
-          <div className="my-8 flex gap-3">
+          <div className="my-8 flex gap-3 overflow-x-auto">
             {categories.map((category, index) => {
               return (
                 <button
@@ -106,7 +106,7 @@ const TrendingPage = () => {
         </div>
 
         <div className="mx-auto max-w-full lg:max-w-full" >
-          <div className="grid grid-cols-2 gap-x-0 gap-y-10 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+          <div className="grid grid-cols-1 moblieLg:grid-cols-2 gap-x-0 moblieLg:gap-x-4 gap-5 xsm:gap-y-4 sm:gap-y-5 md:gap-y-12 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {trendingPosts == null ? (
               <Loader />
             ) : trendingPosts.results.length ? (

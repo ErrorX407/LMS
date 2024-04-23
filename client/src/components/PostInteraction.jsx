@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { PostContext } from "../pages/PostPage";
 import { UserContext } from "../App";
 import { Link } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-hot-toast";
 import axios from "axios";
 
 const PostInteraction = ({ onShareButtonClick }) => {
@@ -69,7 +69,7 @@ const PostInteraction = ({ onShareButtonClick }) => {
     <div className="my-5 backdrop-blur-md p-3 rounded-2xl bg-black/0 w-full">
       <div className="flex gap-6 justify-between">
         <div className="flex gap-3 items-center">
-          <button onClick={handleLike} className={"like-btn backdrop-blur-md w-fit flex p-3 rounded-2xl justify-start items-center gap-2 cursor-pointer mouseenter " + (isLikedByUser ? "bg-red/30" : "bg-black/30")}>
+          <button onClick={handleLike} className={"like-btn backdrop-blur-md w-fit flex p-3 rounded-2xl justify-start items-center gap-2 cursor-pointer " + (isLikedByUser ? "bg-red/40" : "bg-black/30")}>
             <img
               src="https://img.icons8.com/3d-fluency/94/like--v2.png"
               alt="like--v2"

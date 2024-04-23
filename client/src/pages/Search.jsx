@@ -107,7 +107,7 @@ const Search = () => {
         </div>
 
         <div className="mx-auto max-w-full lg:max-w-full">
-          <div className="grid grid-cols-2 gap-x-0 gap-y-10 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+          <div className="grid grid-cols-2 moblieLg:grid-cols-2 gap-x-6 moblieLg:gap-x-4 gap-5 xsm:gap-y-4 sm:gap-y-5 md:gap-y-12 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {users && users.length > 0
               ? users.map((user, i) => (
                   <motion.div
@@ -135,7 +135,7 @@ const Search = () => {
           <NoDataMessage message={errorMessage} />
         ) : (
           <div className="mx-auto max-w-full lg:max-w-full mt-5">
-            <div className="grid grid-cols-2 gap-x-0 gap-y-10 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+            <div className="grid grid-cols-1 moblieLg:grid-cols-2 gap-x-0 moblieLg:gap-x-4 gap-5 xsm:gap-y-4 sm:gap-y-5 md:gap-y-12 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
               {posts && posts.results.length > 0
                 ? posts.results.map((post, i) => {
                     // console.log(notifications.results.length);

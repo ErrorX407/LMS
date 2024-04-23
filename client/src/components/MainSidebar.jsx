@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { UserContext } from "../App";
 import Navbar from "./Navbar";
 import { clearSession } from "../common/session";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 
 const MainSidebar = () => {
   const { userAuth, setUserAuth } = useContext(UserContext);
@@ -15,7 +15,7 @@ const MainSidebar = () => {
     setTimeout(() => {
       location.reload();
     }, 1000);
-    toast.success("👋 Logged out! See you soon! 🚪🔒");
+    return toast.success("👋 Logged out! See you soon! 🚪🔒");
   };
 
   const toggleSidebar = () => {
@@ -175,7 +175,7 @@ const MainSidebar = () => {
                 {userAuth.access_token ? (
                   <div className="mb-auto">
                     <NavLink
-                      to="/settings"
+                      to="/settings/edit-profile"
                       onClick={(e) => setPageState(e.target.innerText)}
                       className="sidebar-link"
                     >

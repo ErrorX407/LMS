@@ -11,3 +11,15 @@ export const getAllQuestions = async (req, res) => {
     return res.status(200).json({ nbHits: questionsData.length, questionsData });
   }
 };
+
+export const addQuestions = async (req, res) => {
+  let {question, answer, grade, subject, difficulty} = req.body;
+
+  const newQuestions = new Questions({question, answer, grade, subject, difficulty});
+
+  newQuestions.save().then(()=>{
+    return res.status(200).json({message: "Question Added Successfully!"});
+  }).catch((err)=>{
+    return res.status(500).json({Error: err.message});
+  })
+};

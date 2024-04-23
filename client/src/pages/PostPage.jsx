@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-hot-toast";
 import axios from "axios";
 import Loader from "../components/Loader";
 import { getFullDate } from "../common/Date";
@@ -86,26 +86,6 @@ const PostPage = () => {
   // Render only when post is not null
   return (
     <>
-      <ToastContainer
-        stacked
-        toastStyle={{
-          backgroundColor: "#ffffff17",
-          backdropFilter: "blur(20px)",
-          fontSize: "20px",
-        }}
-        position="top-center"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-        transition:Bounce
-        bodyClassName="toastBody"
-      />
       {loading ? (
         <Loader />
       ) : (
@@ -124,16 +104,16 @@ const PostPage = () => {
           <PostAmbient banner={banner} />
           <CommentsContainer />
           <div className="max-w-[900px] center py-4 max-lg:px-[5vw] mt-[30px] md:mt-0 lg:mt-0">
-            <h1 className="w-full text-[40px] md:text-[60px] lg:[5vw] mb-7 leading-[1.15] font-candela line-clamp-2 hover:line-clamp-none cursor-default">
+            <h1 className="w-full text-[32px] xsm:text-[40px] md:text-[60px] lg:[5vw] mb-7 leading-[1.15] font-candela line-clamp-2 hover:line-clamp-none cursor-default">
               {" "}
               {title}{" "}
             </h1>
-            <div className="flex justify-between my-8">
-              <div className="flex gap-5 items-center justify-center">
+            <div className="flex justify-between items-center my-8">
+              <div className="flex gap-3 xsm:gap-5 items-center justify-center">
                 <img
                   src={profile_img}
                   alt=""
-                  className="w-12 h-12 rounded-xl"
+                  className="w-10 h-10 xsm:w-12 xsm:h-12 rounded-xl"
                 />
                 <p className="font-messinaReg cursor-default">
                   {fullName} <br />
@@ -156,7 +136,7 @@ const PostPage = () => {
               className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 backdrop-blur-md z-[1000] flex justify-center items-center"
               style={{ display: showDialog ? "block" : "none" }}
             >
-              <div className="relative w-[90%] lg:w-1/2 md:w-1/2 backdrop-blur-md top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black/50 px-10 py-8 rounded-3xl">
+              <div className="relative w-full xsm:w-[90%] lg:w-1/2 md:w-1/2 backdrop-blur-md top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black/50 px-10 py-8 rounded-3xl">
                 <h1 className="font-candela text-[30px]">
                   Share This Post 🤗 With Your Friends 😉...
                 </h1>
@@ -230,7 +210,7 @@ const PostPage = () => {
 
             {/* ==============Post Content============== */}
 
-            <div className="my-8 blog-page-content">
+            <div className="xsm:my-8 blog-page-content">
               {content[0].blocks.map((block, i) => {
                 return (
                   <div key={i} className="my-4 md:my-6">

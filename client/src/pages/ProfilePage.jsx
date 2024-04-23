@@ -103,7 +103,7 @@ const ProfilePage = () => {
       ) : profile_username.length ? (
         <>
           <PostAmbient banner={profile_img} />
-          <section className="px-5 lg:px-10 md:px-8 mt-[50px] md:mt-0 lg:mt-0">
+          <section className="px-4 xsm:px-5 lg:px-10 md:px-8 mt-[50px] md:mt-0 lg:mt-0">
             <div className="flex justify-between items-center flex-wrap w-full mx-auto">
               <div className="top-cont flex flex-col md:flex-row md:items-center w-full md:w-[55%] md:justify-start">
                 <div className="profile-img m-auto md:m-0 w-40 h-40 overflow-hidden rounded-3xl md:mr-4 mb-4 md:mb-0">
@@ -145,7 +145,7 @@ const ProfilePage = () => {
             </div>
 
             <div className="mx-auto max-w-full lg:max-w-full mt-12">
-              <div className="grid grid-cols-2 gap-x-0 gap-y-10 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+              <div className="grid grid-cols-1 moblieLg:grid-cols-2 gap-x-0 moblieLg:gap-x-4 gap-5 xsm:gap-y-4 sm:gap-y-5 md:gap-y-12 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                 {posts == null ? (
                   <Loader />
                 ) : posts.results.length ? (

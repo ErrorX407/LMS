@@ -36,7 +36,8 @@ const SettingsSideBar = () => {
               <h1 className="font-candela text-3xl mb-3">Dashboard</h1>
               {/* <hr className="border-white/50 -ml-6 mb-8 mr-16" /> */}
 
-              <NavLink
+              {
+                isAdmin ? <NavLink
                 to="/dashboard/posts"
                 onClick={(e) => setPageState(e.target.innerText)}
                 className="sidebar-link"
@@ -51,7 +52,8 @@ const SettingsSideBar = () => {
                     Posts
                   </span>
                 </div>
-              </NavLink>
+              </NavLink> : ""
+              }
 
               <NavLink
                 to="/dashboard/notifications"

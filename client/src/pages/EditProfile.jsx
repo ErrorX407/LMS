@@ -3,7 +3,7 @@ import { UserContext } from "../App";
 import axios from "axios";
 import { profileDataStructure } from "./ProfilePage";
 import Loader from "../components/Loader";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-hot-toast";
 import { uploadImage } from "../common/aws";
 import { storeInSession } from "../common/session";
 import { postStructure } from "./PostPage";

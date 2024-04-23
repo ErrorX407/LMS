@@ -1,5 +1,4 @@
 import React, { useEffect, useState, Suspense } from "react";
-import { toast } from "react-toastify";
 import { motion } from "framer-motion";
 import axios from "axios";
 import Loader from "../components/Loader";
@@ -72,10 +71,10 @@ const Solutions = () => {
       ) : (
         <PostAmbient banner={bannerImage} />
       )}
-      <div className="px-5 lg:px-10 md:px-8 mt-[50px] md:mt-0 lg:mt-0">
+      <div className="px-4 xsm:px-5 lg:px-10 md:px-8 mt-[50px] md:mt-0 lg:mt-0">
         <h1 className="font-candela text-3xl mb-4">Pyq's</h1>
 
-        <div className="my-8 flex gap-3">
+        <div className="my-8 flex gap-3 overflow-x-auto">
           {filters.map((filterName, i) => {
             return (
               <button
@@ -97,44 +96,43 @@ const Solutions = () => {
         </div>
 
         {isPostError ? (
-  <NoDataMessage message="🔍 No Pyq's found! 😕" />
-) : latestPosts == null ? (
-  <Loader />
-) : latestPosts.results.length ? (
-  <div className="mx-auto max-w-full lg:max-w-full">
-    <div className="grid grid-cols-2 gap-x-0 gap-y-10 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-      {latestPosts.results.map((post, i) => (
-        <Suspense key={i} fallback={<p>This is loading...</p>}>
-          <motion.div
-            initial={{ opacity: 0, transform: "translateY(50px)" }}
-            animate={{ opacity: 1, transform: "translateY(0px)" }}
-            transition={{
-              delay: 0.1 * i,
-              duration: 2,
-              ease: [0, 0.71, 0.2, 1.01],
-            }}
-          >
-            <PostCard
-              banner={post.banner}
-              title={post.title}
-              author={post.author.personal_info.fullName}
-              authorLink={post.author.personal_info.username}
-              profileImg={post.author.personal_info.profile_img}
-              postLink={post.post_id}
-              likes={post.activity.total_likes}
-              tags={post.tags}
-              publishedAt={post.publishedAt}
-              category={post.category}
-            />
-          </motion.div>
-        </Suspense>
-      ))}
-    </div>
-  </div>
-) : (
-  <NoDataMessage message="No Posts Found" />
-)}
-
+          <NoDataMessage message="🔍 No Pyq's found! 😕" />
+        ) : latestPosts == null ? (
+          <Loader />
+        ) : latestPosts.results.length ? (
+          <div className="mx-auto max-w-full lg:max-w-full">
+            <div className="grid grid-cols-1 moblieLg:grid-cols-2 gap-x-0 moblieLg:gap-x-4 gap-5 xsm:gap-y-4 sm:gap-y-5 md:gap-y-12 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+              {latestPosts.results.map((post, i) => (
+                <Suspense key={i} fallback={<p>This is loading...</p>}>
+                  <motion.div
+                    initial={{ opacity: 0, transform: "translateY(50px)" }}
+                    animate={{ opacity: 1, transform: "translateY(0px)" }}
+                    transition={{
+                      delay: 0.1 * i,
+                      duration: 2,
+                      ease: [0, 0.71, 0.2, 1.01],
+                    }}
+                  >
+                    <PostCard
+                      banner={post.banner}
+                      title={post.title}
+                      author={post.author.personal_info.fullName}
+                      authorLink={post.author.personal_info.username}
+                      profileImg={post.author.personal_info.profile_img}
+                      postLink={post.post_id}
+                      likes={post.activity.total_likes}
+                      tags={post.tags}
+                      publishedAt={post.publishedAt}
+                      category={post.category}
+                    />
+                  </motion.div>
+                </Suspense>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <NoDataMessage message="No Posts Found" />
+        )}
 
         <LoadMoreButton
           state={latestPosts}

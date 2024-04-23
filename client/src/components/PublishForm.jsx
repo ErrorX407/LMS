@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Select, Option } from "@material-tailwind/react";
 import { useNavigate, useParams } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import { UserContext } from "../App";
 import { EditorContext } from "../pages/Editor";
 import Tag from "./Tag";
@@ -110,26 +110,6 @@ const PublishForm = () => {
   };
   return (
     <>
-      <ToastContainer
-        stacked
-        toastStyle={{
-          backgroundColor: "#ffffff17",
-          backdropFilter: "blur(20px)",
-          width: "400px",
-        }}
-        position="top-center"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-        transition:Bounce
-        bodyClassName="toastBody"
-      />
 
       <section className="w-screen h-screen grid items-center lg:grid-cols-2 py-16 lg:gap-8">
         <button

@@ -6,7 +6,7 @@ import PostAmbient from "../components/PostAmbient";
 
 const PageNotFound = () => {
   return (
-    <>
+    <div className="h-[75vh]">
     <PostAmbient banner="https://images.unsplash.com/photo-1585146709654-1668ad81e1f0?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mzh8fHJlZHxlbnwwfHwwfHx8MA%3D%3D" />
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full">
         <div className="px-10 flex flex-col justify-center items-center gap-5">
@@ -26,7 +26,7 @@ const PageNotFound = () => {
           </Link>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

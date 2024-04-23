@@ -5,7 +5,7 @@ import Loader from "./Loader";
 import { Link } from "react-router-dom";
 import PostAmbient from "./PostAmbient";
 
-const PostCard = React.lazy(() => import("./PostCard"));
+const ComponentCard = React.lazy(() => import("./ComponentCard"));
 
 const Trending = () => {
   const [trendingPosts, setTrendingPosts] = useState(null);
@@ -43,7 +43,7 @@ const Trending = () => {
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.1 * i, duration: 2, ease: [0, 0.71, 0.2, 1.01] }}
                   >
-                    <PostCard
+                    <ComponentCard
                       banner={post.banner}
                       title={post.title}
                       author={post.author.personal_info.fullName}

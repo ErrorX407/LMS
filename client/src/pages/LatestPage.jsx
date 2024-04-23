@@ -1,6 +1,6 @@
 import React, { Suspense, useEffect, useState } from "react";
 import { motion, stagger } from "framer-motion";
-import {toast} from "react-toastify"
+import {toast} from "react-hot-toast"
 import axios from "axios";
 import Loader from "../components/Loader";
 import { FilterPaginationData } from "../common/FilterPaginationData";
@@ -94,9 +94,9 @@ const Latest = () => {
         latestPosts === null ? <PostAmbient banner="https://i.pinimg.com/236x/17/5c/91/175c9122f658873799ead326000e9ee5.jpg" />
         : <PostAmbient banner={bannerImage} />
       }
-      <div className="px-5 lg:px-10 md:px-8 mt-[50px] md:mt-0 lg:mt-0">
+      <div className="px-4 xsm:px-5 lg:px-10 md:px-8 mt-[50px] md:mt-0 lg:mt-0">
         <h1 className="font-candela text-3xl">Latest Posts</h1>
-        <div className="my-8 flex gap-3">
+        <div className="my-8 flex gap-3 overflow-x-auto">
           <div className="w-[100%] flex justify-start items-center gap-4 mx-auto">
             {categories.map((category, index) => {
               return (
@@ -118,7 +118,7 @@ const Latest = () => {
           </div>
         </div>
         <div className="mx-auto max-w-full lg:max-w-full">
-          <div className="grid grid-cols-2 gap-x-0 gap-y-10 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+          <div className="grid grid-cols-1 moblieLg:grid-cols-2 gap-x-0 moblieLg:gap-x-4 gap-5 xsm:gap-y-4 sm:gap-y-5 md:gap-y-12 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {latestPosts == null ? (
               <Loader />
             ) : latestPosts.results.length ? (

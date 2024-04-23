@@ -5,7 +5,7 @@ const Img = ({url, caption}) => {
         <figure className="figure">
             <img className="figure-img img-fluid rounded-2xl" src={url} alt={caption} />
             {
-                caption.length ? <figcaption className="figure-caption text-muted w-full my-3 text-center bg-white/10 py-4 rounded-2xl">{caption}</figcaption> : ""
+                caption.length ? <figcaption className="figure-caption text-muted w-full my-3 text-center bg-white/10 xsm:py-4 rounded-xl xsm:rounded-2xl">{caption}</figcaption> : ""
             }
         </figure>
     )
@@ -13,7 +13,7 @@ const Img = ({url, caption}) => {
 
 const Quote = ({quote, caption}) => {
     return (
-        <figure className="figure bg-purple/10 p-3 pl-5 border-l-4 border-purple rounded-2xl">
+        <figure className="figure bg-purple/10 xsm:p-3 pl-5 border-l-4 border-purple rounded-xl xsm:rounded-2xl">
             <p dangerouslySetInnerHTML={{__html: quote}}></p>
             {
                 caption.length ? <figcaption className="figure-caption text-muted w-full my-3 text-center bg-white/10 py-4 rounded-2xl">{caption}</figcaption> : ""
@@ -24,11 +24,11 @@ const Quote = ({quote, caption}) => {
 
 const List = ({style, items}) => {
     return (
-        <ol className={`ml-16 ${style == "ordered" ? " list-decimal" : " list-disc"}`}>
+        <ol className={`ml-12 xsm:ml-16 ${style == "ordered" ? " list-decimal" : " list-disc"}`}>
             {
                 items.map((item, index) => {
                     return (
-                        <li key={index} dangerouslySetInnerHTML={{__html: item}}></li>
+                        <li key={index} dangerouslySetInnerHTML={{__html: item}} className="leading-[28px] md:leading-[34px] lg:leading-[40px]"></li>
                     )
                 })
             }
@@ -40,7 +40,7 @@ const PostContent = ({ block }) => {
   let { type, data } = block;
 
   if (type == "paragraph") {
-    return <p dangerouslySetInnerHTML={{ __html: data.text }}></p>;
+    return <p dangerouslySetInnerHTML={{ __html: data.text }} className="leading-[28px] md:leading-[32px] lg:leading-[40px]"></p>;
   }
   if (type == "header") {
     if (data.level == 3) {

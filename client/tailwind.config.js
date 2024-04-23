@@ -2,7 +2,17 @@
 export default {
     content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
     theme: {
-        
+        screens:{
+            'moblieSm': "320px",
+            'moblieLg': "425px",
+            'xsm': "460px",
+            'sm':"640px",
+            'md': "768px",
+            'lg': "1025px",
+            'xl': "1281px",
+            '2xl': "1536px",
+        },
+
         colors: {
             'white': '#FFFFFF',
             'black': '#000000',

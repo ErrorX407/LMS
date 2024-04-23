@@ -24,6 +24,7 @@ import News from "./pages/News";
 import ManagePosts from "./pages/ManagePosts";
 import Search from "./pages/Search";
 import EmailVerify from "./pages/EmailVerify";
+import AddQuestions from "./pages/AddQuestions";
 
 const MainSidebar = React.lazy(() => import("./components/MainSidebar"));
 
@@ -57,6 +58,7 @@ const App = () => {
             <Route path="news" element={<News />} />
             <Route path=":id" element={<ProfilePage />} />
           <Route path="/post/:post_id" element={<PostPage />} />
+          <Route path="/add-questions" element={<AddQuestions />} />
           </Route>
 
           <Route path="/editor" element={<Editor />} />

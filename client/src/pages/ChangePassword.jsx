@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 import { Eye, EyeClosed } from "@phosphor-icons/react";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-hot-toast";
 import axios from "axios";
 import { UserContext } from "../App";
 
@@ -111,7 +111,7 @@ const ChangePassword = () => {
           className="email-form w-full flex justify-center items-center md:items-start flex-col"
         >
           <h1 className="font-candela text-3xl mb-8">Change Password </h1>
-          <div className="w-full md:w-1/2 relative">
+          <div className="w-full lg:w-1/2 relative">
             <input
               ref={inputRefCurrent}
               name="currentPassword"
@@ -130,13 +130,13 @@ const ChangePassword = () => {
               )}
             </div>
           </div>
-          <div className=" w-full md:w-1/2 relative">
+          <div className=" w-full lg:w-1/2 relative">
             <input
               ref={inputRefNew}
               name="newPassword"
               type={showNewPassword ? "text" : "password"}
               placeholder="Enter Your New Password"
-              className="mb-5 h-16 w-full p-4 bg-transparent border-2 border-purple/30 text-2xl outline-none rounded-2xl focus:border-purple focus:text-purple active:border-purple active:text-purple"
+              className="mb-5 w-full h-16 p-4 pr-16 bg-transparent border-2 border-purple/30 text-2xl outline-none rounded-2xl focus:border-purple focus:text-purple active:border-purple active:text-purple"
             />
             <div
               className="bg-purple/30 hover:bg-purple/60 absolute right-3 top-3 w-10 h-10 flex justify-center items-center rounded-xl cursor-pointer"
@@ -145,13 +145,13 @@ const ChangePassword = () => {
               {showNewPassword ? <Eye size={22} /> : <EyeClosed size={22} />}
             </div>
           </div>
-          <div className="w-full md:w-1/2 relative">
+          <div className="w-full lg:w-1/2 relative">
             <input
               ref={inputRefConfirm}
               name="confirmPassword"
               type={showConfirmPassword ? "text" : "password"}
               placeholder="Confirm Your New Password"
-              className="mb-5 h-16 w-full p-4 bg-transparent border-2 border-purple/30 text-2xl outline-none rounded-2xl focus:border-purple focus:text-purple active:border-purple active:text-purple"
+              className="mb-5 w-full h-16 p-4 pr-16 bg-transparent border-2 border-purple/30 text-2xl outline-none rounded-2xl focus:border-purple focus:text-purple active:border-purple active:text-purple"
             />
             <div
               className="bg-purple/30 hover:bg-purple/60 absolute right-3 top-3 w-10 h-10 flex justify-center items-center rounded-xl cursor-pointer"
@@ -165,7 +165,7 @@ const ChangePassword = () => {
             </div>
           </div>
           <button
-            className="flex justify-center items-center font-semibold mb-4 gap-1 text-2xl w-full md:w-1/2 h-16 bg-purple rounded-2xl text-black mouseenter"
+            className="flex justify-center items-center font-semibold mb-4 gap-1 text-2xl w-full lg:w-1/2 h-16 bg-purple rounded-2xl text-black mouseenter"
             type="submit"
             onClick={handleSubmit}
           >
