@@ -24,6 +24,7 @@ export const PostContext = createContext({});
 const PostPage = () => {
   let { post_id } = useParams();
   const [post, setPost] = useState(postStructure);
+  const [saveIcon, setSaveIcon] = useState(false)
   const [loading, setLoading] = useState(true);
   const [showDialog, setShowDialog] = useState(false); // State to manage dialog visibility
   const [isLikedByUser, setLikedByUser] = useState(false);
@@ -83,6 +84,11 @@ const PostPage = () => {
     setShowDialog(false); // Close the dialog after copying the link
   };
 
+  const handleSave = () => {
+    
+    setSaveIcon(preVal => !preVal)
+  }
+
   // Render only when post is not null
   return (
     <>
@@ -125,9 +131,12 @@ const PostPage = () => {
                   </Link>
                 </p>
               </div>
-              <p className="text-white/70 max-sm:mt-6 max-sm:ml-12 max-sm:pl-5">
+              <div className="flex justify-center items-center gap-3">
+              <p className="text-white/60 mt-2 max-sm:ml-12">
                 ● {getFullDate(publishedAt)}
               </p>
+              <button className="mt-2 p-3 rounded-full hover:bg-white/10" onClick={handleSave}> <i className={`fi fi-${saveIcon ? "sr" : "rr"}-bookmark text-2xl flex justify-center items-center`}></i> </button>
+              </div>
             </div>
             <img src={banner} alt="" className="aspect-video rounded-2xl" />
 

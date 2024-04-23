@@ -178,6 +178,12 @@ const userSchema = mongoose.Schema(
       ref: "posts",
       default: [],
     },
+    playlists: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Playlist",
+      },
+    ],
     verified: {
       type: Boolean,
       default: false,
