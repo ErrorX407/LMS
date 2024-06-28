@@ -121,8 +121,8 @@ export const ManageDraftPostCard = ({ post }) => {
   } = useContext(UserContext);
 
   return (
-    <div className="post relative w-[250px] h-[260px] bg-[rgba(255,255,255,0.1)] flex-shrink-0 rounded-2xl overflow-hidden">
-      <div className="banner relative w-full overflow-hidden aspect-video ">
+    <div className="post m-auto h-fit xsm:w-[200px] moblieLg:h-[220px] lg:w-[250px] lg:h-[260px] moblieLg:bg-[rgba(255,255,255,0.1)] flex-shrink-0 rounded-xl moblieLg:rounded-2xl overflow-hidden md:w-[220px] md:h-[240px]">
+      <div className="banner relative w-full rounded-xl moblieLg:rounded-none overflow-hidden aspect-video">
         <img
           src={
             banner

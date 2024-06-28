@@ -4,8 +4,8 @@ import axios from "axios";
 import { profileDataStructure } from "./ProfilePage";
 import Loader from "../components/Loader";
 import { toast } from "react-hot-toast";
-import { uploadImage } from "../common/aws";
-import { storeInSession } from "../common/session";
+import { uploadImage } from "../common/Aws";
+import { storeInSession } from "../common/Session";
 import { postStructure } from "./PostPage";
 
 const EditProfile = () => {
@@ -292,7 +292,7 @@ const EditProfile = () => {
                       name="username"
                       type="text"
                       placeholder="Enter username"
-                      className="input-box pl-[4.5rem]"
+                      className="input-box lowercase pl-[4.5rem]"
                     />
                     <div className="absolute left-3 top-2.5 bg-purple/30 w-12 h-12 rounded-xl flex justify-center items-center">
                       <i

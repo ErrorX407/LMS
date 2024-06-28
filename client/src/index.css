@@ -69,7 +69,11 @@
   }
 
   .navbar {
-    @apply z-[999] sticky top-0 flex items-center justify-between gap-12 w-full px-[5vw] py-5 h-[80px] border-b border-transparent backdrop-blur-lg bg-black/90;
+    @apply z-[999] sticky top-0 flex items-center justify-between gap-12 w-full px-[5vw] py-5 h-[80px] border-b border-transparent bg-black;
+  }
+
+  .stack-navbar {
+    @apply z-[999] sticky top-0 flex items-center justify-between gap-12 w-full px-[5vw] py-5 h-[80px] border-b border-transparent bg-transparent;
   }
 
   .logo{
@@ -106,7 +110,7 @@
   }
 
   .link {
-    @apply text-dark-grey hover:text-black hover:bg-grey p-3 px-4 block opacity-75;
+    @apply text-white/80 hover:text-white hover:bg-white/10 rounded-xl p-3 px-4 block;
   }
 
   .hide {
@@ -118,7 +122,7 @@
   }
 
   .sidebar-link {
-    @apply flex justify-start items-center gap-6 overflow-hidden mouseenter cursor-pointer text-2xl p-3 mb-3 bg-white/10 rounded-2xl;
+    @apply flex justify-start items-center gap-6 overflow-hidden mouseenter cursor-pointer text-2xl p-3 mb-3 bg-black rounded-2xl;
   }
 
   .sidebar-link.active {
@@ -167,6 +171,10 @@
   }
 }
 
+*{
+  -webkit-tap-highlight-color: transparent;
+}
+
 ::-webkit-scrollbar{
   display: none;
 }
@@ -187,6 +195,32 @@
   border-radius: 16px;
   backdrop-filter: blur(20px);
   color: #fff;
+}
+
+.stack-page-banner{
+  z-index: -1;
+}
+
+.stack-post-card{
+  margin-bottom: 5px;
+  border-radius: 15px;
+  transition: 0.5s ease;
+}
+
+.stack-post-card:hover{
+  padding: 10px 15px;
+  background: #ffffff1a;
+}
+
+.stack-post-card .stack-arrow{
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: 0.3s ease;
+}
+
+.stack-post-card:hover .stack-arrow{
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .ce-block__content,
@@ -328,6 +362,16 @@
 
 .comments:hover i{
   color: rgb(0, 202, 0);
+}
+
+.stack-post-author-link{
+  transition: 0.5s;
+}
+
+.stack-post-author-link:hover{
+  opacity: 1;
+  text-decoration: 1.5px underline;
+  text-underline-offset: 1.5px;
 }
 
 .author-link:hover .author-name{

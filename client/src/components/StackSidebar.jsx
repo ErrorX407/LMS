@@ -1,22 +1,40 @@
-import React, { useContext, useState } from "react";
-import { Outlet, NavLink, useNavigate } from "react-router-dom";
+import React, { useContext, useEffect, useState, useRef } from "react";
+import { Outlet, NavLink } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { UserContext } from "../App";
 import Navbar from "./Navbar";
 import { clearSession } from "../common/Session";
 import toast from "react-hot-toast";
+import StackNavbar from "./StackNavbar";
+import Logo from "../imgs/logo.webp";
 
-const MainSidebar = () => {
+const StackSidebar = () => {
   const { userAuth, setUserAuth } = useContext(UserContext);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [scrollPosition, setScrollPosition] = useState(0);
 
-  const navigate = useNavigate();
+  const sidebarRef = useRef(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const position = window.scrollY;
+      setScrollPosition(position);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const navbarOpacity = scrollPosition > 100 ? 1 : scrollPosition / 100;
 
   const handleLogout = () => {
     clearSession();
     setTimeout(() => {
       location.reload();
-    }, 1500);
+    }, 1000);
     return toast.success("👋 Logged out! See you soon! 🚪🔒");
   };
 
@@ -24,24 +42,35 @@ const MainSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
 
+  const closeSidebar = () => {
+    setSidebarOpen(false);
+  };
+
   return (
     <>
-      <Navbar toggleSidebar={toggleSidebar} />
-      <section className="relative flex gap-1 px-0 py-0 m-0 max-md:flex-col overflow-y-auto">
+      <StackNavbar toggleSidebar={toggleSidebar} />
+      <section
+        className="relative w-full top-0 flex gap-1 px-0 py-0 m-0 max-md:flex-col overflow-y-auto"
+        onBlur={() => setSidebarOpen(false)}
+        tabIndex={0}
+        ref={sidebarRef}
+      >
         <AnimatePresence>
           {sidebarOpen && (
             <motion.div
               initial={{ x: "-100%" }}
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
+              id="sidebar"
               transition={{ duration: 0.3, ease: [0, 0.71, 0.2, 1.01] }}
-              className={`fixed left-0 w-full md:w-[280px] h-screen backdrop-blur-lg z-[999] px-5 bg-black overflow-y-auto`}
+              className="fixed left-0 w-[280px] h-screen z-[999] px-5 overflow-y-auto"
+              style={{ backgroundColor: `rgba(0, 0, 0, ${navbarOpacity})` }}
             >
-              <div>
+              <div className="mt-5">
                 <NavLink
                   to="/"
-                  onClick={(e) => setPageState(e.target.innerText)}
                   className="sidebar-link"
+                  onClick={() => closeSidebar()}
                 >
                   <div className="solutions flex justify-start items-center gap-6">
                     <img
@@ -54,11 +83,10 @@ const MainSidebar = () => {
                     </span>
                   </div>
                 </NavLink>
-
                 <NavLink
                   to="/search"
-                  onClick={(e) => setPageState(e.target.innerText)}
                   className="sidebar-link"
+                  onClick={() => closeSidebar()}
                 >
                   <div className="solutions flex justify-start items-center gap-6">
                     <img
@@ -71,11 +99,10 @@ const MainSidebar = () => {
                     </span>
                   </div>
                 </NavLink>
-
                 <NavLink
                   to="/solutions"
-                  onClick={(e) => setPageState(e.target.innerText)}
                   className="sidebar-link"
+                  onClick={() => closeSidebar()}
                 >
                   <div className="solutions flex justify-start items-center gap-6">
                     <img
@@ -88,45 +115,11 @@ const MainSidebar = () => {
                     </span>
                   </div>
                 </NavLink>
-
-                <NavLink
-                  to="/pyqs"
-                  onClick={(e) => setPageState(e.target.innerText)}
-                  className="sidebar-link"
-                >
-                  <div className="solutions flex justify-start items-center gap-6">
-                    <img
-                      src="https://img.icons8.com/3d-fluency/94/help.png"
-                      alt="brain"
-                      className="w-[25px]"
-                    />
-                    <span className="text-[18px] whitespace-nowrap w-full overflow-hidden">
-                      PYQ's
-                    </span>
-                  </div>
-                </NavLink>
-
-                <NavLink
-                  to="/question-bank"
-                  onClick={(e) => setPageState(e.target.innerText)}
-                  className="sidebar-link"
-                >
-                  <div className="solutions flex justify-start items-center gap-6">
-                    <img
-                      src="https://img.icons8.com/3d-fluency/94/money-bag.png"
-                      alt="brain"
-                      className="w-[25px]"
-                    />
-                    <span className="text-[18px] whitespace-nowrap w-full overflow-hidden">
-                      Question Bank
-                    </span>
-                  </div>
-                </NavLink>
-
+                {/* Add your other sidebar links here */}
                 <NavLink
                   to="/notes"
-                  onClick={(e) => setPageState(e.target.innerText)}
                   className="sidebar-link"
+                  onClick={() => closeSidebar()}
                 >
                   <div className="solutions flex justify-start items-center gap-6">
                     <img
@@ -139,11 +132,10 @@ const MainSidebar = () => {
                     </span>
                   </div>
                 </NavLink>
-
                 <NavLink
                   to="/test-series"
-                  onClick={(e) => setPageState(e.target.innerText)}
                   className="sidebar-link"
+                  onClick={() => closeSidebar()}
                 >
                   <div className="solutions flex justify-start items-center gap-6">
                     <img
@@ -156,11 +148,10 @@ const MainSidebar = () => {
                     </span>
                   </div>
                 </NavLink>
-
                 <NavLink
                   to="/news"
-                  onClick={(e) => setPageState(e.target.innerText)}
                   className="sidebar-link"
+                  onClick={() => closeSidebar()}
                 >
                   <div className="solutions flex justify-start items-center gap-6">
                     <img
@@ -173,13 +164,12 @@ const MainSidebar = () => {
                     </span>
                   </div>
                 </NavLink>
-
                 {userAuth.access_token ? (
                   <div className="mb-auto">
                     <NavLink
                       to="/settings/edit-profile"
-                      onClick={(e) => setPageState(e.target.innerText)}
                       className="sidebar-link"
+                      onClick={() => closeSidebar()}
                     >
                       <div className="solutions flex justify-start items-center gap-6">
                         <img
@@ -194,7 +184,7 @@ const MainSidebar = () => {
                     </NavLink>
                     <button
                       onClick={handleLogout}
-                      className="w-full flex justify-start items-center gap-6 overflow-hidden mouseenter cursor-pointer text-2xl bg-black p-3 mb-3 rounded-2xl"
+                      className="w-full flex justify-start items-center gap-6 overflow-hidden mouseenter cursor-pointer text-2xl p-3 mb-3 backdrop-blur-lg bg-black/50 rounded-2xl"
                     >
                       <div className="solutions flex justify-start items-center gap-6">
                         <img
@@ -224,4 +214,4 @@ const MainSidebar = () => {
   );
 };
 
-export default MainSidebar;
+export default StackSidebar;

@@ -1,4 +1,11 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import { motion } from "framer-motion";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import axios from "axios";
@@ -7,7 +14,11 @@ import { getFullDate } from "../common/Date";
 import PostAmbient from "../components/PostAmbient";
 import PostInteraction from "../components/PostInteraction";
 import PostContent from "../components/PostContent";
-import CommentsContainer, { fetchComments } from "../components/CommentsContainer";
+import CommentsContainer, {
+  fetchComments,
+} from "../components/CommentsContainer";
+import { UserContext } from "../App";
+import PostStudyStackCard from "../components/PostStudyStackCard";
 
 export const postStructure = {
   title: "",
@@ -23,13 +34,20 @@ export const PostContext = createContext({});
 
 const PostPage = () => {
   let { post_id } = useParams();
+  let studyStackForm = useRef();
+  const {
+    userAuth: { access_token, username },
+  } = useContext(UserContext);
+  const [postId, setPostId] = useState(null);
   const [post, setPost] = useState(postStructure);
-  const [saveIcon, setSaveIcon] = useState(false)
+  const [save, setSave] = useState(false);
+  const [saveIcon, setSaveIcon] = useState(false);
   const [loading, setLoading] = useState(true);
   const [showDialog, setShowDialog] = useState(false); // State to manage dialog visibility
   const [isLikedByUser, setLikedByUser] = useState(false);
   const [commentWrapper, setCommentWrapper] = useState(true);
   const [totalParentCommentsLoaded, setTotalParentCommentsLoaded] = useState(0);
+  const [studyStack, setStudyStack] = useState([]);
 
   let {
     title,
@@ -48,8 +66,12 @@ const PostPage = () => {
         post_id,
       })
       .then(async ({ data: { post } }) => {
-        post.comments = await fetchComments({ post_id: post._id, setParentCommentCountFun: setTotalParentCommentsLoaded})
+        post.comments = await fetchComments({
+          post_id: post._id,
+          setParentCommentCountFun: setTotalParentCommentsLoaded,
+        });
         console.log(post);
+        setPostId(post._id);
         setPost(post);
         setLoading(false);
       })
@@ -60,7 +82,9 @@ const PostPage = () => {
   };
 
   const resetStates = () => {
+    setStudyStack([]);
     setPost(postStructure);
+    setPostId(null);
     setLoading(true);
     setLikedByUser(false);
     setCommentWrapper(false);
@@ -69,6 +93,7 @@ const PostPage = () => {
 
   useEffect(() => {
     resetStates();
+    handleStudyStackClick();
     fetchPost();
   }, [post_id]);
 
@@ -85,9 +110,79 @@ const PostPage = () => {
   };
 
   const handleSave = () => {
-    
-    setSaveIcon(preVal => !preVal)
-  }
+    if (!access_token) {
+      return toast.error("Login to create Studystack");
+    }
+    setSave((preVal) => !preVal);
+  };
+
+  const handleAddNewStack = (e) => {
+    setStudyStack([]);
+  };
+
+  const createStudyStack = (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    let form = new FormData(studyStackForm.current);
+    let formData = { post_id: postId, username };
+
+    for (let [key, value] of form.entries()) {
+      formData[key] = value;
+    }
+
+    let { title, description } = formData;
+
+    if (!title || title === "") {
+      return toast.error("Title is required!!");
+    }
+
+    axios
+      .post(
+        import.meta.env.VITE_SERVER_DOMAIN +
+          "/api/v1/post/ineraction/studystack/create",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+          },
+        }
+      )
+      .then(({ data }) => {
+        console.log(data);
+        setLoading(false);
+        setSave(true);
+        setSaveIcon(true);
+        return toast.success("StudyStack created successfully");
+      })
+      .catch(({ response }) => {
+        setLoading(false);
+        setSaveIcon(false);
+        console.log(response.data.Error);
+        return toast.error(response.data.Error);
+      });
+  };
+
+  const handleStudyStackClick = (e) => {
+    // e.preventDefault();
+    // setFilter(e.target.value);
+
+    axios
+      .post(
+        import.meta.env.VITE_SERVER_DOMAIN +
+          "/api/v1/post/ineraction/studystack/get",
+        { profile_username: username }
+      )
+      .then(({ data }) => {
+        setStudyStack(data.studyStack);
+        // e.target.setAttribute("disabled", "true");
+        console.log(data.studyStack);
+      })
+      .catch(({ response }) => {
+        console.log(response);
+        e.target.removeAttribute("disabled");
+      });
+  };
 
   // Render only when post is not null
   return (
@@ -114,7 +209,7 @@ const PostPage = () => {
               {" "}
               {title}{" "}
             </h1>
-            <div className="flex justify-between items-center my-8">
+            <div className="flex justify-between items-center my-8 mb-8">
               <div className="flex gap-3 xsm:gap-5 items-center justify-center">
                 <img
                   src={profile_img}
@@ -132,12 +227,119 @@ const PostPage = () => {
                 </p>
               </div>
               <div className="flex justify-center items-center gap-3">
-              <p className="text-white/60 mt-2 max-sm:ml-12">
-                ● {getFullDate(publishedAt)}
-              </p>
-              <button className="mt-2 p-3 rounded-full hover:bg-white/10" onClick={handleSave}> <i className={`fi fi-${saveIcon ? "sr" : "rr"}-bookmark text-2xl flex justify-center items-center`}></i> </button>
+                <p className="text-white/60 mt-2 max-sm:ml-12">
+                  {getFullDate(publishedAt)}
+                </p>
+                <button
+                  className="mt-2 p-3 rounded-full hover:bg-white/10"
+                  onClick={handleSave}
+                >
+                  {" "}
+                  <i
+                    className={`fi fi-${
+                      saveIcon ? "sr" : "rr"
+                    }-bookmark text-2xl flex justify-center items-center`}
+                  ></i>{" "}
+                </button>
               </div>
             </div>
+
+            {save ? (
+              studyStack.length == 0 ? (
+                <div className="w-full">
+                  <h1 className="px-4 py-2 h-16 flex justify-center items-center bg-white/10 mb-4 rounded-xl md:rounded-2xl text-xl md:text-2xl">
+                    Create new studystack
+                  </h1>
+                  <form ref={studyStackForm} className="w-full mb-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 md:gap-x-4 gap-y-4">
+                      <input
+                        name="title"
+                        type="text"
+                        placeholder="Name of the Studystack"
+                        className="bg-transparent p-4 text-xl md:text-2xl border-[3px] border-white/20 rounded-2xl outline-none hover:border-white/30 focus:border-white/50"
+                      />
+                      <input
+                        name="description"
+                        type="text"
+                        placeholder="Description"
+                        className="bg-transparent p-4 text-xl md:text-2xl border-[3px] border-white/20 rounded-2xl outline-none hover:border-white/30 focus:border-white/50"
+                      />
+                    </div>
+                    <button
+                      onClick={createStudyStack}
+                      type="submit"
+                      className="w-full mt-4 px-4 py-2 h-16 flex justify-center items-center text-black bg-white mb-4 rounded-xl md:rounded-2xl text-xl md:text-2xl hover:bg-white/70 active:scale-95"
+                    >
+                      Create Studystack
+                    </button>
+                  </form>
+                </div>
+              ) : (
+                <div>
+                  <div className="w-full mb-4 grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-4">
+                    {studyStack.map((stack, index) => {
+                      return (
+                        <motion.div
+                          key={index}
+                          initial={{
+                            opacity: 0,
+                            transform: "translateY(50px)",
+                          }}
+                          animate={{ opacity: 1, transform: "translateY(0px)" }}
+                          transition={{
+                            delay: 0.1 * index,
+                            duration: 2,
+                            ease: [0, 0.71, 0.2, 1.01],
+                          }}
+                        >
+                          <PostStudyStackCard
+                            postId={postId}
+                            stackId={stack.stack_id}
+                            title={stack.title}
+                            postBanner={stack.posts[0].banner}
+                            postBanner2={
+                              stack.posts.length >= 2
+                                ? stack.posts[1].banner
+                                : ""
+                            }
+                            postBanner3={
+                              stack.posts.length >= 3
+                                ? stack.posts[2].banner
+                                : ""
+                            }
+                            postBanner4={
+                              stack.posts.length >= 4
+                                ? stack.posts[3].banner
+                                : ""
+                            }
+                          />
+                        </motion.div>
+                      );
+                    })}
+                  </div>
+                  <motion.button
+                    whileTap={{ scale: 0.95 }}
+                    transition={{
+                      duration: 0.3,
+                      ease: [0, 0.71, 0.2, 1.01],
+                      scale: {
+                        type: "spring",
+                        damping: 8,
+                        stiffness: 100,
+                        restDelta: 0.001,
+                      },
+                    }}
+                    onClick={handleAddNewStack}
+                    className="w-full mt-4 px-4 py-2 h-16 flex justify-center items-center text-black bg-white mb-8 rounded-xl md:rounded-2xl text-xl md:text-2xl hover:bg-white/70 active:scale-95"
+                  >
+                    Add a new studystack
+                  </motion.button>
+                </div>
+              )
+            ) : (
+              ""
+            )}
+
             <img src={banner} alt="" className="aspect-video rounded-2xl" />
 
             {/* Share Dialog Box */}

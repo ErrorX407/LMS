@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { QuestionBankContext } from "../pages/QuestionBank";
 import LoaderTwo from "../components/LoaderTwo";
 import NoDataMessage from "../components/NoDataMessage";
+import FormatSaveCount from "../components/FormatSaveCount";
 
 const QuestionCard = React.lazy(() => import("../components/QuestionCard"));
 
@@ -11,7 +12,7 @@ const QuestionsPage = () => {
   return (
     <div className="max-w-[900px] m-auto">
       <h1 className="font-candela text-2xl md:text-3xl my-2 mb-8">
-        {getQuestions.nbHits} Question found
+        {FormatSaveCount(getQuestions.nbHits)} Question found
       </h1>
 
       <div className="mx-auto max-w-full lg:max-w-full">

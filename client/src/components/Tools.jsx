@@ -5,7 +5,7 @@ import Header from "@editorjs/header";
 import Quote from "@editorjs/quote";
 import Marker from "@editorjs/marker";
 import InlineCode from "@editorjs/inline-code";
-import { uploadImage } from "../common/aws";
+import { uploadImage } from "../common/Aws";
 
 const uploadImageByURL = (e) => {
   let link = new Promise((resolve, reject) => {

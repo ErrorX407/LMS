@@ -1,4 +1,5 @@
-import { nanoid } from "nanoid";
+import { customAlphabet } from "nanoid";
+import crypto from "crypto";
 import Post from "../models/Post.js";
 import User from "../models/User.js";
 import Comment from "../models/Comment.js";
@@ -9,129 +10,143 @@ export const getPostRoute = (req, res) => {
     let authorId = req.user;
     let isAdmin = req.admin;
 
-    if (isAdmin) {
-      if (!authorId) {
-        return res.status(403).json({ Error: "User ID not found in request" });
-      }
+    if (!isAdmin) {
+      return res
+        .status(403)
+        .json({ Error: "🚫 No permission to create posts. 😕📝" });
+    }
 
-      let { title, category, banner, tags, grade, content, draft, username, id } =
-        req.body;
+    if (!authorId) {
+      return res.status(403).json({ Error: "User ID not found in request" });
+    }
 
-      if (!title) {
+    let { title, banner, tags, grade, content, draft, username, id } = req.body;
+
+    if (!title) {
+      return res
+        .status(403)
+        .json({ Error: "You must provide a title to publish a post." });
+    }
+
+    if (!draft) {
+      if (!banner) {
         return res
           .status(403)
-          .json({ Error: "You must provide a title to publish a post." });
+          .json({ Error: "You must provide a post banner to publish it." });
       }
-
-      if (!draft) {
-        if (!category) {
-          return res
-            .status(403)
-            .json({ Error: "You must provide a category to publish a post." });
-        }
-        if (!banner) {
-          return res
-            .status(403)
-            .json({ Error: "You must provide a post banner to publish it." });
-        }
-        if (!tags) {
-          return res.status(403).json({
+      if (!tags || tags.length === 0) {
+        return res
+          .status(403)
+          .json({
             Error: "You must provide at least one tag to publish a post.",
           });
-        }
-        if (!content.blocks.length) {
-          return res.status(403).json({
-            Error: "You must provide some content to publish a post.",
-          });
-        }
       }
+      if (!content || content.blocks.length === 0) {
+        return res
+          .status(403)
+          .json({ Error: "You must provide some content to publish a post." });
+      }
+    }
 
-      tags = tags.map((tag) => tag.toLowerCase());
+    tags = tags.map((tag) => tag.toLowerCase());
 
-      // let post_id =
-      //   title
-      //     .replace(/[^a-zA-Z0-9]/g, " ")
-      //     .replace(/\s+/g, "-")
-      //     .trim() +
-      //   "-" +
-      //   nanoid(25);
+    const alphabet =
+      "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    const nanoid = customAlphabet(alphabet, 25);
+    const randomString = nanoid();
+    const timestamp = Date.now();
+    // Generate a random string to ensure uniqueness
+    const uniqueRandomString = customAlphabet(alphabet, 10)();
 
-      let post_id =
-        id ||
-        `pub=${username}` +
-          "_" +
-          `category=${category}` +
-          "_" +
-          `pid=${nanoid(25)}`;
+    // Check if username and title are defined
+    if (!username || !title) {
+      return res.status(403).json({ Error: "Username or title is missing." });
+    }
 
-      if (id) {
-        Post.findOneAndUpdate(
-          { post_id },
-          {
-            title,
-            content,
-            tags,
-            banner,
-            category,
-            grade,
-            draft: draft ? draft : false,
-          }
-        )
-          .then(() => {
-            return res.status(200).json({ id: post_id });
-          })
-          .catch((err) => {
-            res.status(500).json({ Error: err.message });
-          });
-      } else {
-        let post = new Post({
+    // Create hashes for username and title
+    const titleHash = crypto
+      .createHash("sha256")
+      .update(title)
+      .digest("hex")
+      .substring(0, 10);
+    const timestampHash = crypto
+      .createHash("sha256")
+      .update(timestamp.toString())
+      .digest("hex")
+      .substring(0, 10);
+
+    // Combine the hashed username, title, and random string
+    // Combine the hashed username, title, random string, and timestamp
+    let post_id =
+      id ||
+      `${uniqueRandomString}${timestampHash}${titleHash}${randomString.substring(
+        0,
+        20
+      )}`;
+
+    if (id) {
+      // Update existing post
+      Post.findOneAndUpdate(
+        { post_id },
+        {
           title,
           content,
           tags,
           banner,
           grade,
-          category,
-          author: authorId,
-          post_id,
-          draft: Boolean(draft),
+          draft: draft || false,
+        }
+      )
+        .then(() => {
+          return res.status(200).json({ id: post_id });
+        })
+        .catch((err) => {
+          res.status(500).json({ Error: err.message });
         });
-
-        post
-          .save()
-          .then((post) => {
-            let incrementVal = draft ? 0 : 1;
-
-            User.findOneAndUpdate(
-              { _id: authorId },
-              {
-                $inc: { "account_info.total_posts": incrementVal },
-                $push: { posts: post._id },
-              }
-            )
-              .then((user) => {
-                if (!user) {
-                  console.error("User not found");
-                  return res.status(404).json({ Error: "User not found" });
-                }
-                console.log("User updated successfully");
-                res.status(200).json({ id: post.post_id });
-              })
-              .catch((err) => {
-                console.error("Error updating user:", err);
-                res
-                  .status(500)
-                  .json({ Error: "Failed to update total post number" });
-              });
-          })
-          .catch((err) => {
-            console.error("Error saving post:", err);
-            res.status(500).json({ Error: err.message });
-          });
-      }
     } else {
-      return res
-        .status(500)
-        .json({ Error: "🚫 No permission to create posts. 😕📝" });
+      // Save new post
+      const post = new Post({
+        title,
+        content,
+        tags,
+        banner,
+        grade,
+        author: authorId,
+        post_id,
+        draft: Boolean(draft),
+      });
+
+      post
+        .save()
+        .then((post) => {
+          let incrementVal = draft ? 0 : 1;
+
+          User.findOneAndUpdate(
+            { _id: authorId },
+            {
+              $inc: { "account_info.total_posts": incrementVal },
+              $push: { posts: post._id },
+            }
+          )
+            .then((user) => {
+              if (!user) {
+                console.error("User not found");
+                return res.status(404).json({ Error: "User not found" });
+              }
+              console.log("User updated successfully");
+              res.status(200).json({ id: post.post_id });
+            })
+            .catch((err) => {
+              console.error("Error updating user:", err);
+              res
+                .status(500)
+                .json({ Error: "Failed to update total post number" });
+            });
+        })
+        .catch((err) => {
+          console.error("Error saving post:", err);
+          res.status(500).json({ Error: err.message });
+        });
     }
   } catch (error) {
     console.error("Error in getPostRoute:", error);
@@ -232,34 +247,36 @@ export const filterPostsByCategory = (req, res) => {
 
     let findQuery = { draft: false };
 
-    if (filter !== 'all') {
+    if (filter !== "all") {
       findQuery.grade = filter; // Filter by grade if provided
     }
 
-    Post.find({ 
+    Post.find({
       category: { $regex: category, $options: "i" }, // Case-insensitive matching for category
-      ...findQuery // Add additional filter conditions
+      ...findQuery, // Add additional filter conditions
     })
-    .populate(
-      "author",
-      "personal_info.profile_img personal_info.username personal_info.fullName -_id"
-    )
-    .sort({ publishedAt: -1 })
-    .select("post_id title category banner activity tags grade publishedAt -_id")
-    .skip((page - 1) * maxLimit)
-    .limit(maxLimit)
-    .then((posts) => {
-      if (posts.length === 0) {
-        return res.status(404).json({
-          Error: `No Post Found`,
-        });
-      }
-      return res.status(200).json({ posts });
-    })
-    .catch((err) => {
-      console.error("Error filtering posts by category:", err);
-      return res.status(500).json({ Error: err.message });
-    });
+      .populate(
+        "author",
+        "personal_info.profile_img personal_info.username personal_info.fullName -_id"
+      )
+      .sort({ publishedAt: -1 })
+      .select(
+        "post_id title category banner activity tags grade publishedAt -_id"
+      )
+      .skip((page - 1) * maxLimit)
+      .limit(maxLimit)
+      .then((posts) => {
+        if (posts.length === 0) {
+          return res.status(404).json({
+            Error: `No Post Found`,
+          });
+        }
+        return res.status(200).json({ posts });
+      })
+      .catch((err) => {
+        console.error("Error filtering posts by category:", err);
+        return res.status(500).json({ Error: err.message });
+      });
   } catch (error) {
     console.error("Error in filterPostsByCategory:", error);
     res.status(500).json({ Error: "Internal server error" });
@@ -385,16 +402,16 @@ export const writtenPosts = (req, res) => {
 
   let { page, draft, query, deletedDocCount } = req.body;
 
-  let maxLimit = 5;
-  let skipDocs = (page - 1) * maxLimit;
+  // let maxLimit = 5;
+  // let skipDocs = (page - 1) * maxLimit;
 
-  if (deletedDocCount) {
-    skipDocs -= deletedDocCount;
-  }
+  // if (deletedDocCount) {
+  //   skipDocs -= deletedDocCount;
+  // }
 
   Post.find({ author: user_id, draft, title: new RegExp(query, "i") })
-    .skip(skipDocs)
-    .limit(maxLimit)
+    // .skip(skipDocs)
+    // .limit(maxLimit)
     .sort({ publishedAt: -1 })
     .select(" title banner publishedAt post_id activity category draft -_id")
     .then((posts) => {
@@ -447,9 +464,10 @@ export const deletePosts = (req, res) => {
       .catch((err) => {
         return res.status(500).json({ Error: err.message });
       });
-  }
-  else{
-    return res.status(500).json({ Error: "🚫 No permission to delete post. 😕🔒" });
+  } else {
+    return res
+      .status(500)
+      .json({ Error: "🚫 No permission to delete post. 😕🔒" });
   }
 };
 

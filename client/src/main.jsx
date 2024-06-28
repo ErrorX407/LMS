@@ -16,11 +16,13 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         className: "custom-toast",
         success: {
           style: {
+            color: "#ffffff",
             background: "#61d3452d",
           },
         },
         error: {
           style: {
+            color: "#ffffff",
             backgroundColor: "#ff4b4b2d",
           },
         },

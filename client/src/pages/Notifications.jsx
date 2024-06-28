@@ -63,7 +63,7 @@ const Notifications = () => {
         Recent Notifications{" "}
       </h1>
 
-      <div className="my-8 flex gap-3">
+      <div className="my-8 flex gap-3 overflow-x-auto">
         {
             filters.map((filterName, i) => {
               return (

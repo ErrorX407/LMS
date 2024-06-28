@@ -145,12 +145,6 @@ const TrendingPage = () => {
           </div>
         </div>
       </div>
-      {/* <LoadMoreButton
-          state={trendingPosts}
-          fetchDataFun={
-            pageState == "trending" ? fetchTrendingPosts : fetchPostsByCategory
-          }
-        /> */}
     </>
   );
 };

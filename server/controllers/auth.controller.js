@@ -34,7 +34,7 @@ const generateUsername = async (email) => {
   return username;
 };
 
-export const register = async(req, res) => {
+export const register = async (req, res) => {
   const { fullName, email, password } = req.body;
   const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; // regex for email
   const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/; // regex for password
@@ -84,41 +84,54 @@ export const register = async(req, res) => {
 
         const url = `${process.env.BASE_URL}users/${user._id}/verify/${tokenValue}`;
         const emailMessage = `
-            📧 Welcome aboard! 🚀
-
-            Thank you for signing up! We're thrilled to have you join our community. 
-            To get started, please verify your email address by clicking the link below. 🌟
-
-            <a href="${url}">Verify Email</a>
-
-            If you have any questions or need assistance, feel free to reach out to us. We're here to help! 🤗
-
-            Best regards,
-            ${fullName}
-        `;
+    <html>
+    <head>
+        <style>
+          a{
+            padding: 8px 16px;
+            font-weight: bold;
+            text-decoration: none;
+            background: #8B46FF;
+            border-radius: 12px;
+          }
+          p{
+            font-size: 17px;
+            font-weight: 500;
+          }
+        </style>
+    </head>
+    <body>
+        <p>📧 Welcome aboard! 🚀</p> <br />
+        <p>Thank you for signing up! We're thrilled to have you join our community. <br /> To get started, please verify your email address by clicking the button below. 🌟</p> <br />
+        <p style="color: #ffffff;"><a href="${url}" style="color: #ffffff;">Verify Email</a></p> <br />
+        <p>If you have any questions or need assistance, feel free to reach out to us. We're here to help! 🤗</p> <br />
+        <p>Best regards, <br />  ${fullName}</p>
+    </body>
+    </html>
+`;
         await sendEmail(
           email,
           "🌟 Welcome! Please Verify Your Email Address 📧",
           emailMessage
         );
 
-        return res.status(200).json({ message: "📧 Email sent! 📬 Please verify your account. 🔒😊" });
+        return res.status(200).json({
+          message: "📧 Email sent! 📬 Please verify your account. 🔒😊",
+        });
       })
       .catch((err) => {
         if (err.code == 11000) {
-          return res
-            .status(500)
-            .json({
-              Error:
-                "Oops! It looks like someone already used that email. 📧 Please try another one!",
-            });
+          return res.status(500).json({
+            Error:
+              "Oops! It looks like someone already used that email. 📧 Please try another one!",
+          });
         }
         return res.status(500).json({ Error: err.message });
       });
   });
 };
 
-export const verifyEmail = async(req, res) => {
+export const verifyEmail = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
 
@@ -151,23 +164,23 @@ export const login = async (req, res) => {
   const user = await User.findOne({ "personal_info.email": email });
 
   if (!user) {
-    return res.status(403).json({ Error: "Email not found" });
+    return res.status(403).json({ Error: "Email not found 💀" });
   }
 
   if (!user.verified) {
-    return res.status(403).json({ Error: "Please verify your email first" });
+    return res.status(403).json({ Error: "Please verify your email first ⚡" });
   }
 
   bcrypt.compare(password, user.personal_info.password, (err, result) => {
     if (err) {
       return res
         .status(403)
-        .json({ Error: "Error occurred while login please try again" });
+        .json({ Error: "Error occurred while login please try again ⌛" });
     }
     if (result) {
       return res.status(200).json(formatDataToSend(user));
     } else {
-      return res.status(403).json({ Error: "Incorrect password" });
+      return res.status(403).json({ Error: "Incorrect password 🔑" });
     }
   });
 };

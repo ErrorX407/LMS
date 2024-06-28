@@ -7,7 +7,7 @@ import axios from "axios";
 
 import defaultBanner from "../imgs/blog banner.png";
 import Logo from "../imgs/logo.webp";
-import { uploadImage } from "../common/aws";
+import { uploadImage } from "../common/Aws";
 import { EditorContext } from "../pages/Editor";
 import { tools } from "./Tools";
 import { UserContext } from "../App";

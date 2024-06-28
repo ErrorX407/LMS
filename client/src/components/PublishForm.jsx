@@ -163,7 +163,7 @@ const PublishForm = () => {
             type="text"
             placeholder="Post Title"
             defaultValue={title}
-            className="mb-5 w-full h-16 p-4 bg-transparent border-2 border-purple/30 text-2xl outline-none rounded-2xl focus:border-purple focus:text-purple active:border-purple active:text-purple"
+            className="mb-5 w-full p-4 bg-transparent border-2 border-purple/30 text-2xl outline-none rounded-2xl focus:border-purple focus:text-purple active:border-purple active:text-purple"
             onChange={handlePostTitleChange}
           />
 
@@ -199,7 +199,7 @@ const PublishForm = () => {
               type="text"
               name="tags"
               placeholder={`${tagLimit - tags.length} tags left`}
-              className="sticky mb-5 w-full h-16 p-4 bg-transparent border-2 border-purple/30 text-2xl outline-none rounded-2xl focus:border-purple focus:text-purple active:border-purple active:text-purple"
+              className="sticky mb-5 w-full p-4 bg-transparent border-2 border-purple/30 text-2xl outline-none rounded-2xl focus:border-purple focus:text-purple active:border-purple active:text-purple"
               onKeyDown={handleTagKeyDown}
             />
             {tags.map((tag, i) => {
@@ -208,7 +208,7 @@ const PublishForm = () => {
           </div>
 
           <button
-            className="w-full py-3 rounded-2xl bg-p bg bg-purple text-black text-xl font-semibold mouseenter"
+            className="w-full py-3 rounded-2xl bg-purple text-black text-xl font-semibold mouseenter"
             onClick={publishPost}
           >
             Publish

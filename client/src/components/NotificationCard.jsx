@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { getFullDate } from "../common/Date";
-import NotificationCommentField from "./NotificationCOmmentField";
+import NotificationCommentField from "./NotificationCommentField";
 import { UserContext } from "../App";
 import axios from "axios";
 

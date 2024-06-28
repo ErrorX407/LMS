@@ -39,8 +39,8 @@ const PostCard = ({
                 <div className="author-img w-[25px] h-[25px] aspect-square object-cover lg:w-[30px] lg:h-[30px] md:w-[28px] md:h-[28px] overflow-hidden rounded-[6px] lg:rounded-lg md:rounded-lg flex-shrink-0">
                   <img src={profileImg} alt={authorLink} />
                 </div>
-                <div className="author-name capitalize text-[14px] md:text-[15px] lg:text-[16px] w-[100%] overflow-hidden whitespace-nowrap text-ellipsis text-white/70 ">
-                  {author}
+                <div className="author-name text-[14px] md:text-[15px] lg:text-[16px] w-[100%] overflow-hidden whitespace-nowrap text-ellipsis text-white/70 ">
+                  {authorLink}
                 </div>
               </div>
             </Link>

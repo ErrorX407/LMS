@@ -70,9 +70,9 @@ const postSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    playlist: {
+    studystack: {
       type: Schema.Types.ObjectId,
-      ref: "playlists", // Assuming the model name for playlists is "Playlist"
+      ref: "studystacks", // Assuming the model name for playlists is "Playlist"
     },
   },
   {

@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
-import { lookInSession } from "./common/session";
+import { lookInSession } from "./common/Session";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -25,6 +25,9 @@ import ManagePosts from "./pages/ManagePosts";
 import Search from "./pages/Search";
 import EmailVerify from "./pages/EmailVerify";
 import AddQuestions from "./pages/AddQuestions";
+import CreateQuiz from "./pages/CreateQuiz";
+import StudyStackPage from "./pages/StudyStackPage";
+import PublishQuiz from "./components/PublishQuiz";
 
 const MainSidebar = React.lazy(() => import("./components/MainSidebar"));
 
@@ -59,8 +62,10 @@ const App = () => {
             <Route path=":id" element={<ProfilePage />} />
           <Route path="/post/:post_id" element={<PostPage />} />
           <Route path="/add-questions" element={<AddQuestions />} />
+          <Route path="/create/quiz" element={<PublishQuiz />} />
           </Route>
 
+          <Route path="/studystack/:stack_id" element={<StudyStackPage />} />
           <Route path="/editor" element={<Editor />} />
           <Route path="/editor/:post_id" element={<Editor />} />
           <Route path="/login" element={<Login />} />

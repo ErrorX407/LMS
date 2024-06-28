@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import FormatSaveCount from "./FormatSaveCount";
 
 const PostCard = ({
   banner,
@@ -34,7 +35,7 @@ const PostCard = ({
         <div className="absolute hidden moblieLg:flex pointer-events-none bg-black/30 backdrop-blur-md bottom-2 right-2 likes w-fit p-3 rounded-2xl justify-start items-center gap-2 cursor-pointer">
           <i className="fi fi-sr-heart text-white text-[14px] md:text-[15px] lg:text-[16px] bg-transparent flex justify-center items-center"></i>
           <div className="like-count text-white text-[14px] md:text-[15px] lg:text-[16px]">
-            {likes.toLocaleString()}
+            {FormatSaveCount(likes)}
           </div>
         </div>
         <Link to={`/${category}`} className="moblieLg:hidden">
@@ -63,7 +64,7 @@ const PostCard = ({
             <div className=" flex pointer-events-none likes w-fit p-0 rounded-2xl justify-start items-center gap-2 cursor-pointer">
           <i className="fi fi-sr-heart text-white text-[14px] md:text-[15px] lg:text-[16px] bg-transparent flex justify-center items-center"></i>
           <div className="like-count text-white text-[14px] md:text-[15px] lg:text-[16px]">
-            {likes.toLocaleString()}
+            {FormatSaveCount(likes)}
           </div>
         </div>
           </div>

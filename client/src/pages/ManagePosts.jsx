@@ -166,7 +166,7 @@ const ManagePosts = () => {
             <Loader />
           ) : posts.results.posts.length ? (
             <div className="mx-auto max-w-full lg:max-w-full">
-              <div className="grid grid-cols-1 moblieLg:grid-cols-2 gap-x-0 moblieLg:gap-x-4 gap-5 xsm:gap-y-4 sm:gap-y-5 md:gap-y-12 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+              <div className="grid grid-cols-1 moblieLg:grid-cols-2 gap-x-0 moblieLg:gap-x-4 gap-5 xsm:gap-y-4 sm:gap-y-5 md:gap-y-12 sm:grid-cols-3 lg:grid-cols-4">
                 {posts.results.posts.map((post, i) => {
                   return (
                     <motion.div
@@ -198,7 +198,7 @@ const ManagePosts = () => {
             <Loader />
           ) : drafts.results.posts.length ? (
             <div className="mx-auto max-w-full lg:max-w-full">
-              <div className="grid grid-cols-2 gap-x-0 gap-y-10 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+              <div className="grid grid-cols-2 gap-x-0 gap-y-10 sm:grid-cols-3 lg:grid-cols-4">
                 {drafts.results.posts.map((post, i) => {
                   return (
                     <motion.div

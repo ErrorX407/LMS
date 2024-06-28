@@ -3,7 +3,7 @@ import { Eye, EyeClosed } from "@phosphor-icons/react";
 import { Link, Navigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";
-import { storeInSession } from "../common/session";
+import { storeInSession } from "../common/Session";
 import { UserContext } from "../App";
 import PostAmbient from "../components/PostAmbient";
 import Logo from "../imgs/logo.webp";
@@ -40,7 +40,7 @@ const Login = () => {
         setFormLoading(false);
         regButton.removeAttribute("disabled");
         toast.success(
-          "Welcome aboard! 🎉 You're in! 🚀 Let's get started on this adventure together! 🌟 #LoginSuccess"
+          "Welcome aboard! 🎉 You're in! 🚀"
         );
       })
       .catch(({ response }) => {
@@ -79,7 +79,7 @@ const Login = () => {
         setFormLoading(false);
         regButton.removeAttribute("disabled");
       return toast.error(
-        "Oopsie! 🙉 It seems like you missed filling out some fields. Please make sure all fields are filled in! 📝 #AllFieldsRequiredError"
+        "Oopsie! 🙉 It seems like you missed filling out some fields.📝 #AllFieldsRequiredError"
       );
     }
     if (!email || email.length === 0 || email === "") {
@@ -96,7 +96,7 @@ const Login = () => {
         setFormLoading(false);
         regButton.removeAttribute("disabled");
       return toast.error(
-        "Oops! 🙈 Looks like there was a hiccup with your email. Please double-check and try again! 📧 #EmailError"
+        "Oops! Please double-check and try again! 📧 #EmailError"
       );
     }
 
@@ -105,7 +105,7 @@ const Login = () => {
         setFormLoading(false);
         regButton.removeAttribute("disabled");
       return toast.error(
-        "Uh-oh! 🙊 It seems there's a problem with your password. Give it another shot! 🔒 #PasswordError"
+        "🙊 Uh-oh! 🔒 #PasswordError"
       );
     }
 
@@ -143,7 +143,7 @@ const Login = () => {
               name="email"
               type="email"
               placeholder="example@shiv.com"
-              className="mb-5 w-full h-16 p-4 bg-transparent border-2 border-[#ff35e4]/30 text-2xl outline-none rounded-2xl focus:border-[#ff35e4] focus:text-[#ff35e4] active:border-[#ff35e4] active:text-[#ff35e4]"
+              className="mb-5 w-full h-fit p-4 bg-transparent border-2 border-[#ff35e4]/30 text-2xl outline-none rounded-2xl focus:border-[#ff35e4] focus:text-[#ff35e4] active:border-[#ff35e4] active:text-[#ff35e4]"
             />
             <div className="relative w-full">
               <input
@@ -151,7 +151,7 @@ const Login = () => {
                 name="password"
                 type={showPassword ? "text" : "password"}
                 placeholder="●●●●●●●●●●"
-                className="w-full mb-5 h-16 p-4 bg-transparent border-2 border-[#ff35e4]/30 text-2xl outline-none rounded-2xl focus:border-[#ff35e4] focus:text-[#ff35e4] active:border-[#ff35e4] active:text-[#ff35e4]"
+                className="w-full h-fit mb-5 p-4 bg-transparent border-2 border-[#ff35e4]/30 text-2xl outline-none rounded-2xl focus:border-[#ff35e4] focus:text-[#ff35e4] active:border-[#ff35e4] active:text-[#ff35e4]"
               />
 
               <div
@@ -162,7 +162,7 @@ const Login = () => {
               </div>
             </div>
             <button
-              className="flex justify-center items-center mb-4 gap-1 text-3xl w-full h-16 bg-[#ff35e4] rounded-2xl text-black mouseenter font-semibold"
+              className="flex justify-center items-center mb-4 gap-1 text-xl moblieLg:text-2xl md:text-3xl w-full h-16 bg-[#ff35e4] rounded-2xl text-black mouseenter font-semibold"
               type="submit"
               onClick={handleSubmit}
             >

@@ -4,7 +4,7 @@ import { Eye, EyeClosed } from "@phosphor-icons/react";
 import { Link, Navigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import axios from "axios";
-import { storeInSession } from "../common/session";
+import { storeInSession } from "../common/Session";
 import { UserContext } from "../App";
 import PostAmbient from "../components/PostAmbient";
 import LoaderTwo from "../components/LoaderTwo";
@@ -79,14 +79,14 @@ const Register = () => {
       setFormLoading(false);
       regButton.removeAttribute("disabled");
       return toast.error(
-        "Whoops! Looks like you missed filling out some fields. Make sure to complete them all! 📝"
+        "Whoops! Looks like you missed filling out some fields! 📝"
       );
     }
     if (!fullName || fullName.length < 3 || fullName === "") {
       setFormLoading(false);
       regButton.removeAttribute("disabled");
       return toast.error(
-        "Hey there! Your full name should have more than three letters. Give it another shot! 📝"
+        "Hey there! Your full name should have more than three letters.📝"
       );
     }
     if (!email || email.length === 0 || email === "") {
@@ -160,21 +160,21 @@ const Register = () => {
               name="fullName"
               type="text"
               placeholder="John Wick"
-              className="capitalize mb-5 w-full md:h-16 p-4 bg-transparent border-2 border-[#CA4E00]/30 md:text-xl lg:text-2xl outline-none rounded-2xl focus:border-[#CA4E00] focus:text-[#CA4E00] active:border-[#CA4E00] active:text-[#CA4E00]"
+              className="capitalize mb-5 w-full p-4 bg-transparent border-2 border-[#CA4E00]/30 md:text-xl lg:text-2xl outline-none rounded-2xl focus:border-[#CA4E00] focus:text-[#CA4E00] active:border-[#CA4E00] active:text-[#CA4E00]"
             />
             <input
               name="email"
               type="email"
               placeholder="johnwick@email.com"
-              className="lowercase mb-5 w-full md:h-16 p-4 bg-transparent border-2 border-[#CA4E00]/30 md:text-xl lg:text-2xl outline-none rounded-2xl focus:border-[#CA4E00] focus:text-[#CA4E00] active:border-[#CA4E00] active:text-[#CA4E00]"
+              className="lowercase mb-5 w-full p-4 bg-transparent border-2 border-[#CA4E00]/30 md:text-xl lg:text-2xl outline-none rounded-2xl focus:border-[#CA4E00] focus:text-[#CA4E00] active:border-[#CA4E00] active:text-[#CA4E00]"
             />
             <div className="w-full relative">
               <input
                 ref={passwordRef}
-                name="password"
                 type={showPassword ? "text" : "password"}
+                name="password"
                 placeholder="●●●●●●●●●●"
-                className="mb-5 w-full md:h-16 p-4 bg-transparent border-2 border-[#CA4E00]/30 md:text-xl lg:text-2xl outline-none rounded-2xl focus:border-[#CA4E00] focus:text-[#CA4E00] active:border-[#CA4E00] active:text-[#CA4E00]"
+                className="mb-5 w-full p-4 bg-transparent border-2 border-[#CA4E00]/30 md:text-xl lg:text-2xl outline-none rounded-2xl focus:border-[#CA4E00] focus:text-[#CA4E00] active:border-[#CA4E00] active:text-[#CA4E00]"
               />
               <div
                 className="bg-[#CA4E00]/30 hover:bg-[#CA4E00]/60 absolute right-2.5 top-2.5 md:right-3 md:top-3 w-10 h-10 flex justify-center items-center rounded-xl cursor-pointer"
@@ -184,7 +184,7 @@ const Register = () => {
               </div>
             </div>
             <button
-              className="flex justify-center items-center font-semibold mb-4 gap-1 text-2xl md:text-3xl w-full h-[52px] md:h-16 bg-[#CA4E00] rounded-2xl text-black mouseenter"
+              className="flex justify-center items-center h-16 font-semibold mb-4 gap-1 text-xl moblieLg:text-2xl md:text-3xl w-full bg-[#CA4E00] rounded-2xl text-black mouseenter"
               type="submit"
               onClick={handleSubmit}
             >

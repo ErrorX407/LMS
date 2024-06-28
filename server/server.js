@@ -11,6 +11,8 @@ import postRouter from "./routes/post.routes.js";
 import postInteractionRouter from "./routes/postInteraction.routes.js";
 import notificationRouter from "./routes/notification.routes.js";
 import questionsRoute from "./routes/questions.routes.js"
+import stackRoute from "./routes/stack.routes.js"
+import quizRoute from "./routes/quiz.routes.js"
 
 const app = express();
 const port = 3000;
@@ -36,6 +38,8 @@ app.use("/api/v1/post", postRouter);
 app.use("/api/v1/post/ineraction", postInteractionRouter);
 app.use("/api/v1/notification", notificationRouter);
 app.use('/api/v1/questionBank', questionsRoute);
+app.use('/api/v1/stack', stackRoute);
+app.use('/api/v1/quiz', quizRoute);
 
 app.get("/", (req, res) => {
   res.send("Hello World!");

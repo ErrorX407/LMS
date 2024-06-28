@@ -4,6 +4,7 @@ import { UserContext } from "../App";
 import { Link } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import axios from "axios";
+import FormatSaveCount from "./FormatSaveCount";
 
 const PostInteraction = ({ onShareButtonClick }) => {
   let {
@@ -73,20 +74,20 @@ const PostInteraction = ({ onShareButtonClick }) => {
             <img
               src="https://img.icons8.com/3d-fluency/94/like--v2.png"
               alt="like--v2"
-              className="w-[25px]"
+              className="w-[20px] md:w-[25px]"
             />
-            <div className="like-count text-[20px]">
-              {total_likes}
+            <div className="like-count text-[16px] md:text-[20px]">
+              {FormatSaveCount(total_likes)}
             </div>
           </button>
           <button onClick={()=>setCommentWrapper(preVal => !preVal)} className="bg-black/30 backdrop-blur-md mouseenter w-fit flex p-3 rounded-2xl justify-start items-center gap-2 cursor-pointer">
             <img
               src="https://img.icons8.com/3d-fluency/94/chat-message.png"
               alt="comments"
-              className="w-[25px]"
+              className="w-[20px] md:w-[25px]"
             />
-            <div className="like-count text-white text-[20px]">
-              {total_comments}
+            <div className="like-count text-white text-[16px] md:text-[20px]">
+              {FormatSaveCount(total_comments)}
             </div>
           </button>
         </div>
@@ -99,11 +100,11 @@ const PostInteraction = ({ onShareButtonClick }) => {
             >
               <img
                 src="https://img.icons8.com/3d-fluency/94/edit.png" alt="edit"
-                className="w-[25px]"
+                className="w-[20px] md:w-[25px]"
               />
-              <div className="like-count text-white text-[20px]">
+              {/* <div className="like-count text-white text-[20px]">
                 Edit Post
-              </div>
+              </div> */}
             </Link>
             :
             null
@@ -111,11 +112,11 @@ const PostInteraction = ({ onShareButtonClick }) => {
           <button className="bg-black/30 backdrop-blur-md mouseenter w-fit flex p-3 rounded-2xl justify-start items-center gap-2 cursor-pointer" onClick={onShareButtonClick} >
             <img
               src="https://img.icons8.com/3d-fluency/94/paper-plane.png" alt="paper-plane"
-              className="w-[25px] -hue-rotate-90"
+              className="w-[20px] md:w-[25px] -hue-rotate-90"
             />
-            <div className="like-count text-white text-[20px]">
+            {/* <div className="like-count text-white text-[20px]">
               Share
-            </div>
+            </div> */}
           </button>
         </div>
       </div>

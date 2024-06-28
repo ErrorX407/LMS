@@ -6,7 +6,7 @@ const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
 export const getUserProfile = async (req, res) => {
   const { username } = req.body;
   User.findOne({ "personal_info.username": username })
-    .select("-personal_info.password -updatedAt -posts")
+    .select("-personal_info.password -updatedAt")
     .then((user) => {
       return res.status(200).json(user);
     })

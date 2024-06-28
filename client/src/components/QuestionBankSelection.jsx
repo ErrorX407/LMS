@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { toast, Toaster } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import { QuestionBankContext } from "../pages/QuestionBank";
 import axios from "axios";
 import LoaderTwo from "./LoaderTwo";
@@ -50,21 +50,6 @@ const QuestionBankSelection = () => {
   };
   return (
     <>
-      <Toaster
-        toastOptions={{
-          className: "custom-toast",
-          success: {
-            style: {
-              background: "#61d3452d",
-            },
-          },
-          error: {
-            style: {
-              backgroundColor: "#ff4b4b2d",
-            },
-          },
-        }}
-      />
       <h1 className="font-candela text-3xl">Question Bank</h1>
       <div className="w-full md:w-1/2 mt-10">
         <select

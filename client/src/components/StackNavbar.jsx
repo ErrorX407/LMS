@@ -1,11 +1,28 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Logo from "../imgs/logo.webp";
 import { UserContext } from "../App";
 import axios from "axios";
 
-const Navbar = ({ toggleSidebar }) => {
+const StackNavbar = ({ toggleSidebar }) => {
   const { userAuth, setUserAuth } = useContext(UserContext);
+
+  const [scrollPosition, setScrollPosition] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const position = window.scrollY;
+      setScrollPosition(position);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const navbarOpacity = scrollPosition > 100 ? 1 : scrollPosition / 100;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,7 +47,7 @@ const Navbar = ({ toggleSidebar }) => {
   }, [userAuth.access_token, setUserAuth]);
 
   return (
-    <nav className="navbar sm:px-5 lg:px-10 md:px-8">
+    <nav className="stack-navbar sm:px-5 lg:px-10 md:px-8" style={{ backgroundColor: `rgba(0, 0, 0, ${navbarOpacity})` }}>
       <Link to="/">
         <div className="flex justify-center items-center gap-2 md:gap-4">
           <img src={Logo} alt="logo" className="w-[25px] xsm:w-[20px] xsm:h-[20px] md:w-[30px] md:h-[30px]" />
@@ -94,4 +111,4 @@ const Navbar = ({ toggleSidebar }) => {
   );
 };
 
-export default Navbar;
+export default StackNavbar;

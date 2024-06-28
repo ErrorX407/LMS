@@ -178,10 +178,10 @@ const userSchema = mongoose.Schema(
       ref: "posts",
       default: [],
     },
-    playlists: [
+    studystacks: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Playlist",
+        ref: "studystacks",
       },
     ],
     verified: {
